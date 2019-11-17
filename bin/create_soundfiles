@@ -82,3 +82,4 @@ lame -b 128 0999.wav 0999_reset_ok.mp3
 
 rm *.aiff
 rm *.wav
+mv *.mp3 mp3
