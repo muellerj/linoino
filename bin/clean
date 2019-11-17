@@ -1,0 +1,5 @@
+#!/bin/sh
+
+rm -rf tmp/*.aiff
+rm -rf tmp/*.wav
+rm -rf mp3/*.mp3

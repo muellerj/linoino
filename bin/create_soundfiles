@@ -1,4 +1,17 @@
-#!/bin/bash
+#!/bin/sh
+
+build_soundfile() {
+  name=$1
+  text=$2
+  say -v Anna "$text" -o tmp/$name.aiff
+  sox tmp/$name.aiff tmp/$name.wav pitch 800
+  lame -b 128 tmp/$name.wav mp3/$name.mp3
+  #rm tmp/$name.aiff tmp/$name.wav
+}
+
+build_soundfile foo "hallo linus, du grosser tiger"
+
+exit 0
 
 for i in {1..250};
 do
