@@ -1,3 +1,4 @@
 sd-card/**/*.mp3
-tmp/*.aiff
-tmp/*.wav
+
+tmp/*
+!tmp/.gitkeep

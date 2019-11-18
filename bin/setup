@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# Install packages
 brew install lame sox arduino-cli
 
+# Arduino: Update indices
+arduino-cli core update-index
+
+# Install core for Arduino Nano
+arduino-cli core install arduino:avr
+
+# Install required libs
 arduino-cli lib install "MFRC522" "DFPlayer Mini Mp3 by Makuna" "JC_Button"
