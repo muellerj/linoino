@@ -2,3 +2,5 @@ sd-card/**/*.mp3
 
 tmp/*
 !tmp/.gitkeep
+
+out
