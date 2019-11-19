@@ -16,6 +16,8 @@ clean:
 soundfiles:
 	bin/create_soundfiles msg/audio_messages_de.txt
 
+compile: $(OUT)
+
 upload: $(OUT)
 	arduino-cli upload \
 		--fqbn $(BOARD) \
@@ -24,7 +26,7 @@ upload: $(OUT)
 		--verify \
 		.
 
-compile: $(SRC)
+$(OUT): $(SRC)
 	mkdir -p out
 	arduino-cli compile \
 		--fqbn $(BOARD) \
