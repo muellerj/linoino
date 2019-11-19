@@ -1,6 +1,8 @@
-sd-card/**/*.mp3
+sd-card
 
 tmp/*
 !tmp/.gitkeep
+
+bin/arduino-cli
 
 out
