@@ -8,14 +8,17 @@ SRC=linuino.ino
 setup:
 	bin/setup
 
+dummycard:
+	bin/create_dummy_songs
+
 clean:
 	rm -rf tmp/*.aiff
 	rm -rf tmp/*.wav
 	rm -rf sd-card
 	rm -rf out
 
-soundfiles:
-	bin/create_soundfiles msg/audio_messages.txt
+audio_messages:
+	bin/create_audio_messages msg/audio_messages.txt
 
 compile: $(OUT)
 

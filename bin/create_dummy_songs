@@ -1,0 +1,11 @@
+#!/bin/sh
+
+for i in {1..5}; do
+  folder=$(printf "%02d" $i)
+  for j in {1..5}; do
+    file=$(printf "%03d" $j).mp3
+    text="Ordner $i - Datei $j"
+    echo "Creating $folder/$file: '$text'"
+    build_soundfile "$folder/$file" "$text"
+  done
+done

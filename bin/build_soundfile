@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 FILEPATH TEXT" >&2
+  exit 1
+fi
+
+BASEDIR=sd-card
+
+filepath=$1
+text=$2
+
+mkdir -p $BASEDIR/"$(dirname $filepath)"
+say -v Anna "$text" -o tmp/soundfile.aiff
+sox tmp/soundfile.aiff tmp/soundfile.wav
+lame -b 128 tmp/soundfile.wav $BASEDIR/$filepath
+rm tmp/soundfile.aiff tmp/soundfile.wav
