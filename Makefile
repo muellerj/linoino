@@ -6,7 +6,7 @@ OUT=out/linuino
 SRC=linuino.ino
 
 setup:
-	sudo bin/setup
+	bin/setup
 
 clean:
 	rm -rf tmp/*.aiff

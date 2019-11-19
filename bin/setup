@@ -9,7 +9,8 @@ case "$(uname -s)" in
 
   Linux)
     echo "Installing on Linux"
-    curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/usr/local/bin sh
+    curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+    sudo apk add lame sox
     ;;
 
   *)
