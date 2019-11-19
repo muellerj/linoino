@@ -1,7 +1,22 @@
 #!/bin/sh
 
 # Install packages
-brew install lame sox arduino-cli
+case "$(uname -s)" in
+  Darwin)
+    echo "Installing on MacOS"
+    brew install lame sox arduino-cli
+    ;;
+
+  Linux)
+    echo "Installing on Linux"
+    curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/usr/local/bin sh
+    ;;
+
+  *)
+    echo "Unknown operating system - aborting"
+    exit 1
+    ;;
+esac
 
 # Arduino: Update indices
 arduino-cli core update-index
