@@ -8,6 +8,11 @@ SRC=linuino.ino
 setup:
 	bin/setup
 
+clean:
+	rm -rf tmp/*.aiff
+	rm -rf tmp/*.wav
+	rm -rf sd-card
+
 soundfiles:
 	bin/create_soundfiles audio_messages_de.txt
 

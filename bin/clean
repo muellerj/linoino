@@ -1,5 +1,0 @@
-#!/bin/sh
-
-rm -rf tmp/*.aiff
-rm -rf tmp/*.wav
-rm -rf sd-card
