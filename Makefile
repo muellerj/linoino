@@ -12,9 +12,10 @@ clean:
 	rm -rf tmp/*.aiff
 	rm -rf tmp/*.wav
 	rm -rf sd-card
+	rm -rf out
 
 soundfiles:
-	bin/create_soundfiles msg/audio_messages_de.txt
+	bin/create_soundfiles msg/audio_messages.txt
 
 compile: $(OUT)
 
