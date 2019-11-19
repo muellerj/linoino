@@ -17,9 +17,6 @@
     Information and contribution at https://tonuino.de.
 */
 
-// uncomment the below line to enable five button support
-//#define FIVEBUTTONS
-
 static const uint32_t cardCookie = 322417479;
 
 // DFPlayer Mini
@@ -643,27 +640,14 @@ MFRC522::StatusCode status;
 #define shutdownPin 7
 #define openAnalogPin A7
 
-#ifdef FIVEBUTTONS
-#define buttonFourPin A3
-#define buttonFivePin A4
-#endif
-
 #define LONG_PRESS 1000
 
 Button pauseButton(buttonPause);
 Button upButton(buttonUp);
 Button downButton(buttonDown);
-#ifdef FIVEBUTTONS
-Button buttonFour(buttonFourPin);
-Button buttonFive(buttonFivePin);
-#endif
 bool ignorePauseButton = false;
 bool ignoreUpButton = false;
 bool ignoreDownButton = false;
-#ifdef FIVEBUTTONS
-bool ignoreButtonFour = false;
-bool ignoreButtonFive = false;
-#endif
 
 /// Funktionen für den Standby Timer (z.B. über Pololu-Switch oder Mosfet)
 
@@ -769,10 +753,6 @@ void setup() {
   pinMode(buttonPause, INPUT_PULLUP);
   pinMode(buttonUp, INPUT_PULLUP);
   pinMode(buttonDown, INPUT_PULLUP);
-#ifdef FIVEBUTTONS
-  pinMode(buttonFourPin, INPUT_PULLUP);
-  pinMode(buttonFivePin, INPUT_PULLUP);
-#endif
   pinMode(shutdownPin, OUTPUT);
   digitalWrite(shutdownPin, LOW);
 
@@ -796,10 +776,6 @@ void readButtons() {
   pauseButton.read();
   upButton.read();
   downButton.read();
-#ifdef FIVEBUTTONS
-  buttonFour.read();
-  buttonFive.read();
-#endif
 }
 
 void volumeUpButton() {
@@ -1008,7 +984,6 @@ void loop() {
     }
 
     if (upButton.pressedFor(LONG_PRESS)) {
-#ifndef FIVEBUTTONS
       if (isPlaying()) {
         if (!mySettings.invertVolumeButtons) {
           volumeUpButton();
@@ -1021,7 +996,6 @@ void loop() {
         playShortCut(1);
       }
       ignoreUpButton = true;
-#endif
     } else if (upButton.wasReleased()) {
       if (!ignoreUpButton)
         if (!mySettings.invertVolumeButtons) {
@@ -1034,7 +1008,6 @@ void loop() {
     }
 
     if (downButton.pressedFor(LONG_PRESS)) {
-#ifndef FIVEBUTTONS
       if (isPlaying()) {
         if (!mySettings.invertVolumeButtons) {
           volumeDownButton();
@@ -1047,7 +1020,6 @@ void loop() {
         playShortCut(2);
       }
       ignoreDownButton = true;
-#endif
     } else if (downButton.wasReleased()) {
       if (!ignoreDownButton) {
         if (!mySettings.invertVolumeButtons) {
@@ -1059,34 +1031,6 @@ void loop() {
       }
       ignoreDownButton = false;
     }
-#ifdef FIVEBUTTONS
-    if (buttonFour.wasReleased()) {
-      if (isPlaying()) {
-        if (!mySettings.invertVolumeButtons) {
-          volumeUpButton();
-        }
-        else {
-          nextButton();
-        }
-      }
-      else {
-        playShortCut(1);
-      }
-    }
-    if (buttonFive.wasReleased()) {
-      if (isPlaying()) {
-        if (!mySettings.invertVolumeButtons) {
-          volumeDownButton();
-        }
-        else {
-          previousButton();
-        }
-      }
-      else {
-        playShortCut(2);
-      }
-    }
-#endif
     // Ende der Buttons
   } while (!mfrc522.PICC_IsNewCardPresent());
 
