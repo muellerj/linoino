@@ -14,7 +14,7 @@ clean:
 	rm -rf sd-card
 
 soundfiles:
-	bin/create_soundfiles audio_messages_de.txt
+	bin/create_soundfiles msg/audio_messages_de.txt
 
 upload: $(OUT)
 	arduino-cli upload \
