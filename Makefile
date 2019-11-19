@@ -9,7 +9,7 @@ setup:
 	bin/setup
 
 soundfiles:
-	bin/create_soundfiles
+	bin/create_soundfiles audio_messages_de.txt
 
 upload: $(OUT)
 	arduino-cli upload \
