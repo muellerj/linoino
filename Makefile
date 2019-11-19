@@ -2,22 +2,26 @@ all: upload
 
 BOARD=arduino:avr:nano:cpu=atmega328old
 PORT=/dev/ttyACM0
-PROJECT=linuino
+OUT=out/linuino
+SRC=linuino.ino
 
 setup:
 	bin/setup
 
-upload: compile
+soundfiles:
+	bin/create_soundfiles
+
+upload: $(OUT)
 	arduino-cli upload \
 		--fqbn $(BOARD) \
 		--port $(PORT) \
-		--input out/$(PROJECT) \
+		--input $< \
 		--verify \
 		.
 
-compile:
+compile: $(SRC)
 	mkdir -p out
 	arduino-cli compile \
 		--fqbn $(BOARD) \
-		--output out/$(PROJECT) \
+		--output $(OUT) \
 		.
