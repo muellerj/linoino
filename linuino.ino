@@ -77,6 +77,13 @@ const byte PCS_CARD_GONE     = 2; // card is not reachable anymore
 const byte PCS_CARD_IS_BACK  = 3; // card was gone, and is now back again
 uint8_t numberOfCards = 0;
 
+// Modes
+const byte MODE_HOERSPIEL = 1;
+const byte MODE_ALBUM     = 2;
+const byte MODE_PARTY     = 3;
+const byte MODE_SINGLE    = 4;
+const byte MODE_BOOK      = 5;
+
 void setup() {
   mySetup();
 }
