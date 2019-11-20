@@ -33,6 +33,7 @@ nfcTagObject myCard;
 
 bool knownCard = false;
 
+#include "lib/setup.h"
 #include "lib/standby.h"
 #include "lib/button_interface.h"
 #include "lib/track_navigation.h"
@@ -41,15 +42,15 @@ bool knownCard = false;
 
 #include "lib/mp3_init.cpp"
 
-// Leider kann das Modul keine Queue abspielen.
+// Tracks
 static uint16_t _lastTrackFinished;
 
-// Time to go to sleep
+// Standby
 long standbyTimer = 5; // Minutes
 unsigned long sleepAtMillis = 0;
 
 // MFRC522
-MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522
+MFRC522 mfrc522(SS_PIN, RST_PIN);
 MFRC522::MIFARE_Key key;
 bool successRead;
 byte sector = 1;
@@ -57,6 +58,7 @@ byte blockAddr = 4;
 byte trailerBlock = 7;
 MFRC522::StatusCode status;
 
+// Buttons
 Button pauseButton(buttonPause);
 Button upButton(buttonUp);
 Button downButton(buttonDown);
@@ -64,56 +66,19 @@ bool ignorePauseButton = false;
 bool ignoreUpButton = false;
 bool ignoreDownButton = false;
 
+// Cards
 static bool hasCard = false;
-
 static byte lastCardUid[4];
 static byte retries;
 static bool lastCardWasUL;
-
 const byte PCS_NO_CHANGE     = 0; // no change detected since last pollCard() call
 const byte PCS_NEW_CARD      = 1; // card with new UID detected (had no card or other card before)
 const byte PCS_CARD_GONE     = 2; // card is not reachable anymore
 const byte PCS_CARD_IS_BACK  = 3; // card was gone, and is now back again
-
 uint8_t numberOfCards = 0;
 
 void setup() {
-
-  Serial.begin(115200); // Debug via Serial interface
-  randomSeed(analogRead(A0)); // Zufallsgenerator initialisieren
-
-  Serial.println(F("TonUINO Version 2.0"));
-  Serial.println(F("(c) Thorsten Voß"));
-
-  // Knöpfe mit PullUp
-  pinMode(buttonPause, INPUT_PULLUP);
-  pinMode(buttonUp, INPUT_PULLUP);
-  pinMode(buttonDown, INPUT_PULLUP);
-
-  // Busy Pin
-  pinMode(busyPin, INPUT);
-
-  // DFPlayer Mini initialisieren
-  mp3.begin();
-  mp3.setVolume(15);
-
-  // NFC Leser initialisieren
-  SPI.begin();        // Init SPI bus
-  mfrc522.PCD_Init(); // Init MFRC522
-  mfrc522.PCD_DumpVersionToSerial(); // Show details of PCD - MFRC522 Card Reader
-  for (byte i = 0; i < 6; i++) {
-    key.keyByte[i] = 0xFF;
-  }
-
-  // Reset all cards (all three buttons)
-  if (digitalRead(buttonPause) == LOW && 
-      digitalRead(buttonUp)    == LOW &&
-      digitalRead(buttonDown)  == LOW) {
-    Serial.println(F("Reset -> EEPROM wird gelöscht"));
-    for (int i = 0; i < EEPROM.length(); i++) {
-      EEPROM.write(i, 0);
-    }
-  }
+  mySetup();
 }
 
 void loop() {
@@ -129,6 +94,7 @@ void loop() {
   handleCardReader();
 }
 
+#include "lib/setup.cpp"
 #include "lib/standby.cpp"
 #include "lib/button_interface.cpp"
 #include "lib/voice_menu.cpp"
