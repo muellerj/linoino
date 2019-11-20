@@ -82,15 +82,8 @@ void setup() {
 }
 
 void loop() {
-
-  do {
-    mp3.loop();
-    handleButtonPresses();
-  } while (!mfrc522.PICC_IsNewCardPresent());
-
-  if (!mfrc522.PICC_ReadCardSerial())
-    return;
-
+  mp3.loop();
+  handleButtonPresses();
   handleCardReader();
 }
 
