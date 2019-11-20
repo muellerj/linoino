@@ -1,3 +1,7 @@
+bool isPlaying() { 
+  return !digitalRead(busyPin); 
+}
+
 static void nextTrack(uint16_t track) {
   if (track == _lastTrackFinished) {
     return;
