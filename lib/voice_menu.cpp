@@ -1,9 +1,13 @@
 int voiceMenu(int numberOfOptions, int startMessage, int messageOffset,
               bool preview = false, int previewFromFolder = 0) {
+
   int returnValue = 0;
-  if (startMessage != 0)
+
+  if (startMessage != 0) {
     mp3.playMp3FolderTrack(startMessage);
-  do {
+  }
+
+  while(true) {
     pauseButton.read();
     upButton.read();
     downButton.read();
@@ -74,9 +78,10 @@ int voiceMenu(int numberOfOptions, int startMessage, int messageOffset,
           else
             mp3.playFolderTrack(previewFromFolder, returnValue);
         }
-      } else
+      } else {
         ignoreDownButton = false;
+      }
     }
-  } while (true);
+  }
 }
 

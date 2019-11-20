@@ -32,12 +32,12 @@ void setupCard() {
   EEPROM.write(myCard.folder,1);
 
   // Einzelmodus -> Datei abfragen
-  if (myCard.mode == 4)
+  if (myCard.mode == MODE_SINGLE)
     myCard.special = voiceMenu(mp3.getFolderTrackCount(myCard.folder), 320, 0,
                                true, myCard.folder);
 
   // Admin Funktionen
-  if (myCard.mode == 6)
+  if (myCard.mode == MODE_ADMIN)
     myCard.special = voiceMenu(3, 320, 320);
 
   // Karte ist konfiguriert -> speichern
@@ -169,39 +169,41 @@ void handleKnownCard() {
   Serial.print(F(" Dateien in Ordner "));
   Serial.println(myCard.folder);
 
-  // Hörspielmodus: eine zufällige Datei aus dem Ordner
-  if (myCard.mode == 1) {
+
+  switch(myCard.mode) {
+  case MODE_HOERSPIEL:
     Serial.println(F("Hörspielmodus -> zufälligen Track wiedergeben"));
     currentTrack = random(1, numTracksInFolder + 1);
     Serial.println(currentTrack);
     mp3.playFolderTrack(myCard.folder, currentTrack);
-  }
-  // Album Modus: kompletten Ordner spielen
-  if (myCard.mode == 2) {
+    break;
+
+  case MODE_ALBUM:
     Serial.println(F("Album Modus -> kompletten Ordner wiedergeben"));
     currentTrack = 1;
     mp3.playFolderTrack(myCard.folder, currentTrack);
-  }
-  // Party Modus: Ordner in zufälliger Reihenfolge
-  if (myCard.mode == 3) {
+    break;
+
+  case MODE_PARTY:
     Serial.println(
         F("Party Modus -> Ordner in zufälliger Reihenfolge wiedergeben"));
     currentTrack = random(1, numTracksInFolder + 1);
     mp3.playFolderTrack(myCard.folder, currentTrack);
-  }
-  // Einzel Modus: eine Datei aus dem Ordner abspielen
-  if (myCard.mode == 4) {
+    break;
+
+  case MODE_SINGLE:
     Serial.println(
         F("Einzel Modus -> eine Datei aus dem Odrdner abspielen"));
     currentTrack = myCard.special;
     mp3.playFolderTrack(myCard.folder, currentTrack);
-  }
-  // Hörbuch Modus: kompletten Ordner spielen und Fortschritt merken
-  if (myCard.mode == 5) {
+    break;
+
+  case MODE_BOOK:
     Serial.println(F("Hörbuch Modus -> kompletten Ordner spielen und "
                       "Fortschritt merken"));
     currentTrack = EEPROM.read(myCard.folder);
     mp3.playFolderTrack(myCard.folder, currentTrack);
+    break;
   }
 }
 

@@ -83,6 +83,7 @@ const byte MODE_ALBUM     = 2;
 const byte MODE_PARTY     = 3;
 const byte MODE_SINGLE    = 4;
 const byte MODE_BOOK      = 5;
+const byte MODE_ADMIN     = 6;
 
 void setup() {
   mySetup();
