@@ -1,1 +1,1 @@
-static void button_interface();
+static void handleButtonPresses();

@@ -1,4 +1,9 @@
-static void button_interface() {
+static void handleButtonPresses() {
+
+  pauseButton.read();
+  upButton.read();
+  downButton.read();
+
   if (pauseButton.wasReleased()) {
     if (ignorePauseButton == false) {
       if (isPlaying())

@@ -3,3 +3,4 @@ void resetCard();
 void setupCard();
 bool readCard(nfcTagObject *nfcTag);
 void writeCard(nfcTagObject nfcTag);
+void handleKnownCard();
