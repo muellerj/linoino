@@ -1,4 +1,4 @@
-void previewCurrentSelection(int previewFromFolder, int returnValue) {
+void previewSelection(int previewFromFolder, int returnValue) {
   do {
     delay(10);
   } while (isPlaying());
@@ -6,6 +6,20 @@ void previewCurrentSelection(int previewFromFolder, int returnValue) {
     mp3.playFolderTrack(returnValue, 1);
   else
     mp3.playFolderTrack(previewFromFolder, returnValue);
+}
+
+int changeOption(int returnValue, int delta, int numberOfOptions, 
+                 int messageOffset, bool preview, int previewFromFolder) {
+  if (delta > 0) {
+    returnValue = min(returnValue + delta, numberOfOptions);
+  } else {
+    returnValue = max(returnValue + delta, 1);
+  }
+  mp3.playMp3FolderTrack(messageOffset + returnValue);
+  delay(1000);
+  if (preview)
+    previewSelection(previewFromFolder, returnValue);
+  return returnValue;
 }
 
 int voiceMenu(int numberOfOptions, int startMessage, int messageOffset,
@@ -33,21 +47,13 @@ int voiceMenu(int numberOfOptions, int startMessage, int messageOffset,
 
     // Up button
     if (upButton.pressedFor(LONG_PRESS)) {
-      returnValue = min(returnValue + 10, numberOfOptions);
-      mp3.playMp3FolderTrack(messageOffset + returnValue);
-      delay(1000);
-      if (preview) {
-        previewCurrentSelection(previewFromFolder, returnValue);
-      }
+      returnValue = changeOption(returnValue, 10, numberOfOptions, 
+                                 messageOffset, preview, previewFromFolder);
       ignoreUpButton = true;
     } else if (upButton.wasReleased()) {
       if (!ignoreUpButton) {
-        returnValue = min(returnValue + 1, numberOfOptions);
-        mp3.playMp3FolderTrack(messageOffset + returnValue);
-        delay(1000);
-        if (preview) {
-          previewCurrentSelection(previewFromFolder, returnValue);
-        }
+        returnValue = changeOption(returnValue, 1, numberOfOptions, 
+                                   messageOffset, preview, previewFromFolder);
       } else {
         ignoreUpButton = false;
       }
@@ -55,25 +61,16 @@ int voiceMenu(int numberOfOptions, int startMessage, int messageOffset,
     
     // Down button
     if (downButton.pressedFor(LONG_PRESS)) {
-      returnValue = max(returnValue - 10, 1);
-      mp3.playMp3FolderTrack(messageOffset + returnValue);
-      delay(1000);
-      if (preview) {
-        previewCurrentSelection(previewFromFolder, returnValue);
-      }
+      returnValue = changeOption(returnValue, -10, numberOfOptions, 
+                                 messageOffset, preview, previewFromFolder);
       ignoreDownButton = true;
     } else if (downButton.wasReleased()) {
       if (!ignoreDownButton) {
-        returnValue = max(returnValue - 1, 1);
-        mp3.playMp3FolderTrack(messageOffset + returnValue);
-        delay(1000);
-        if (preview) {
-          previewCurrentSelection(previewFromFolder, returnValue);
-        }
+        returnValue = changeOption(returnValue, -1, numberOfOptions, 
+                                   messageOffset, preview, previewFromFolder);
       } else {
         ignoreDownButton = false;
       }
     }
   }
 }
-
