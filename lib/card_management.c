@@ -149,6 +149,19 @@ void writeCard(nfcTagObject nfcTag) {
   delay(100);
 }
 
+void onNewCard() {
+  randomSeed(millis() + random(1000));
+  if (readCard(&myCard) == true) {
+    if (myCard.cookie == 322417479 && myCard.folder != 0 && myCard.mode != 0) {
+      knownCard = true;
+      handleKnownCard();
+    } else {
+      knownCard = false;
+      setupCard();
+    }
+  }
+}
+
 void handleKnownCard() {
   _lastTrackFinished = 0;
   numTracksInFolder = mp3.getFolderTrackCount(myCard.folder);
@@ -189,6 +202,71 @@ void handleKnownCard() {
                       "Fortschritt merken"));
     currentTrack = EEPROM.read(myCard.folder);
     mp3.playFolderTrack(myCard.folder, currentTrack);
+  }
+}
+
+byte pollCard() {
+  const byte maxRetries = 2;
+
+  if (!hasCard) {
+    if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial() && readCard(&myCard)) {
+      bool bSameUID = !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
+      Serial.print(F("IsSameAsLastUID="));
+      Serial.println(bSameUID);
+      // store info about current card
+      memcpy(lastCardUid, mfrc522.uid.uidByte, 4);
+      lastCardWasUL = mfrc522.PICC_GetType(mfrc522.uid.sak) == MFRC522::PICC_TYPE_MIFARE_UL;
+
+      retries = maxRetries;
+      hasCard = true;
+      return bSameUID ? PCS_CARD_IS_BACK : PCS_NEW_CARD;
+    }
+    return PCS_NO_CHANGE;
+  } else {
+    // hasCard
+    // perform a dummy read command just to see whether the card is in range
+    byte buffer[18];
+    byte size = sizeof(buffer);
+
+    if (mfrc522.MIFARE_Read(lastCardWasUL ? 8 : blockAddr, buffer, &size) != MFRC522::STATUS_OK) {
+      if (retries > 0) {
+          retries--;
+      } else {
+          Serial.println(F("card gone"));
+          mfrc522.PICC_HaltA();
+          mfrc522.PCD_StopCrypto1();
+          hasCard = false;
+          return PCS_CARD_GONE;
+      }
+    } else {
+        retries = maxRetries;
+    }
+  }
+  return PCS_NO_CHANGE;
+}
+
+void handleCardReader() {
+  // poll card only every 100ms
+  static uint8_t lastCardPoll = 0;
+  uint8_t now = millis();
+
+  if (static_cast<uint8_t>(now - lastCardPoll) > 100) {
+    lastCardPoll = now;
+    switch (pollCard()) {
+    case PCS_NEW_CARD:
+      onNewCard();
+      break;
+
+    case PCS_CARD_GONE:
+      mp3.pause();
+      setstandbyTimer();
+      break;
+
+    case PCS_CARD_IS_BACK:
+      mp3.start();
+      disablestandbyTimer();
+      break;
+    }
   }
 }
 

@@ -4,3 +4,5 @@ void setupCard();
 bool readCard(nfcTagObject *nfcTag);
 void writeCard(nfcTagObject nfcTag);
 void handleKnownCard();
+void handleCardReader();
+byte pollCard();
