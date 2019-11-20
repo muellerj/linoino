@@ -39,44 +39,7 @@ bool knownCard = false;
 #include "lib/card_management.h"
 #include "lib/voice_menu.h"
 
-// implement a notification class,
-// its member methods will get called
-//
-class Mp3Notify {
-public:
-  static void OnError(uint16_t errorCode) {
-    // see DfMp3_Error for code meaning
-    Serial.println();
-    Serial.print("Com Error ");
-    Serial.println(errorCode);
-  }
-  static void OnPlayFinished(uint16_t track) {
-    Serial.print("Track beendet");
-    Serial.println(track);
-    delay(100);
-    nextTrack(track);
-  }
-  static void OnCardOnline(uint16_t code) {
-    Serial.println(F("SD Karte online "));
-  }
-  static void OnCardInserted(uint16_t code) {
-    Serial.println(F("SD Karte bereit "));
-  }
-  static void OnCardRemoved(uint16_t code) {
-    Serial.println(F("SD Karte entfernt "));
-  }
-  static void OnUsbOnline(uint16_t code) {
-      Serial.println(F("USB online "));
-  }
-  static void OnUsbInserted(uint16_t code) {
-      Serial.println(F("USB bereit "));
-  }
-  static void OnUsbRemoved(uint16_t code) {
-    Serial.println(F("USB entfernt "));
-  }
-};
-
-static DFMiniMp3<SoftwareSerial, Mp3Notify> mp3(mySoftwareSerial);
+#include "lib/mp3_init.cpp"
 
 // Leider kann das Modul keine Queue abspielen.
 static uint16_t _lastTrackFinished;
@@ -166,8 +129,8 @@ void loop() {
   handleCardReader();
 }
 
-#include "lib/standby.c"
-#include "lib/button_interface.c"
-#include "lib/voice_menu.c"
-#include "lib/card_management.c"
-#include "lib/track_navigation.c"
+#include "lib/standby.cpp"
+#include "lib/button_interface.cpp"
+#include "lib/voice_menu.cpp"
+#include "lib/card_management.cpp"
+#include "lib/track_navigation.cpp"
