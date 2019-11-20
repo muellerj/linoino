@@ -5,7 +5,6 @@
 #include <SPI.h>
 #include <SoftwareSerial.h>
 
-
 // DFPlayer Mini
 SoftwareSerial mySoftwareSerial(2, 3); // RX, TX
 uint16_t numTracksInFolder;
@@ -24,6 +23,7 @@ nfcTagObject myCard;
 
 bool knownCard = false;
 
+#include "lib/button_interface.h"
 #include "lib/track_navigation.h"
 #include "lib/card_management.h"
 #include "lib/voice_menu.h"
@@ -123,16 +123,15 @@ void setup() {
   // NFC Leser initialisieren
   SPI.begin();        // Init SPI bus
   mfrc522.PCD_Init(); // Init MFRC522
-  mfrc522
-      .PCD_DumpVersionToSerial(); // Show details of PCD - MFRC522 Card Reader
+  mfrc522.PCD_DumpVersionToSerial(); // Show details of PCD - MFRC522 Card Reader
   for (byte i = 0; i < 6; i++) {
     key.keyByte[i] = 0xFF;
   }
 
-  // RESET --- ALLE DREI KNÖPFE BEIM STARTEN GEDRÜCKT HALTEN -> alle bekannten
-  // Karten werden gelöscht
-  if (digitalRead(buttonPause) == LOW && digitalRead(buttonUp) == LOW &&
-      digitalRead(buttonDown) == LOW) {
+  // Reset all cards (all three buttons)
+  if (digitalRead(buttonPause) == LOW && 
+      digitalRead(buttonUp)    == LOW &&
+      digitalRead(buttonDown)  == LOW) {
     Serial.println(F("Reset -> EEPROM wird gelöscht"));
     for (int i = 0; i < EEPROM.length(); i++) {
       EEPROM.write(i, 0);
@@ -142,59 +141,16 @@ void setup() {
 }
 
 void loop() {
+
   do {
     mp3.loop();
-    // Buttons werden nun über JS_Button gehandelt, dadurch kann jede Taste
-    // doppelt belegt werden
+
     pauseButton.read();
     upButton.read();
     downButton.read();
 
-    if (pauseButton.wasReleased()) {
-      if (ignorePauseButton == false) {
-        if (isPlaying())
-          mp3.pause();
-        else
-          mp3.start();
-      }
-      ignorePauseButton = false;
-    } else if (pauseButton.pressedFor(LONG_PRESS) &&
-               ignorePauseButton == false) {
-      if (isPlaying())
-        mp3.playAdvertisement(currentTrack);
-      else {
-        knownCard = false;
-        mp3.playMp3FolderTrack(800);
-        Serial.println(F("Karte resetten..."));
-        resetCard();
-        mfrc522.PICC_HaltA();
-        mfrc522.PCD_StopCrypto1();
-      }
-      ignorePauseButton = true;
-    }
+    button_interface();
 
-    if (upButton.pressedFor(LONG_PRESS)) {
-      Serial.println(F("Volume Up"));
-      mp3.increaseVolume();
-      ignoreUpButton = true;
-    } else if (upButton.wasReleased()) {
-      if (!ignoreUpButton)
-        nextTrack(random(65536));
-      else
-        ignoreUpButton = false;
-    }
-
-    if (downButton.pressedFor(LONG_PRESS)) {
-      Serial.println(F("Volume Down"));
-      mp3.decreaseVolume();
-      ignoreDownButton = true;
-    } else if (downButton.wasReleased()) {
-      if (!ignoreDownButton)
-        previousTrack();
-      else
-        ignoreDownButton = false;
-    }
-    // Ende der Buttons
   } while (!mfrc522.PICC_IsNewCardPresent());
 
   // RFID Karte wurde aufgelegt
@@ -258,6 +214,7 @@ void loop() {
   mfrc522.PCD_StopCrypto1();
 }
 
+#include "lib/button_interface.c"
 #include "lib/voice_menu.c"
 #include "lib/card_management.c"
 #include "lib/track_navigation.c"
