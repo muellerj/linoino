@@ -9,6 +9,11 @@ RED=\033[0;31m
 GREEN=\033[0;32m
 RESET=\033[0m 
 
+define ok
+	([ $$? -eq 0 ] && printf "\n$(GREEN)$(1) OK$(RESET)\n") || \
+	printf "\n$(RED)$(1) FAIL$(RESET)\n"
+endef
+
 setup:
 	bin/setup
 
@@ -32,15 +37,11 @@ upload: $(OUT)
 		--port $(PORT) \
 		--input $< \
 		--verify \
-		.  && \
-		([ $$? -eq 0 ] && printf "$(GREEN)OK$(RESET)") || \
-		printf "$(RED)FAIL$(RESET)" 
+		.  && $(call ok, "UPLOAD")
 
 $(OUT): $(SRC)
 	@mkdir -p out
 	@arduino-cli compile \
 		--fqbn $(BOARD) \
 		--output $(OUT) \
-		.  && \
-		([ $$? -eq 0 ] && printf "$(GREEN)OK$(RESET)") || \
-		printf "$(RED)FAIL$(RESET)" 
+		.  && $(call ok, "COMPILER")
