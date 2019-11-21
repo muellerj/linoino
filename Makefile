@@ -5,6 +5,10 @@ PORT=/dev/ttyACM0
 OUT=out/linuino
 SRC=linuino.ino
 
+RED=\033[0;31m
+GREEN=\033[0;32m
+RESET=\033[0m 
+
 setup:
 	bin/setup
 
@@ -23,16 +27,20 @@ audio_messages:
 compile: $(OUT)
 
 upload: $(OUT)
-	arduino-cli upload \
+	@arduino-cli upload \
 		--fqbn $(BOARD) \
 		--port $(PORT) \
 		--input $< \
 		--verify \
-		.
+		.  && \
+		([ $$? -eq 0 ] && printf "$(GREEN)OK$(RESET)") || \
+		printf "$(RED)FAIL$(RESET)" 
 
 $(OUT): $(SRC)
-	mkdir -p out
-	arduino-cli compile \
+	@mkdir -p out
+	@arduino-cli compile \
 		--fqbn $(BOARD) \
 		--output $(OUT) \
-		.
+		.  && \
+		([ $$? -eq 0 ] && printf "$(GREEN)OK$(RESET)") || \
+		printf "$(RED)FAIL$(RESET)" 
