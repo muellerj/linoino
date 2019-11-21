@@ -10,7 +10,7 @@ void handleButtonPresses() {
     else {
       knownCard = false;
       mp3.playMp3FolderTrack(800);
-      Serial.println(F("Karte resetten..."));
+      Serial.println(F("Reset card..."));
       resetCard();
       mfrc522.PICC_HaltA();
       mfrc522.PCD_StopCrypto1();

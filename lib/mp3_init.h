@@ -21,10 +21,10 @@ public:
     Serial.println(F("SD Karte entfernt "));
   }
   static void OnUsbOnline(uint16_t code) {
-      Serial.println(F("USB online "));
+    Serial.println(F("USB online "));
   }
   static void OnUsbInserted(uint16_t code) {
-      Serial.println(F("USB bereit "));
+    Serial.println(F("USB bereit "));
   }
   static void OnUsbRemoved(uint16_t code) {
     Serial.println(F("USB entfernt "));
