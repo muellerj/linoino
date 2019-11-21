@@ -3,14 +3,14 @@ bool isPlaying() {
 }
 
 void nextTrack(uint16_t track) {
-  if (track == _lastTrackFinished) {
+  if (track == _lastTrackFinished)
     return;
-   }
-   _lastTrackFinished = track;
+
+  _lastTrackFinished = track;
    
-   // Wenn eine neue Karte angelernt wird soll das Ende eines Tracks nicht
-   // verarbeitet werden
-   if (knownCard == false)
+  // Wenn eine neue Karte angelernt wird soll das Ende eines Tracks nicht
+  // verarbeitet werden
+  if (knownCard == false)
     return;
 
   switch(myCard.mode) {
@@ -31,7 +31,7 @@ void nextTrack(uint16_t track) {
     uint16_t oldTrack = currentTrack;
     currentTrack = random(1, numTracksInFolder + 1);
     if (currentTrack == oldTrack)
-      currentTrack = currentTrack == numTracksInFolder ? 1 : currentTrack+1;
+      currentTrack = currentTrack == numTracksInFolder ? 1 : currentTrack + 1;
     Serial.print(F("Party Modus ist aktiv -> zufälligen Track spielen: "));
     Serial.println(currentTrack);
     mp3.playFolderTrack(myCard.folder, currentTrack);
@@ -48,11 +48,9 @@ void nextTrack(uint16_t track) {
                      "Fortschritt speichern"));
       Serial.println(currentTrack);
       mp3.playFolderTrack(myCard.folder, currentTrack);
-      // Fortschritt im EEPROM abspeichern
-      EEPROM.write(myCard.folder, currentTrack);
+      EEPROM.write(myCard.folder, currentTrack); // Save progress
     } else {
-      // Fortschritt zurück setzen
-      EEPROM.write(myCard.folder, 1);
+      EEPROM.write(myCard.folder, 1); // Reset progress
     }
     break;
   }
@@ -67,9 +65,9 @@ void previousTrack() {
 
   case MODE_ALBUM:
     Serial.println(F("Albummodus ist aktiv -> vorheriger Track"));
-    if (currentTrack != 1) {
+    if (currentTrack != 1)
       currentTrack = currentTrack - 1;
-    }
+
     mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
@@ -86,9 +84,8 @@ void previousTrack() {
   case MODE_BOOK:
     Serial.println(F("Hörbuch Modus ist aktiv -> vorheriger Track und "
                      "Fortschritt speichern"));
-    if (currentTrack != 1) {
-      currentTrack = currentTrack - 1;
-    }
+    currentTrack = max(currentTrack - 1, 1);
+
     mp3.playFolderTrack(myCard.folder, currentTrack);
     // Fortschritt im EEPROM abspeichern
     EEPROM.write(myCard.folder, currentTrack);
