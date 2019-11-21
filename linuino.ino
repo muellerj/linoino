@@ -23,15 +23,6 @@
 #include "lib/voice_menu.h"
 #include "lib/mp3_init.h"
 
-// MFRC522
-MFRC522 mfrc522(SS_PIN, RST_PIN);
-MFRC522::MIFARE_Key key;
-bool successRead;
-byte sector = 1;
-byte blockAddr = 4;
-byte trailerBlock = 7;
-MFRC522::StatusCode status;
-
 void setup() {
   mySetup();
 }
