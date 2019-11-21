@@ -1,4 +1,4 @@
-static void handleButtonPresses() {
+void handleButtonPresses() {
 
   pauseButton.read();
   upButton.read();

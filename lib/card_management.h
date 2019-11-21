@@ -29,15 +29,6 @@ const byte MODE_SINGLE    = 4;
 const byte MODE_BOOK      = 5;
 const byte MODE_ADMIN     = 6;
 
-void dump_byte_array(byte *buffer, byte bufferSize);
-void resetCard();
-void setupCard();
-bool readCard(nfcTagObject *nfcTag);
-void writeCard(nfcTagObject nfcTag);
-void handleKnownCard();
-void handleCardReader();
-byte pollCard();
-
 // MFRC522
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 MFRC522::MIFARE_Key key;
@@ -46,3 +37,12 @@ byte sector = 1;
 byte blockAddr = 4;
 byte trailerBlock = 7;
 MFRC522::StatusCode status;
+
+void dump_byte_array(byte *buffer, byte bufferSize);
+void resetCard();
+void setupCard();
+bool readCard(nfcTagObject *nfcTag);
+void writeCard(nfcTagObject nfcTag);
+void handleKnownCard();
+void handleCardReader();
+byte pollCard();

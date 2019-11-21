@@ -31,4 +31,4 @@ public:
   }
 };
 
-static DFMiniMp3<SoftwareSerial, Mp3Notify> mp3(mySoftwareSerial);
+DFMiniMp3<SoftwareSerial, Mp3Notify> mp3(mySoftwareSerial);

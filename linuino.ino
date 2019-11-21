@@ -1,11 +1,3 @@
-#include <DFMiniMp3.h>
-#include <EEPROM.h>
-#include <JC_Button.h>
-#include <MFRC522.h>
-#include <SPI.h>
-#include <SoftwareSerial.h>
-#include <avr/sleep.h>
-
 #define RST_PIN 9
 #define SS_PIN 10
 #define buttonPause A0
@@ -14,6 +6,14 @@
 #define busyPin 4
 #define shutdownPin 7
 #define LONG_PRESS 1000
+
+#include <DFMiniMp3.h>
+#include <EEPROM.h>
+#include <JC_Button.h>
+#include <MFRC522.h>
+#include <SPI.h>
+#include <SoftwareSerial.h>
+#include <avr/sleep.h>
 
 #include "lib/setup.h"
 #include "lib/standby.h"

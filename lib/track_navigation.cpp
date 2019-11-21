@@ -2,7 +2,7 @@ bool isPlaying() {
   return !digitalRead(busyPin); 
 }
 
-static void nextTrack(uint16_t track) {
+void nextTrack(uint16_t track) {
   if (track == _lastTrackFinished) {
     return;
    }
@@ -58,7 +58,7 @@ static void nextTrack(uint16_t track) {
   }
 }
 
-static void previousTrack() {
+void previousTrack() {
   switch(myCard.mode) {
   case MODE_HOERSPIEL:
     Serial.println(F("Hörspielmodus ist aktiv -> Track von vorne spielen"));
