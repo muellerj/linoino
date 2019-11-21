@@ -5,7 +5,7 @@ void resetCard() {
     downButton.read();
 
     if (upButton.wasReleased() || downButton.wasReleased()) {
-      Serial.print(F("Abgebrochen!"));
+      Serial.print(F("Aborted!"));
       mp3.playMp3FolderTrack(802);
       return;
     }
@@ -14,13 +14,13 @@ void resetCard() {
   if (!mfrc522.PICC_ReadCardSerial())
     return;
 
-  Serial.print(F("Karte wird neu Konfiguriert!"));
+  Serial.print(F("Reconfiguring card!"));
   setupCard();
 }
 
 void setupCard() {
   mp3.pause();
-  Serial.print(F("Neue Karte konfigurieren"));
+  Serial.print(F("Configure new card"));
 
   // Ordner abfragen
   myCard.folder = voiceMenu(99, 300, 0, true);
@@ -29,7 +29,7 @@ void setupCard() {
   myCard.mode = voiceMenu(6, 310, 310);
 
   // Hörbuchmodus -> Fortschritt im EEPROM auf 1 setzen
-  EEPROM.write(myCard.folder,1);
+  EEPROM.write(myCard.folder, 1);
 
   // Einzelmodus -> Datei abfragen
   if (myCard.mode == MODE_SINGLE)
@@ -142,9 +142,9 @@ void writeCard(nfcTagObject nfcTag) {
     Serial.print(F("MIFARE_Write() failed: "));
     Serial.println(mfrc522.GetStatusCodeName(status));
       mp3.playMp3FolderTrack(401);
-  }
-  else
+  } else {
     mp3.playMp3FolderTrack(400);
+  }
   Serial.println();
   delay(100);
 }
@@ -166,9 +166,8 @@ void handleKnownCard() {
   _lastTrackFinished = 0;
   numTracksInFolder = mp3.getFolderTrackCount(myCard.folder);
   Serial.print(numTracksInFolder);
-  Serial.print(F(" Dateien in Ordner "));
+  Serial.print(F("Files in folder:"));
   Serial.println(myCard.folder);
-
 
   switch(myCard.mode) {
   case MODE_HOERSPIEL:
@@ -185,15 +184,13 @@ void handleKnownCard() {
     break;
 
   case MODE_PARTY:
-    Serial.println(
-        F("Party Modus -> Ordner in zufälliger Reihenfolge wiedergeben"));
+    Serial.println(F("Party Modus -> Shuffle songs in folder"));
     currentTrack = random(1, numTracksInFolder + 1);
     mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_SINGLE:
-    Serial.println(
-        F("Einzel Modus -> eine Datei aus dem Odrdner abspielen"));
+    Serial.println(F("Single Mode -> Play single file from folder"));
     currentTrack = myCard.special;
     mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
