@@ -23,13 +23,6 @@
 #include "lib/voice_menu.h"
 #include "lib/mp3_init.h"
 
-// Tracks
-static uint16_t _lastTrackFinished;
-
-// Standby
-unsigned long standbyTimer = 5; // minutes
-unsigned long sleepAtMillis = 0; // miliseconds
-
 // MFRC522
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 MFRC522::MIFARE_Key key;
