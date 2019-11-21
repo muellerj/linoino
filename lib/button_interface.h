@@ -5,4 +5,4 @@ bool ignorePauseButton = false;
 bool ignoreUpButton = false;
 bool ignoreDownButton = false;
 
-void handleButtonPresses();
+void pollButtons();

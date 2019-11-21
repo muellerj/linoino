@@ -29,7 +29,7 @@ void setup() {
 
 void loop() {
   mp3.loop();
-  handleButtonPresses();
+  pollButtons();
   handleCardReader();
 }
 

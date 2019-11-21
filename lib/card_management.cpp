@@ -222,7 +222,6 @@ byte pollCard() {
     }
     return PCS_NO_CHANGE;
   } else {
-    // hasCard
     // perform a dummy read command just to see whether the card is in range
     byte buffer[18];
     byte size = sizeof(buffer);

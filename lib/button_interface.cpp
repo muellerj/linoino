@@ -1,4 +1,4 @@
-void handleButtonPresses() {
+void pollButtons() {
 
   pauseButton.read();
   upButton.read();
