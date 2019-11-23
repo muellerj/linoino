@@ -4,6 +4,7 @@ void pollButtons() {
   upButton.read();
   downButton.read();
 
+  // Pause button
   if (pauseButton.pressedFor(LONG_PRESS) && !ignorePauseButton) {
     if (isPlaying())
       mp3.playAdvertisement(currentTrack);
@@ -26,26 +27,30 @@ void pollButtons() {
     ignorePauseButton = false;
   }
 
+  // Up button
   if (upButton.pressedFor(LONG_PRESS)) {
-    Serial.println(F("Volume Up"));
-    mp3.increaseVolume();
+    nextTrack(random(65536));
     ignoreUpButton = true;
   } else if (upButton.wasReleased()) {
-    if (!ignoreUpButton)
-      nextTrack(random(65536));
-    else
+    if (!ignoreUpButton) {
+      Serial.println(F("Volume Up"));
+      mp3.increaseVolume();
+    } else {
       ignoreUpButton = false;
+    }
   }
 
+  // Down button
   if (downButton.pressedFor(LONG_PRESS)) {
-    Serial.println(F("Volume Down"));
-    mp3.decreaseVolume();
+    previousTrack();
     ignoreDownButton = true;
   } else if (downButton.wasReleased()) {
-    if (!ignoreDownButton)
-      previousTrack();
-    else
+    if (!ignoreDownButton) {
+      Serial.println(F("Volume Down"));
+      mp3.decreaseVolume();
+    } else {
       ignoreDownButton = false;
+    }
   }
 }
 
