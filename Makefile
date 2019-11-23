@@ -31,6 +31,10 @@ audio_messages:
 
 compile: $(OUT)
 
+monitor:
+	# Note that C-A C-\ exits screen
+	screen $(PORT) 115200
+
 upload: $(OUT)
 	@arduino-cli upload \
 		--fqbn $(BOARD) \
