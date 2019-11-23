@@ -3,7 +3,7 @@ all: upload
 BOARD=arduino:avr:nano:cpu=atmega328old
 PORT=/dev/cu.wchusbserialfd3140
 OUT=out/linuino
-SRC=linuino.ino
+SRC=linuino.ino lib/*.cpp lib/*.h
 
 RED=\033[0;31m
 GREEN=\033[0;32m
@@ -29,13 +29,15 @@ clean:
 audio_messages:
 	bin/create_audio_messages msg/audio_messages.txt
 
-compile: $(OUT)
+compile: $(OUT).hex
+
+$(OUT).hex: $(OUT).elf
 
 monitor:
 	# Note that C-A C-\ exits screen
 	screen $(PORT) 115200
 
-upload: $(OUT)
+upload: $(OUT).hex
 	@arduino-cli upload \
 		--fqbn $(BOARD) \
 		--port $(PORT) \
@@ -43,7 +45,7 @@ upload: $(OUT)
 		--verify \
 		.  && $(call ok, "UPLOAD")
 
-$(OUT): $(SRC)
+$(OUT).elf: $(SRC)
 	@mkdir -p out
 	@arduino-cli compile \
 		--fqbn $(BOARD) \
