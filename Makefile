@@ -1,7 +1,7 @@
 all: upload
 
 BOARD=arduino:avr:nano:cpu=atmega328old
-PORT=/dev/ttyACM0
+PORT=/dev/cu.wchusbserialfd3140
 OUT=out/linuino
 SRC=linuino.ino
 
