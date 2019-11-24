@@ -4,6 +4,8 @@ BOARD=arduino:avr:nano:cpu=atmega328old
 PORT=/dev/cu.wchusbserialfd3140
 OUT=out/linuino
 SRC=linuino.ino lib/*.cpp lib/*.h
+TC=/Volumes/tiggercloud/Linuino
+SDCARD=/Volumes/LINUINO
 
 RED=\033[0;31m
 GREEN=\033[0;32m
@@ -19,6 +21,10 @@ setup:
 
 dummycard:
 	bin/create_dummy_songs
+
+copy:
+	rsync -a --progress --exclude=".*" $(TC) $(SDCARD)
+	rm -rf $(SDCARD)/**/.*
 
 clean:
 	rm -rf tmp/*.aiff
