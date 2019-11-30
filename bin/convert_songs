@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ "$#" -ne 1 ] || ! [ -d "$1" ]; then
+  echo "Usage: $0 BASEDIR" >&2
+  exit 1
+fi
+
+basedir="$1"
+
+find "$basedir" -type f -name "*.m4a" | \
+  while read f; do
+    newname=$(bin/bestname $(dirname "$f")/$(basename "$f" ".m4a").mp3)
+    echo "Converting $f -> $newname"
+    ffmpeg -i "$f" -acodec libmp3lame -aq 2 "$newname"
+    rm -f "$f"
+  done
