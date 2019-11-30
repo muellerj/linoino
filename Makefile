@@ -19,8 +19,8 @@ endef
 setup:
 	bin/setup
 
-dummycard:
-	bin/create_dummy_songs
+dummysongs:
+	bin/create_dummy_songs $(TC)
 
 convert:
 	@find tmp/a -type f -name "*.m4a" | \
@@ -42,7 +42,7 @@ clean:
 	rm -rf out
 
 audio_messages:
-	bin/create_audio_messages msg/audio_messages.txt
+	bin/create_audio_messages $(TC) msg/audio_messages.txt
 
 compile: $(OUT).hex
 

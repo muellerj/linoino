@@ -1,11 +1,18 @@
 #!/bin/sh
 
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 BASEFOLDER" >&2
+  exit 1
+fi
+
+dir=$1
+
 for i in {1..5}; do
   folder=$(printf "%02d" $i)
   for j in {1..5}; do
     file=$(printf "%03d" $j).mp3
     text="Ordner $i - Datei $j"
-    echo "Creating $folder/$file: '$text'"
-    build_soundfile "$folder/$file" "$text"
+    echo "Creating $dir/$folder/$file: '$text'"
+    build_soundfile "$dir/$folder/$file" "$text"
   done
 done
