@@ -9,7 +9,8 @@ ALLOWED_CHARS="a-zA-z0-9\-_."
 DIR=$(dirname "$1")
 NAME=$(basename "$1" ".*" | \
   tr '[:upper:]' '[:lower:]' | \
-  sed "s/[^${ALLOWED_CHARS}]/_/g")
+  sed "s/[^${ALLOWED_CHARS}]/_/g" | \
+  sed "s/^\d\+_*//")
 
 i=1
 name="$(printf "%04d" $i)_${NAME}"
@@ -19,4 +20,4 @@ while [ -f "$DIR/$name" ]; do
   name="$(printf "%04d" $i)_${NAME}"
 done
 
-echo "--> $DIR/$name"
+echo "${DIR}/${name}"

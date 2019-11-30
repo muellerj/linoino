@@ -22,8 +22,17 @@ setup:
 dummycard:
 	bin/create_dummy_songs
 
+convert:
+	@find tmp/a -type f -name "*.m4a" | \
+		while read f; do \
+			newname=$$(bin/bestname "$$(dirname "$$f")/$$(basename "$$f" ".m4a").mp3"); \
+			echo "Converting $$f -> $$newname"; \
+			ffmpeg -i "$$f" -acodec libmp3lame -aq 2 "$$newname"; \
+			rm -f "$$f"; \
+		done
+
 copy:
-	rsync -a --progress --exclude=".*" $(TC) $(SDCARD)
+	rsync -zarv --progress --include="*/" --include="*.mp3" --exclude="*" $(TC)/ $(SDCARD)/
 	rm -rf $(SDCARD)/**/.*
 
 clean:
