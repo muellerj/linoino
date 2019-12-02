@@ -18,10 +18,10 @@ void resetProgress() {
 }
 
 void nextTrack(uint16_t track) {
-  if (track == _lastTrackFinished)
+  if (track == lastTrackFinished)
     return;
 
-  _lastTrackFinished = track;
+  lastTrackFinished = track;
    
   // Return early if card is unknown
   if (knownCard == false)

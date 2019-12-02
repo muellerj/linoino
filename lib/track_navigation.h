@@ -2,7 +2,7 @@
 SoftwareSerial mySoftwareSerial(2, 3); // RX, TX
 uint16_t numTracksInFolder;
 uint16_t currentTrack;
-uint16_t _lastTrackFinished;
+uint16_t lastTrackFinished;
 
 
 bool isPlaying();
