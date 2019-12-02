@@ -4,7 +4,8 @@
  *   - SINGLE (play a single given file from one folder, then stop)
  *   - RANDOM (play a single random file from one folder, then stop)
  *   - ALBUM (play all files from one folder in order, stop at end)
- *   - SHUFFLE (play all files from one folder randomly, never stop)
+ *   - BOOK  (play all files from one folder in order, save progress, stop at end)
+ *   - PARTY (play all files from one folder randomly, never stop)
  *
  */
 
@@ -183,35 +184,30 @@ void handleKnownCard() {
   case MODE_RANDOM:
     Serial.println(F("Mode random -> Play random track"));
     currentTrack = random(1, numTracksInFolder + 1);
-    Serial.println(currentTrack);
-    mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_ALBUM:
-    Serial.println(F("Album Modus -> kompletten Ordner wiedergeben"));
+    Serial.println(F("Mode album -> Play entire folder"));
     currentTrack = 1;
-    mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_PARTY:
-    Serial.println(F("Party Modus -> Shuffle songs in folder"));
+    Serial.println(F("Mode party -> Shuffle songs in folder"));
     currentTrack = random(1, numTracksInFolder + 1);
-    mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_SINGLE:
-    Serial.println(F("Single Mode -> Play single file from folder"));
+    Serial.println(F("Mode single -> Play single file from folder"));
     currentTrack = myCard.special;
-    mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_BOOK:
-    Serial.println(F("Hörbuch Modus -> kompletten Ordner spielen und "
-                      "Fortschritt merken"));
+    Serial.println(F("Mode book -> Play entire folder and save progress"));
     currentTrack = EEPROM.read(myCard.folder);
-    mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
   }
+
+  mp3.playFolderTrack(myCard.folder, currentTrack);
 }
 
 byte pollCard() {
