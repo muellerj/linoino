@@ -1,3 +1,13 @@
+/*
+ * Card types:
+ *
+ *   - SINGLE (play a single given file from one folder, then stop)
+ *   - RANDOM (play a single random file from one folder, then stop)
+ *   - ALBUM (play all files from one folder in order, stop at end)
+ *   - SHUFFLE (play all files from one folder randomly, never stop)
+ *
+ */
+
 void resetCard() {
   do {
     pauseButton.read();
@@ -170,8 +180,8 @@ void handleKnownCard() {
   Serial.println(myCard.folder);
 
   switch(myCard.mode) {
-  case MODE_HOERSPIEL:
-    Serial.println(F("Hörspielmodus -> zufälligen Track wiedergeben"));
+  case MODE_RANDOM:
+    Serial.println(F("Mode random -> Play random track"));
     currentTrack = random(1, numTracksInFolder + 1);
     Serial.println(currentTrack);
     mp3.playFolderTrack(myCard.folder, currentTrack);

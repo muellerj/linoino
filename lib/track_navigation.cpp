@@ -29,8 +29,8 @@ void nextTrack(uint16_t track) {
     return;
 
   switch(myCard.mode) {
-  case MODE_HOERSPIEL:
-    Serial.println(F("Hörspielmodus active -> keinen neuen Track spielen"));
+  case MODE_RANDOM:
+    Serial.println(F("Mode random -> stop"));
     break;
 
   case MODE_ALBUM:
@@ -70,8 +70,8 @@ void nextTrack(uint16_t track) {
 
 void previousTrack() {
   switch(myCard.mode) {
-  case MODE_HOERSPIEL:
-    Serial.println(F("Hörspiel mode active -> Track von vorne spielen"));
+  case MODE_RANDOM:
+    Serial.println(F("Mode random -> Play track again"));
     mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 

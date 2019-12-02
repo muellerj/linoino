@@ -22,7 +22,7 @@ const byte PCS_NEW_CARD      = 1; // card with new UID detected (had no card or 
 const byte PCS_CARD_GONE     = 2; // card is not reachable anymore
 const byte PCS_CARD_IS_BACK  = 3; // card was gone, and is now back again
 
-const byte MODE_HOERSPIEL = 1;
+const byte MODE_RANDOM    = 1;
 const byte MODE_ALBUM     = 2;
 const byte MODE_PARTY     = 3;
 const byte MODE_SINGLE    = 4;
