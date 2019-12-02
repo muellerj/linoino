@@ -1,8 +1,11 @@
-void pollButtons() {
-
+void readButtons() {
   pauseButton.read();
   upButton.read();
   downButton.read();
+}
+
+void pollButtons() {
+  readButtons();
 
   // Pause button
   if (pauseButton.pressedFor(LONG_PRESS) && !ignorePauseButton) {

@@ -11,9 +11,7 @@
 
 void resetCard() {
   do {
-    pauseButton.read();
-    upButton.read();
-    downButton.read();
+    readButtons();
 
     if (upButton.wasReleased() || downButton.wasReleased()) {
       Serial.print(F("Aborted!"));

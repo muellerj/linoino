@@ -18,12 +18,6 @@ int changeOption(int i, int delta, int optMin, int optMax, int previewFolder) {
   return i;
 }
 
-void readButtons() {
-  pauseButton.read();
-  upButton.read();
-  downButton.read();
-}
-
 int promptUserSelection(int question, int optMin, int optMax, 
                         int previewFolder=-1) {
   int returnValue = 0;
