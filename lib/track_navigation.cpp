@@ -23,8 +23,7 @@ void nextTrack(uint16_t track) {
 
   _lastTrackFinished = track;
    
-  // Wenn eine neue Karte angelernt wird soll das Ende eines Tracks nicht
-  // verarbeitet werden
+  // Return early if card is unknown
   if (knownCard == false)
     return;
 
@@ -33,32 +32,28 @@ void nextTrack(uint16_t track) {
     Serial.println(F("Mode random -> stop"));
     break;
 
+  case MODE_SINGLE:
+    Serial.println(F("Mode single -> stop"));
+    break;
+
   case MODE_ALBUM:
-    if (currentTrack != numTracksInFolder) {
+    if (currentTrack < numTracksInFolder) {
       currentTrack = currentTrack + 1;
+      Serial.print(sprintf("Mode album -> next track: %d", currentTrack));
       mp3.playFolderTrack(myCard.folder, currentTrack);
-      Serial.print(F("Albummodus active -> next track: "));
-      Serial.print(currentTrack);
     }
     break;
 
   case MODE_PARTY:
-    uint16_t oldTrack = currentTrack;
     currentTrack = newRandomTrack(numTracksInFolder);
-    Serial.print(F("Party mode active -> play random track: "));
-    Serial.println(currentTrack);
+    Serial.print(sprintf("Mode party -> next random track: %d", currentTrack));
     mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
-  case MODE_SINGLE:
-    Serial.println(F("Einzel mode active -> Strom sparen"));
-    break;
-
   case MODE_BOOK:
-    if (currentTrack != numTracksInFolder) {
+    if (currentTrack < numTracksInFolder) {
       currentTrack = currentTrack + 1;
-      Serial.println(F("Hörbuch mode active-> next track and save progress"));
-      Serial.println(currentTrack);
+      Serial.print(sprintf("Mode book -> next track (saved): %d", currentTrack));
       mp3.playFolderTrack(myCard.folder, currentTrack);
       saveProgress();
     } else {
@@ -71,29 +66,29 @@ void nextTrack(uint16_t track) {
 void previousTrack() {
   switch(myCard.mode) {
   case MODE_RANDOM:
-    Serial.println(F("Mode random -> Play track again"));
+    Serial.println(F("Mode random -> play track again"));
     mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_ALBUM:
-    Serial.println(F("Album mode active -> vorheriger Track"));
     currentTrack = max(currentTrack - 1, 1);
+    Serial.println(F("Mode album -> previous track"));
     mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_PARTY:
-    Serial.println(F("Party mode active -> Track von vorne spielen"));
+    Serial.println(F("Party mode -> Replay current track"));
     mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_SINGLE:
-    Serial.println(F("Einzel mode active -> Track von vorne spielen"));
+    Serial.println(F("Mode single-> Replay current track"));
     mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_BOOK:
-    Serial.println(F("Hörbuch mode active-> previous track and save progress"));
     currentTrack = max(currentTrack - 1, 1);
+    Serial.println(F("Mode book -> previous track (saved)"));
     mp3.playFolderTrack(myCard.folder, currentTrack);
     saveProgress();
     break;
