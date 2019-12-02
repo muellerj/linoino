@@ -40,7 +40,7 @@ void setupCard() {
   myCard.mode = voiceMenu(6, 310, 310);
 
   // Hörbuchmodus -> Fortschritt im EEPROM auf 1 setzen
-  EEPROM.write(myCard.folder, 1);
+  resetProgress();
 
   // Einzelmodus -> Datei abfragen
   if (myCard.mode == MODE_SINGLE)
