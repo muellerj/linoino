@@ -1,17 +1,24 @@
+# New card setup
 mp3/0300_new_tag.mp3|Oh, eine neue Karte! Verwende die Lautstärke Tasten um einen Ordner für die Karte auszuwählen. Drücke die Pause Taste um die Auswahl zu speichern.
 mp3/0310.mp3|OK, ich habe die Karte mit dem Ordner verknüpft. Wähle nun mit den Lautstärke Tasten den Wiedergabemodus aus.
-mp3/0311_mode_random_episode.mp3|Hörspielmodus: Eine zufällige Datei aus dem Ordner wiedergeben
+
+# Modes
+mp3/0311_mode_random.mp3|Randommodus: Eine zufällige Datei aus dem Ordner wiedergeben
 mp3/0312_mode_album.mp3|Albummodus: Den kompletten Ordner wiedergeben
 mp3/0313_mode_party.mp3|Party Modus: Ordner zufällig wiedergeben.
 mp3/0314_mode_single_track.mp3|Einzel Modus: Eine bestimmte Datei im Ordner wiedergeben.
 mp3/0315_mode_audio_book.mp3|Hörbuch Modus: Einen Ordner wiedergeben und den Fortschritt speichern.
 mp3/0316_admin.mp3|Admin Funktionen.
+
+# File selection
 mp3/0320_select_file.mp3|OK, wähle nun bitte die Datei mit den Lautstärke Tasten aus. 
 mp3/0330.mp3|Soll ich vor einer Datei jeweils die Nummer ansagen? Du kannst jederzeit durch einen langen Druck auf die Pause Taste die aktuelle Nummer abfragen.
 mp3/0331.mp3|Nein, Nummer nicht ansagen.
 mp3/0332.mp3|Ja, Nummer ansagen.
 mp3/0400_ok.mp3|OK. Ich habe die Karte konfiguriert.
 mp3/0401_error.mp3|Oh weh! Das hat leider nicht geklappt!.
+
+# Card reset
 mp3/0800_reset_tag.mp3|Bitte lege die zu löschende Karte auf! Zum Abbrechen einfach eine der Lautstärke Tasten drücken!
 mp3/0801_reset_tag_ok.mp3|OK, du kannst den Tag nun wieder neu konfigurieren.
 mp3/0802_reset_aborted.mp3|OK, ich habe den Vorgang abgebrochen.

@@ -8,7 +8,8 @@ fi
 basedir=$1
 
 cat $2 | \
-  grep -v "^#" | \
+  grep -v -e "^#" | \
+  grep -v -e '^[[:space:]]*$' | \
   while read line; do
     path="$(echo "$line" | cut -d "|" -f 1)"
     text="$(echo "$line" | cut -d "|" -f 2)"
