@@ -15,9 +15,13 @@ byte lastCardUid[4];
 byte retries;
 bool lastCardWasUL;
 
+uint8_t lastCardPoll = 0;
+
 const byte maxRetries = 2;
 
 uint8_t numberOfCards = 0;
+
+const uint8_t minPollInterval = 100;
 
 const byte PCS_NO_CHANGE     = 0; // no change detected since last pollCard() call
 const byte PCS_NEW_CARD      = 1; // card with new UID detected (had no card or other card before)

@@ -246,12 +246,11 @@ byte pollCard() {
 }
 
 void handleCardReader() {
-  // poll card only every 100ms
-  static uint8_t lastCardPoll = 0;
   uint8_t now = millis();
 
-  if (static_cast<uint8_t>(now - lastCardPoll) > 100) {
+  if (static_cast<uint8_t>(now - lastCardPoll) > minPollInterval) {
     lastCardPoll = now;
+
     switch (pollCard()) {
     case PCS_NEW_CARD:
       onNewCard();
