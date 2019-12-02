@@ -180,30 +180,30 @@ void handleKnownCard() {
   Serial.println(myCard.folder);
 
   switch(myCard.mode) {
-  case MODE_RANDOM:
-    Serial.println(F("Mode random -> Play random track"));
-    currentTrack = random(1, numTracksInFolder + 1);
-    break;
+    case MODE_RANDOM:
+      Serial.println(F("Mode random -> Play random track"));
+      currentTrack = random(1, numTracksInFolder + 1);
+      break;
 
-  case MODE_ALBUM:
-    Serial.println(F("Mode album -> Play entire folder"));
-    currentTrack = 1;
-    break;
+    case MODE_ALBUM:
+      Serial.println(F("Mode album -> Play entire folder"));
+      currentTrack = 1;
+      break;
 
-  case MODE_PARTY:
-    Serial.println(F("Mode party -> Shuffle songs in folder"));
-    currentTrack = random(1, numTracksInFolder + 1);
-    break;
+    case MODE_PARTY:
+      Serial.println(F("Mode party -> Shuffle songs in folder"));
+      currentTrack = random(1, numTracksInFolder + 1);
+      break;
 
-  case MODE_SINGLE:
-    Serial.println(F("Mode single -> Play single file from folder"));
-    currentTrack = myCard.special;
-    break;
+    case MODE_SINGLE:
+      Serial.println(F("Mode single -> Play single file from folder"));
+      currentTrack = myCard.special;
+      break;
 
-  case MODE_BOOK:
-    Serial.println(F("Mode book -> Play entire folder and save progress"));
-    currentTrack = EEPROM.read(myCard.folder);
-    break;
+    case MODE_BOOK:
+      Serial.println(F("Mode book -> Play entire folder and save progress"));
+      currentTrack = EEPROM.read(myCard.folder);
+      break;
   }
 
   mp3.playFolderTrack(myCard.folder, currentTrack);
@@ -230,7 +230,7 @@ byte pollCard() {
 
     if (mfrc522.MIFARE_Read(lastCardWasUL ? 8 : blockAddr, buffer, &size) != MFRC522::STATUS_OK) {
       if (retries < maxRetries) {
-          retries++;
+        retries++;
       } else {
           Serial.println(F("card gone"));
           mfrc522.PICC_HaltA();
@@ -239,7 +239,7 @@ byte pollCard() {
           return PCS_CARD_GONE;
       }
     } else {
-        retries = 0;
+      retries = 0;
     }
   }
   return PCS_NO_CHANGE;
@@ -252,19 +252,19 @@ void handleCardReader() {
     lastCardPoll = now;
 
     switch (pollCard()) {
-    case PCS_NEW_CARD:
-      onNewCard();
-      break;
+      case PCS_NEW_CARD:
+        onNewCard();
+        break;
 
-    case PCS_CARD_GONE:
-      mp3.pause();
-      setstandbyTimer();
-      break;
+      case PCS_CARD_GONE:
+        mp3.pause();
+        setstandbyTimer();
+        break;
 
-    case PCS_CARD_IS_BACK:
-      mp3.start();
-      disablestandbyTimer();
-      break;
+      case PCS_CARD_IS_BACK:
+        mp3.start();
+        disablestandbyTimer();
+        break;
     }
   }
 }
