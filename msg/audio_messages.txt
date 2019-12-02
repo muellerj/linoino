@@ -8,7 +8,6 @@ mp3/0312_mode_album.mp3|Albummodus: Den kompletten Ordner wiedergeben
 mp3/0313_mode_party.mp3|Party Modus: Ordner zufällig wiedergeben.
 mp3/0314_mode_single_track.mp3|Einzel Modus: Eine bestimmte Datei im Ordner wiedergeben.
 mp3/0315_mode_audio_book.mp3|Hörbuch Modus: Einen Ordner wiedergeben und den Fortschritt speichern.
-mp3/0316_admin.mp3|Admin Funktionen.
 
 # File selection
 mp3/0320_select_file.mp3|OK, wähle nun bitte die Datei mit den Lautstärke Tasten aus. 

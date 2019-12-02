@@ -37,7 +37,7 @@ void setupCard() {
   myCard.folder = voiceMenu(99, 300, 0, true);
 
   // Wiedergabemodus abfragen
-  myCard.mode = voiceMenu(6, 310, 310);
+  myCard.mode = voiceMenu(5, 310, 310);
 
   // Hörbuchmodus -> Fortschritt im EEPROM auf 1 setzen
   resetProgress();
@@ -46,10 +46,6 @@ void setupCard() {
   if (myCard.mode == MODE_SINGLE)
     myCard.special = voiceMenu(mp3.getFolderTrackCount(myCard.folder), 320, 0,
                                true, myCard.folder);
-
-  // Admin Funktionen
-  if (myCard.mode == MODE_ADMIN)
-    myCard.special = voiceMenu(3, 320, 320);
 
   // Karte ist konfiguriert -> speichern
   mp3.pause();
