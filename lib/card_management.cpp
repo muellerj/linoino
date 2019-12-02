@@ -210,18 +210,15 @@ void handleKnownCard() {
 }
 
 byte pollCard() {
-  const byte maxRetries = 2;
-
   if (!hasCard) {
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial() && readCard(&myCard)) {
       bool bSameUID = !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
-      Serial.print(F("IsSameAsLastUID="));
-      Serial.println(bSameUID);
+      Serial.print(sprintf("Same card: %d", bSameUID ? "true" : "false"));
       // store info about current card
       memcpy(lastCardUid, mfrc522.uid.uidByte, 4);
       lastCardWasUL = mfrc522.PICC_GetType(mfrc522.uid.sak) == MFRC522::PICC_TYPE_MIFARE_UL;
 
-      retries = maxRetries;
+      retries = 0;
       hasCard = true;
       return bSameUID ? PCS_CARD_IS_BACK : PCS_NEW_CARD;
     }
@@ -232,8 +229,8 @@ byte pollCard() {
     byte size = sizeof(buffer);
 
     if (mfrc522.MIFARE_Read(lastCardWasUL ? 8 : blockAddr, buffer, &size) != MFRC522::STATUS_OK) {
-      if (retries > 0) {
-          retries--;
+      if (retries < maxRetries) {
+          retries++;
       } else {
           Serial.println(F("card gone"));
           mfrc522.PICC_HaltA();
@@ -242,7 +239,7 @@ byte pollCard() {
           return PCS_CARD_GONE;
       }
     } else {
-        retries = maxRetries;
+        retries = 0;
     }
   }
   return PCS_NO_CHANGE;

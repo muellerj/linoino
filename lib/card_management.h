@@ -15,6 +15,8 @@ byte lastCardUid[4];
 byte retries;
 bool lastCardWasUL;
 
+const byte maxRetries = 2;
+
 uint8_t numberOfCards = 0;
 
 const byte PCS_NO_CHANGE     = 0; // no change detected since last pollCard() call
