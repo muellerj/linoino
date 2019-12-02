@@ -67,30 +67,27 @@ void previousTrack() {
   switch(myCard.mode) {
   case MODE_RANDOM:
     Serial.println(F("Mode random -> play track again"));
-    mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_ALBUM:
     currentTrack = max(currentTrack - 1, 1);
     Serial.println(F("Mode album -> previous track"));
-    mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_PARTY:
     Serial.println(F("Party mode -> Replay current track"));
-    mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_SINGLE:
     Serial.println(F("Mode single-> Replay current track"));
-    mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_BOOK:
     currentTrack = max(currentTrack - 1, 1);
     Serial.println(F("Mode book -> previous track (saved)"));
-    mp3.playFolderTrack(myCard.folder, currentTrack);
     saveProgress();
     break;
   }
+
+  mp3.playFolderTrack(myCard.folder, currentTrack);
 }

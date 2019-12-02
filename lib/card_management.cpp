@@ -176,8 +176,7 @@ void onNewCard() {
 void handleKnownCard() {
   lastTrackFinished = 0;
   numTracksInFolder = mp3.getFolderTrackCount(myCard.folder);
-  Serial.print(numTracksInFolder);
-  Serial.print(F("Files in folder:"));
+  Serial.print(sprintf("%d files in folder:", numTracksInFolder));
   Serial.println(myCard.folder);
 
   switch(myCard.mode) {
