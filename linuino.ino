@@ -15,6 +15,7 @@
 #include <SoftwareSerial.h>
 #include <avr/sleep.h>
 
+#include "lib/debug.h"
 #include "lib/setup.h"
 #include "lib/standby.h"
 #include "lib/button_interface.h"
@@ -33,6 +34,7 @@ void loop() {
   handleCardReader();
 }
 
+#include "lib/debug.cpp"
 #include "lib/setup.cpp"
 #include "lib/standby.cpp"
 #include "lib/button_interface.cpp"
