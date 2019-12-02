@@ -1,59 +1,49 @@
-void previewSelection(int previewFromFolder, int returnValue) {
-  do {
-    delay(10);
-  } while (isPlaying());
-  if (previewFromFolder == 0)
-    mp3.playFolderTrack(returnValue, 1);
-  else
-    mp3.playFolderTrack(previewFromFolder, returnValue);
+void previewSelection(int folder, int track) {
+  if (folder == -1) return;
+  do { delay(10); } while (isPlaying());
+
+  if (folder == 0) {
+    folder = track;
+    track = 1;
+  }
+
+  mp3.playFolderTrack(folder, track);
 }
 
-int changeOption(int returnValue, int delta, int numberOfOptions, 
-                 int messageOffset, bool preview, int previewFromFolder) {
-  if (delta > 0) {
-    returnValue = min(returnValue + delta, numberOfOptions);
-  } else {
-    returnValue = max(returnValue + delta, 1);
-  }
-  mp3.playMp3FolderTrack(messageOffset + returnValue);
+int changeOption(int i, int delta, int optMin, int optMax, int previewFolder) {
+  i = delta > 0 ? min(i + delta, optMax - optMin + 1) : max(i + delta, 1);
+  mp3.playMp3FolderTrack((optMin - 1) + i);
   delay(1000);
-  if (preview)
-    previewSelection(previewFromFolder, returnValue);
-  return returnValue;
+  previewSelection(previewFolder, i);
+  return i;
 }
 
-int voiceMenu(int numberOfOptions, int startMessage, int messageOffset,
-              bool preview = false, int previewFromFolder = 0) {
+void readButtons() {
+  pauseButton.read();
+  upButton.read();
+  downButton.read();
+}
 
+int promptUserSelection(int question, int optMin, int optMax, 
+                        int previewFolder=-1) {
   int returnValue = 0;
-
-  if (startMessage != 0) {
-    mp3.playMp3FolderTrack(startMessage);
-  }
+  mp3.playMp3FolderTrack(question);
 
   while(true) {
 
-    pauseButton.read();
-    upButton.read();
-    downButton.read();
-
+    readButtons();
     mp3.loop();
 
-    // Pause button
-    if (pauseButton.wasPressed()) {
-      if (returnValue != 0) return returnValue;
-      delay(1000);
-    }
+    // Confirm selection
+    if (pauseButton.wasPressed() && returnValue != 0) return returnValue;
 
     // Up button
     if (upButton.pressedFor(LONG_PRESS)) {
-      returnValue = changeOption(returnValue, 10, numberOfOptions, 
-                                 messageOffset, preview, previewFromFolder);
+      returnValue = changeOption(returnValue, +10, optMin, optMax, previewFolder);
       ignoreUpButton = true;
     } else if (upButton.wasReleased()) {
       if (!ignoreUpButton) {
-        returnValue = changeOption(returnValue, 1, numberOfOptions, 
-                                   messageOffset, preview, previewFromFolder);
+      returnValue = changeOption(returnValue, +1, optMin, optMax, previewFolder);
       } else {
         ignoreUpButton = false;
       }
@@ -61,13 +51,11 @@ int voiceMenu(int numberOfOptions, int startMessage, int messageOffset,
     
     // Down button
     if (downButton.pressedFor(LONG_PRESS)) {
-      returnValue = changeOption(returnValue, -10, numberOfOptions, 
-                                 messageOffset, preview, previewFromFolder);
+      returnValue = changeOption(returnValue, -10, optMin, optMax, previewFolder);
       ignoreDownButton = true;
     } else if (downButton.wasReleased()) {
       if (!ignoreDownButton) {
-        returnValue = changeOption(returnValue, -1, numberOfOptions, 
-                                   messageOffset, preview, previewFromFolder);
+      returnValue = changeOption(returnValue, -1, optMin, optMax, previewFolder);
       } else {
         ignoreDownButton = false;
       }

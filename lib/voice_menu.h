@@ -1,2 +1,1 @@
-int voiceMenu(int numberOfOptions, int startMessage, int messageOffset,
-              bool preview = false, int previewFromFolder = 0);
+int promptUserSelection(int question, int optMin, int optMax, int previewFolder=-1);

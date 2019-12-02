@@ -34,20 +34,21 @@ void setupCard() {
   Serial.print(F("Configure new card"));
 
   // Ordner abfragen
-  myCard.folder = voiceMenu(99, 300, 0, true);
+  myCard.folder = promptUserSelection(300, 1, 99, 0);
 
   // Wiedergabemodus abfragen
-  myCard.mode = voiceMenu(5, 310, 310);
+  myCard.mode = promptUserSelection(310, 311, 315, -1);
 
   // Hörbuchmodus -> Fortschritt im EEPROM auf 1 setzen
   resetProgress();
 
   // Einzelmodus -> Datei abfragen
-  if (myCard.mode == MODE_SINGLE)
-    myCard.special = voiceMenu(mp3.getFolderTrackCount(myCard.folder), 320, 0,
-                               true, myCard.folder);
+  if (myCard.mode == MODE_SINGLE) {
+    int folderCount = mp3.getFolderTrackCount(myCard.folder);
+    myCard.special = promptUserSelection(320, 1, folderCount, myCard.folder);  
+  }
 
-  // Karte ist konfiguriert -> speichern
+  // Save settings
   mp3.pause();
   writeCard(myCard);
 }
