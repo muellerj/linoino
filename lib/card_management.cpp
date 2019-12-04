@@ -246,27 +246,3 @@ byte pollCard() {
   }
   return PCS_NO_CHANGE;
 }
-
-void handleCardReader() {
-  uint8_t now = millis();
-
-  if (static_cast<uint8_t>(now - lastCardPoll) > minPollInterval) {
-    lastCardPoll = now;
-
-    switch (pollCard()) {
-      case PCS_NEW_CARD:
-        onNewCard();
-        break;
-
-      case PCS_CARD_GONE:
-        mp3.pause();
-        setstandbyTimer();
-        break;
-
-      case PCS_CARD_IS_BACK:
-        mp3.start();
-        disablestandbyTimer();
-        break;
-    }
-  }
-}

@@ -40,7 +40,18 @@ void loop() {
     case BTN_DOWN_SHORTPRESS:  volumeDown(); break;
   }
 
-  handleCardReader();
+  uint8_t now = millis();
+  uint8_t timeGone = static_cast<uint8_t>(now - lastCardPoll);
+
+  if (timeGone > minPollInterval) {
+    lastCardPoll = now;
+
+    switch (pollCard()) {
+      case PCS_NEW_CARD:     onNewCard(); break;
+      case PCS_CARD_GONE:    pausePlayback(); setstandbyTimer(); break;
+      case PCS_CARD_IS_BACK: startPlayback(); disablestandbyTimer(); break;
+    }
+  }
 }
 
 #include "lib/debug.cpp"

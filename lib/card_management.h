@@ -43,11 +43,10 @@ byte blockAddr = 4;
 byte trailerBlock = 7;
 MFRC522::StatusCode status;
 
-void dump_byte_array(byte *buffer, byte bufferSize);
+void onNewCard();
 void resetCard();
 void setupCard();
 bool readCard(nfcTagObject *nfcTag);
 void writeCard(nfcTagObject nfcTag);
 void handleKnownCard();
-void handleCardReader();
 byte pollCard();
