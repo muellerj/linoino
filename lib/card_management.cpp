@@ -10,13 +10,18 @@
  */
 
 void resetCard() {
-  do {
-    readButtons();
+  Serial.println(F("Reset card..."));
+  knownCard = false;
+  mp3.playMp3FolderTrack(800);
 
-    if (upButton.wasReleased() || downButton.wasReleased()) {
-      Serial.print(F("Aborted!"));
-      mp3.playMp3FolderTrack(802);
-      return;
+  do {
+    switch(pollButtons()) {
+      case BTN_UP_SHORTPRESS: 
+      case BTN_DOWN_SHORTPRESS:
+        Serial.print(F("Aborted!"));
+        mp3.playMp3FolderTrack(802);
+        return;
+      break;
     }
   } while (!mfrc522.PICC_IsNewCardPresent());
 
@@ -25,6 +30,8 @@ void resetCard() {
 
   Serial.print(F("Reconfiguring card!"));
   setupCard();
+  mfrc522.PICC_HaltA();
+  mfrc522.PCD_StopCrypto1();
 }
 
 void setupCard() {

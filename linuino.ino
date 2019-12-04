@@ -30,7 +30,16 @@ void setup() {
 
 void loop() {
   mp3.loop();
-  pollButtons();
+
+  switch(pollButtons()) {
+    case BTN_PAUSE_LONGPRESS:  isPlaying() ? playAdvert() : resetCard(); break;
+    case BTN_PAUSE_SHORTPRESS: isPlaying() ? pausePlayback() : startPlayback(); break;
+    case BTN_UP_LONGPRESS:     nextTrack(random(65536)); break;
+    case BTN_UP_SHORTPRESS:    volumeUp(); break;
+    case BTN_DOWN_LONGPRESS:   previousTrack(); break;
+    case BTN_DOWN_SHORTPRESS:  volumeDown(); break;
+  }
+
   handleCardReader();
 }
 

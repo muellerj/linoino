@@ -17,6 +17,18 @@ void resetProgress() {
   EEPROM.write(myCard.folder, 1);
 }
 
+void playAdvert() {
+  mp3.playAdvertisement(currentTrack);
+}
+
+void pausePlayback() {
+  mp3.pause();
+}
+
+void startPlayback() {
+  mp3.start();
+}
+
 void nextTrack(uint16_t track) {
   if (track == lastTrackFinished)
     return;
