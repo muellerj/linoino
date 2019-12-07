@@ -56,6 +56,7 @@ void setupCard() {
   // Save settings
   mp3.pause();
   writeCard(myCard);
+  handleKnownCard();
 }
 
 bool readCard(nfcTagObject *nfcTag) {
