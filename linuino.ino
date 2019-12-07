@@ -21,6 +21,7 @@
 #include "lib/button_interface.h"
 #include "lib/track_navigation.h"
 #include "lib/card_management.h"
+#include "lib/volume_settings.h"
 #include "lib/voice_menu.h"
 #include "lib/mp3_init.h"
 
@@ -60,4 +61,5 @@ void loop() {
 #include "lib/button_interface.cpp"
 #include "lib/voice_menu.cpp"
 #include "lib/card_management.cpp"
+#include "lib/volume_settings.cpp"
 #include "lib/track_navigation.cpp"

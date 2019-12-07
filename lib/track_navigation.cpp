@@ -1,6 +1,4 @@
-bool isPlaying() { 
-  return !digitalRead(busyPin); 
-}
+bool isPlaying() { return !digitalRead(busyPin); }
 
 uint16_t newRandomTrack(uint16_t numTracksInFolder) {
   uint16_t newTrack = random(1, numTracksInFolder + 1);
@@ -9,25 +7,12 @@ uint16_t newRandomTrack(uint16_t numTracksInFolder) {
   return newTrack;
 }
 
-void saveProgress() {
-  EEPROM.write(myCard.folder, currentTrack);
-}
+void saveProgress()  { EEPROM.write(myCard.folder, currentTrack); }
+void resetProgress() { EEPROM.write(myCard.folder, 1); }
 
-void resetProgress() {
-  EEPROM.write(myCard.folder, 1);
-}
-
-void playAdvert() {
-  mp3.playAdvertisement(currentTrack);
-}
-
-void pausePlayback() {
-  mp3.pause();
-}
-
-void startPlayback() {
-  mp3.start();
-}
+void playAdvert() { mp3.playAdvertisement(currentTrack); }
+void pausePlayback() { mp3.pause(); }
+void startPlayback() { mp3.start(); }
 
 void nextTrack(uint16_t track) {
   if (track == lastTrackFinished)
@@ -69,6 +54,8 @@ void nextTrack(uint16_t track) {
       mp3.playFolderTrack(myCard.folder, currentTrack);
       saveProgress();
     } else {
+      currentTrack = 1;
+      printf("Mode book -> end, resetting track to 1\n");
       resetProgress();
     }
     break;

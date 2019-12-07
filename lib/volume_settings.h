@@ -1,0 +1,2 @@
+void volumeUp();
+void volumeDown();

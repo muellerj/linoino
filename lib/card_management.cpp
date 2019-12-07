@@ -28,7 +28,6 @@ void resetCard() {
   if (!mfrc522.PICC_ReadCardSerial())
     return;
 
-  printf("Reconfiguring card!\n");
   setupCard();
   mp3.playMp3FolderTrack(999);
   memcpy(lastCardUid, 0, 4);
