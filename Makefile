@@ -27,7 +27,7 @@ convert:
 
 copy:
 	rsync -zarv --progress --include="*/" --include="*.mp3" --exclude="*" $(TC)/ $(SDCARD)/
-	rm -rf $(SDCARD)/**/.*
+	find $(SDCARD) -name '.*' | xargs rm -rf
 
 clean:
 	rm -rf tmp/*.aiff
