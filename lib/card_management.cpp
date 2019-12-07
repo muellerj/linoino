@@ -30,6 +30,7 @@ void resetCard() {
 
   printf("Reconfiguring card!\n");
   setupCard();
+  mp3.playMp3FolderTrack(999);
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();
 }
@@ -56,7 +57,6 @@ void setupCard() {
   // Save settings
   mp3.pause();
   writeCard(myCard);
-  handleKnownCard();
 }
 
 bool readCard(nfcTagObject *nfcTag) {
