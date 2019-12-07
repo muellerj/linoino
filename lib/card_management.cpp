@@ -93,10 +93,11 @@ bool readCard(nfcTagObject *nfcTag) {
     returnValue = false;
     printf("MIFARE_Read() failed: %d\n", mfrc522.GetStatusCodeName(status));
   }
-  printf("Data in block %d:", blockAddr);
-  dump_byte_array(buffer, 16);
-  printf("\n");
-  printf("\n");
+
+  // printf("Data in block %d:", blockAddr);
+  // dump_byte_array(buffer, 16);
+  // printf("\n");
+  // printf("\n");
 
   uint32_t tempCookie;
   tempCookie = (uint32_t)buffer[0] << 24;
@@ -138,9 +139,10 @@ void writeCard(nfcTagObject nfcTag) {
   }
 
   // Write data to the block
-  printf("Writing data into block %d...\n", blockAddr);
-  dump_byte_array(buffer, 16);
-  printf("\n");
+  //printf("Writing data into block %d...\n", blockAddr);
+  //dump_byte_array(buffer, 16);
+  //printf("\n");
+
   status = (MFRC522::StatusCode)mfrc522.MIFARE_Write(blockAddr, buffer, 16);
   if (status != MFRC522::STATUS_OK) {
     printf("MIFARE_Write() failed: %d\n", mfrc522.GetStatusCodeName(status));
@@ -171,30 +173,11 @@ void handleKnownCard() {
   printf("%d files in folder %d\n", numTracksInFolder, myCard.folder);
 
   switch(myCard.mode) {
+    case MODE_ALBUM:  currentTrack = 1; break;
     case MODE_RANDOM:
-      printf("Mode random -> Play random track\n");
-      currentTrack = random(1, numTracksInFolder + 1);
-      break;
-
-    case MODE_ALBUM:
-      printf("Mode album -> Play entire folder\n");
-      currentTrack = 1;
-      break;
-
-    case MODE_PARTY:
-      printf("Mode party -> Shuffle songs in folder\n");
-      currentTrack = random(1, numTracksInFolder + 1);
-      break;
-
-    case MODE_SINGLE:
-      printf("Mode single -> Play single file from folder\n");
-      currentTrack = myCard.special;
-      break;
-
-    case MODE_BOOK:
-      printf("Mode book -> Play entire folder and save progress\n");
-      currentTrack = EEPROM.read(myCard.folder);
-      break;
+    case MODE_PARTY:  currentTrack = random(1, numTracksInFolder + 1); break;
+    case MODE_SINGLE: currentTrack = myCard.special; break;
+    case MODE_BOOK:   currentTrack = EEPROM.read(myCard.folder); break;
   }
 
   mp3.playFolderTrack(myCard.folder, currentTrack);
