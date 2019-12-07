@@ -10,7 +10,7 @@
  */
 
 void resetCard() {
-  Serial.println(F("Reset card..."));
+  printf("Reset card...\n");
   knownCard = false;
   mp3.playMp3FolderTrack(800);
 
@@ -18,7 +18,7 @@ void resetCard() {
     switch(pollButtons()) {
       case BTN_UP_SHORTPRESS: 
       case BTN_DOWN_SHORTPRESS:
-        Serial.print(F("Aborted!"));
+        printf("Aborted!\n");
         mp3.playMp3FolderTrack(802);
         return;
       break;
@@ -28,7 +28,7 @@ void resetCard() {
   if (!mfrc522.PICC_ReadCardSerial())
     return;
 
-  Serial.print(F("Reconfiguring card!"));
+  printf("Reconfiguring card!\n");
   setupCard();
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();
@@ -36,7 +36,7 @@ void resetCard() {
 
 void setupCard() {
   mp3.pause();
-  Serial.print(F("Configure new card"));
+  printf("Configure new card\n");
 
   // Ordner abfragen
   myCard.folder = promptUserSelection(300, 1, 99, 0);
@@ -62,48 +62,41 @@ void setupCard() {
 bool readCard(nfcTagObject *nfcTag) {
   bool returnValue = true;
   // Show some details of the PICC (that is: the tag/card)
-  Serial.print(F("Card UID:"));
+  printf("Card UID:\n");
   dump_byte_array(mfrc522.uid.uidByte, mfrc522.uid.size);
-  Serial.println();
-  Serial.print(F("PICC type: "));
+  printf("\n");
   MFRC522::PICC_Type piccType = mfrc522.PICC_GetType(mfrc522.uid.sak);
-  Serial.println(mfrc522.PICC_GetTypeName(piccType));
+  printf("PICC type: %d\n", mfrc522.PICC_GetTypeName(piccType));
 
   byte buffer[18];
   byte size = sizeof(buffer);
 
   // Authenticate using key A
-  Serial.println(F("Authenticating using key A..."));
+  printf("Authenticating using key A...\n");
   status = (MFRC522::StatusCode)mfrc522.PCD_Authenticate(
       MFRC522::PICC_CMD_MF_AUTH_KEY_A, trailerBlock, &key, &(mfrc522.uid));
   if (status != MFRC522::STATUS_OK) {
     returnValue = false;
-    Serial.print(F("PCD_Authenticate() failed: "));
-    Serial.println(mfrc522.GetStatusCodeName(status));
+    printf("PCD_Authenticate() failed: %d\n", mfrc522.GetStatusCodeName(status));
     return;
   }
 
   // Show the whole sector as it currently is
-  Serial.println(F("Current data in sector:"));
+  printf("Current data in sector:\n");
   mfrc522.PICC_DumpMifareClassicSectorToSerial(&(mfrc522.uid), &key, sector);
-  Serial.println();
+  printf("\n");
 
   // Read data from the block
-  Serial.print(F("Reading data from block "));
-  Serial.print(blockAddr);
-  Serial.println(F(" ..."));
+  printf("Reading data from block %d...\n", blockAddr);
   status = (MFRC522::StatusCode)mfrc522.MIFARE_Read(blockAddr, buffer, &size);
   if (status != MFRC522::STATUS_OK) {
     returnValue = false;
-    Serial.print(F("MIFARE_Read() failed: "));
-    Serial.println(mfrc522.GetStatusCodeName(status));
+    printf("MIFARE_Read() failed: %d\n", mfrc522.GetStatusCodeName(status));
   }
-  Serial.print(F("Data in block "));
-  Serial.print(blockAddr);
-  Serial.println(F(":"));
+  printf("Data in block %d:", blockAddr);
   dump_byte_array(buffer, 16);
-  Serial.println();
-  Serial.println();
+  printf("\n");
+  printf("\n");
 
   uint32_t tempCookie;
   tempCookie = (uint32_t)buffer[0] << 24;
@@ -135,31 +128,27 @@ void writeCard(nfcTagObject nfcTag) {
   mifareType = mfrc522.PICC_GetType(mfrc522.uid.sak);
 
   // Authenticate using key B
-  Serial.println(F("Authenticating again using key B..."));
+  printf("Authenticating again using key B...\n");
   status = (MFRC522::StatusCode)mfrc522.PCD_Authenticate(
       MFRC522::PICC_CMD_MF_AUTH_KEY_B, trailerBlock, &key, &(mfrc522.uid));
   if (status != MFRC522::STATUS_OK) {
-    Serial.print(F("PCD_Authenticate() failed: "));
-    Serial.println(mfrc522.GetStatusCodeName(status));
+    printf("PCD_Authenticate() failed: %d\n", mfrc522.GetStatusCodeName(status));
     mp3.playMp3FolderTrack(401);
     return;
   }
 
   // Write data to the block
-  Serial.print(F("Writing data into block "));
-  Serial.print(blockAddr);
-  Serial.println(F(" ..."));
+  printf("Writing data into block %d...\n", blockAddr);
   dump_byte_array(buffer, 16);
-  Serial.println();
+  printf("\n");
   status = (MFRC522::StatusCode)mfrc522.MIFARE_Write(blockAddr, buffer, 16);
   if (status != MFRC522::STATUS_OK) {
-    Serial.print(F("MIFARE_Write() failed: "));
-    Serial.println(mfrc522.GetStatusCodeName(status));
-      mp3.playMp3FolderTrack(401);
+    printf("MIFARE_Write() failed: %d\n", mfrc522.GetStatusCodeName(status));
+    mp3.playMp3FolderTrack(401);
   } else {
     mp3.playMp3FolderTrack(400);
   }
-  Serial.println();
+  printf("\n");
   delay(100);
 }
 
@@ -179,32 +168,31 @@ void onNewCard() {
 void handleKnownCard() {
   lastTrackFinished = 0;
   numTracksInFolder = mp3.getFolderTrackCount(myCard.folder);
-  printf("%d files in folder:", numTracksInFolder);
-  Serial.println(myCard.folder);
+  printf("%d files in folder %d\n", numTracksInFolder, myCard.folder);
 
   switch(myCard.mode) {
     case MODE_RANDOM:
-      Serial.println(F("Mode random -> Play random track"));
+      printf("Mode random -> Play random track\n");
       currentTrack = random(1, numTracksInFolder + 1);
       break;
 
     case MODE_ALBUM:
-      Serial.println(F("Mode album -> Play entire folder"));
+      printf("Mode album -> Play entire folder\n");
       currentTrack = 1;
       break;
 
     case MODE_PARTY:
-      Serial.println(F("Mode party -> Shuffle songs in folder"));
+      printf("Mode party -> Shuffle songs in folder\n");
       currentTrack = random(1, numTracksInFolder + 1);
       break;
 
     case MODE_SINGLE:
-      Serial.println(F("Mode single -> Play single file from folder"));
+      printf("Mode single -> Play single file from folder\n");
       currentTrack = myCard.special;
       break;
 
     case MODE_BOOK:
-      Serial.println(F("Mode book -> Play entire folder and save progress"));
+      printf("Mode book -> Play entire folder and save progress\n");
       currentTrack = EEPROM.read(myCard.folder);
       break;
   }
@@ -216,7 +204,7 @@ byte pollCard() {
   if (!hasCard) {
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial() && readCard(&myCard)) {
       bool bSameUID = !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
-      printf("Same card: %d", bSameUID ? "true" : "false");
+      printf("Same card: %d\n", bSameUID ? "true" : "false");
       // store info about current card
       memcpy(lastCardUid, mfrc522.uid.uidByte, 4);
       lastCardWasUL = mfrc522.PICC_GetType(mfrc522.uid.sak) == MFRC522::PICC_TYPE_MIFARE_UL;
@@ -235,7 +223,7 @@ byte pollCard() {
       if (retries < maxRetries) {
         retries++;
       } else {
-          Serial.println(F("card gone"));
+          printf("card gone\n");
           mfrc522.PICC_HaltA();
           mfrc522.PCD_StopCrypto1();
           hasCard = false;

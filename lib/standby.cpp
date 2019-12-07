@@ -1,17 +1,17 @@
 void setstandbyTimer() {
-  Serial.println(F("=== setstandbyTimer()"));
+  printf("=== setstandbyTimer()\n");
   sleepAtMillis = millis() + (standbyTimer * 60 * 1000);
-  Serial.println(sleepAtMillis);
+  printf("Sleeping at %d\n", sleepAtMillis);
 }
 
 void disablestandbyTimer() {
-  Serial.println(F("=== disablestandby()"));
+  printf("=== disablestandby()\n");
   sleepAtMillis = 0;
 }
 
 void checkStandbyAtMillis() {
   if (sleepAtMillis != 0 && millis() > sleepAtMillis) {
-    Serial.println(F("=== power off!"));
+    printf("=== power off!i\n");
     // enter sleep state
     digitalWrite(shutdownPin, HIGH);
     delay(500);

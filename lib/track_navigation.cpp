@@ -41,11 +41,11 @@ void nextTrack(uint16_t track) {
 
   switch(myCard.mode) {
   case MODE_RANDOM:
-    Serial.println(F("Mode random -> stop"));
+    printf("Mode random -> stop\n");
     break;
 
   case MODE_SINGLE:
-    Serial.println(F("Mode single -> stop"));
+    printf("Mode single -> stop\n");
     break;
 
   case MODE_ALBUM:
@@ -78,25 +78,25 @@ void nextTrack(uint16_t track) {
 void previousTrack() {
   switch(myCard.mode) {
   case MODE_RANDOM:
-    Serial.println(F("Mode random -> play track again"));
+    printf("Mode random -> play track again\n");
     break;
 
   case MODE_ALBUM:
     currentTrack = max(currentTrack - 1, 1);
-    Serial.println(F("Mode album -> previous track"));
+    printf("Mode album -> previous track\n");
     break;
 
   case MODE_PARTY:
-    Serial.println(F("Party mode -> Replay current track"));
+    printf("Party mode -> Replay current track\n");
     break;
 
   case MODE_SINGLE:
-    Serial.println(F("Mode single-> Replay current track"));
+    printf("Mode single-> Replay current track\n");
     break;
 
   case MODE_BOOK:
     currentTrack = max(currentTrack - 1, 1);
-    Serial.println(F("Mode book -> previous track (saved)"));
+    printf("Mode book -> previous track (saved)\n");
     saveProgress();
     break;
   }
