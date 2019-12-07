@@ -38,6 +38,8 @@ clean:
 audio_messages:
 	bin/create_audio_messages $(TC) msg/audio_messages.txt
 
+deploy: upload monitor
+
 compile: $(OUT).hex
 
 $(OUT).hex: $(OUT).elf
