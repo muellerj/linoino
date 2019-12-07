@@ -91,7 +91,7 @@ void previousTrack() {
     break;
 
   case MODE_SINGLE:
-    printf("Mode single-> Replay current track\n");
+    printf("Mode single -> Replay current track\n");
     break;
 
   case MODE_BOOK:

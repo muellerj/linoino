@@ -31,6 +31,7 @@ void resetCard() {
   printf("Reconfiguring card!\n");
   setupCard();
   mp3.playMp3FolderTrack(999);
+  memcpy(lastCardUid, 0, 4);
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();
 }
