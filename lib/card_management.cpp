@@ -179,7 +179,7 @@ void onNewCard() {
 void handleKnownCard() {
   lastTrackFinished = 0;
   numTracksInFolder = mp3.getFolderTrackCount(myCard.folder);
-  ardprintf("%d files in folder:", numTracksInFolder);
+  printf("%d files in folder:", numTracksInFolder);
   Serial.println(myCard.folder);
 
   switch(myCard.mode) {
@@ -216,7 +216,7 @@ byte pollCard() {
   if (!hasCard) {
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial() && readCard(&myCard)) {
       bool bSameUID = !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
-      ardprintf("Same card: %d", bSameUID ? "true" : "false");
+      printf("Same card: %d", bSameUID ? "true" : "false");
       // store info about current card
       memcpy(lastCardUid, mfrc522.uid.uidByte, 4);
       lastCardWasUL = mfrc522.PICC_GetType(mfrc522.uid.sak) == MFRC522::PICC_TYPE_MIFARE_UL;

@@ -2,8 +2,14 @@ void mySetup() {
   Serial.begin(115200); // Debug via Serial interface
   randomSeed(analogRead(A0)); // Initalize random number generator
 
+	// Set up stdout
+	fdev_setup_stream(&serial_stdout, serial_putchar, NULL, _FDEV_SETUP_WRITE);
+	stdout = &serial_stdout;
+
   Serial.println(F("TonUINO Version 2.0"));
   Serial.println(F("(c) Thorsten Voß"));
+
+	printf("Another, better message!\n");
 
   // Knöpfe mit PullUp
   pinMode(buttonPause, INPUT_PULLUP);

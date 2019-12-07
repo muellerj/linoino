@@ -51,21 +51,21 @@ void nextTrack(uint16_t track) {
   case MODE_ALBUM:
     if (currentTrack < numTracksInFolder) {
       currentTrack = currentTrack + 1;
-      ardprintf("Mode album -> next track: %d", currentTrack);
+      printf("Mode album -> next track: %d\n", currentTrack);
       mp3.playFolderTrack(myCard.folder, currentTrack);
     }
     break;
 
   case MODE_PARTY:
     currentTrack = newRandomTrack(numTracksInFolder);
-    ardprintf("Mode party -> next random track: %d", currentTrack);
+    printf("Mode party -> next random track: %d\n", currentTrack);
     mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_BOOK:
     if (currentTrack < numTracksInFolder) {
       currentTrack = currentTrack + 1;
-      ardprintf("Mode book -> next track (saved): %d", currentTrack);
+      printf("Mode book -> next track (saved): %d\n", currentTrack);
       mp3.playFolderTrack(myCard.folder, currentTrack);
       saveProgress();
     } else {

@@ -7,7 +7,7 @@ class Mp3Notify {
     }
 
     static void OnPlayFinished(uint16_t track) {
-      ardprintf("End of track %d", track);
+      printf("End of track %d", track);
       delay(100);
       nextTrack(track);
     }
