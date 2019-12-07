@@ -3,7 +3,7 @@ mp3/0300_new_tag.mp3|Oh, eine neue Karte! Verwende die Lautstärke Tasten um ein
 mp3/0310.mp3|OK, ich habe die Karte mit dem Ordner verknüpft. Wähle nun mit den Lautstärke Tasten den Wiedergabemodus aus.
 
 # Modes
-mp3/0311_mode_random.mp3|Randommodus: Eine zufällige Datei aus dem Ordner wiedergeben
+mp3/0311_mode_random.mp3|Zufallsmodus: Eine zufällige Datei aus dem Ordner wiedergeben
 mp3/0312_mode_album.mp3|Albummodus: Den kompletten Ordner wiedergeben
 mp3/0313_mode_party.mp3|Party Modus: Ordner zufällig wiedergeben.
 mp3/0314_mode_single_track.mp3|Einzel Modus: Eine bestimmte Datei im Ordner wiedergeben.
