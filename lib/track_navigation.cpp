@@ -51,21 +51,21 @@ void nextTrack(uint16_t track) {
   case MODE_ALBUM:
     if (currentTrack < numTracksInFolder) {
       currentTrack = currentTrack + 1;
-      Serial.print(sprintf("Mode album -> next track: %d", currentTrack));
+      ardprintf("Mode album -> next track: %d", currentTrack);
       mp3.playFolderTrack(myCard.folder, currentTrack);
     }
     break;
 
   case MODE_PARTY:
     currentTrack = newRandomTrack(numTracksInFolder);
-    Serial.print(sprintf("Mode party -> next random track: %d", currentTrack));
+    ardprintf("Mode party -> next random track: %d", currentTrack);
     mp3.playFolderTrack(myCard.folder, currentTrack);
     break;
 
   case MODE_BOOK:
     if (currentTrack < numTracksInFolder) {
       currentTrack = currentTrack + 1;
-      Serial.print(sprintf("Mode book -> next track (saved): %d", currentTrack));
+      ardprintf("Mode book -> next track (saved): %d", currentTrack);
       mp3.playFolderTrack(myCard.folder, currentTrack);
       saveProgress();
     } else {

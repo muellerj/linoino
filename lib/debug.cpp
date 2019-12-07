@@ -11,10 +11,8 @@ int ardprintf(char *str, ...) {
 
   va_list argv;
   va_start(argv, count);
-  for(i=0,j=0; str[i]!='\0';i++)
-  {
-    if(str[i]=='%')
-    {
+  for(i=0,j=0; str[i]!='\0';i++) {
+    if(str[i]=='%') {
       temp[j] = '\0';
       Serial.print(temp);
       j=0;
@@ -34,9 +32,7 @@ int ardprintf(char *str, ...) {
                   break;
         default:  ;
       };
-    }
-    else
-    {
+    } else {
       temp[j] = str[i];
       j = (j+1)%ARDBUFFER;
       if(j==0)
@@ -46,7 +42,8 @@ int ardprintf(char *str, ...) {
         temp[0]='\0';
       }
     }
-  };
+  }
+
   Serial.println();
   return count + 1;
 }

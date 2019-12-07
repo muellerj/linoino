@@ -7,10 +7,7 @@ class Mp3Notify {
     }
 
     static void OnPlayFinished(uint16_t track) {
-      //char buffer[100];
       ardprintf("End of track %d", track);
-      //Serial.println(buffer);
-      //Serial.println(sprintf("Track %d beendet", track));
       delay(100);
       nextTrack(track);
     }
