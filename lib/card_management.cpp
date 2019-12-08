@@ -30,9 +30,22 @@ void resetCard() {
 
   setupCard();
   mp3.playMp3FolderTrack(999);
-  memcpy(lastCardUid, 0, 4);
+  forgetCard();
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();
+}
+
+void forgetCard() {
+  //     dest         src n
+  memcpy(lastCardUid, 0, 4);
+}
+
+void remeberCard() {
+  memcpy(lastCardUid, mfrc522.uid.uidByte, 4);
+}
+
+bool isCurrentCard() {
+  !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
 }
 
 void setupCard() {
@@ -186,10 +199,9 @@ void handleKnownCard() {
 byte pollCard() {
   if (!hasCard) {
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial() && readCard(&myCard)) {
-      bool bSameUID = !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
-      printf("Same card: %d\n", bSameUID ? "true" : "false");
-      // store info about current card
-      memcpy(lastCardUid, mfrc522.uid.uidByte, 4);
+      bool bSameUID = isCurrentCard();
+      printf("Same card: %s\n", bSameUID ? "true" : "false");
+      remeberCard();
       lastCardWasUL = mfrc522.PICC_GetType(mfrc522.uid.sak) == MFRC522::PICC_TYPE_MIFARE_UL;
 
       retries = 0;
