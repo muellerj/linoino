@@ -35,6 +35,18 @@ void resetCard() {
   mfrc522.PCD_StopCrypto1();
 }
 
+void forgetCard() {
+  memcpy(lastCardUid, 0, 4);
+}
+
+void rememberCard() {
+  memcpy(lastCardUid, mfrc522.uid.uidByte, 4);
+}
+
+bool isSameCard() {
+  !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
+}
+
 void setupCard() {
   mp3.pause();
   printf("Configure new card\n");
@@ -186,15 +198,14 @@ void handleKnownCard() {
 byte pollCard() {
   if (!hasCard) {
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial() && readCard(&myCard)) {
-      bool bSameUID = !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
-      printf("Same card: %d\n", bSameUID ? "true" : "false");
-      // store info about current card
-      memcpy(lastCardUid, mfrc522.uid.uidByte, 4);
+      bool sameCard = !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
+      printf("Same card: %s\n", sameCard ? "true" : "false");
+      rememberCard();
       lastCardWasUL = mfrc522.PICC_GetType(mfrc522.uid.sak) == MFRC522::PICC_TYPE_MIFARE_UL;
 
       retries = 0;
       hasCard = true;
-      return bSameUID ? PCS_CARD_IS_BACK : PCS_NEW_CARD;
+      return sameCard ? PCS_CARD_IS_BACK : PCS_NEW_CARD;
     }
     return PCS_NO_CHANGE;
   } else {
