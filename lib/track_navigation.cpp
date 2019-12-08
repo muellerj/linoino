@@ -38,6 +38,11 @@ void nextTrack(uint16_t track) {
       currentTrack = currentTrack + 1;
       printf("Mode album -> next track: %d\n", currentTrack);
       mp3.playFolderTrack(myCard.folder, currentTrack);
+    } else {
+      currentTrack = 1;
+      printf("Mode album -> end\n");
+      mp3.playFolderTrack(myCard.folder, currentTrack);
+      pausePlayback();
     }
     break;
 
@@ -56,7 +61,9 @@ void nextTrack(uint16_t track) {
     } else {
       currentTrack = 1;
       printf("Mode book -> end, resetting track to 1\n");
-      resetProgress();
+      mp3.playFolderTrack(myCard.folder, currentTrack);
+      pausePlayback();
+      saveProgress();
     }
     break;
   }
