@@ -44,7 +44,7 @@ void rememberCard() {
 }
 
 bool isSameCard() {
-  !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
+  return !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
 }
 
 void setupCard() {
@@ -198,7 +198,7 @@ void handleKnownCard() {
 byte pollCard() {
   if (!hasCard) {
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial() && readCard(&myCard)) {
-      bool sameCard = !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
+      bool sameCard = isSameCard();
       printf("Same card: %s\n", sameCard ? "true" : "false");
       rememberCard();
       lastCardWasUL = mfrc522.PICC_GetType(mfrc522.uid.sak) == MFRC522::PICC_TYPE_MIFARE_UL;
