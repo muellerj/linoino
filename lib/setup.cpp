@@ -1,3 +1,11 @@
+/*
+ * EEPROM Organisation
+ *
+ * 0-255: Progress in respective folders
+ *   256: Volume
+ *
+ */
+
 void mySetup() {
   Serial.begin(115200); // Debug via Serial interface
   randomSeed(analogRead(A0)); // Initalize random number generator
@@ -19,7 +27,7 @@ void mySetup() {
 
   // Initialize DFPlayer Mini
   mp3.begin();
-  mp3.setVolume(15);
+  mp3.setVolume(DEFAULT_VOLUME);
 
   // Initialize NFC reader
   SPI.begin();        // Init SPI bus
