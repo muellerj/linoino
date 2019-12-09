@@ -111,10 +111,10 @@ bool readCard(nfcTagObject *nfcTag) {
   tempCookie += (uint32_t)buffer[2] << 8;
   tempCookie += (uint32_t)buffer[3];
 
-  nfcTag->cookie = tempCookie;
+  nfcTag->cookie  = tempCookie;
   nfcTag->version = buffer[4];
-  nfcTag->folder = buffer[5];
-  nfcTag->mode = buffer[6];
+  nfcTag->folder  = buffer[5];
+  nfcTag->mode    = buffer[6];
   nfcTag->special = buffer[7];
 
   return returnValue;
