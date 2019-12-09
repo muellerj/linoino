@@ -4,3 +4,4 @@ const uint8_t MIN_VOLUME     = 0;
 
 void volumeUp();
 void volumeDown();
+void setVolume(uint8_t vol);

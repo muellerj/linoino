@@ -27,7 +27,7 @@ void mySetup() {
 
   // Initialize DFPlayer Mini
   mp3.begin();
-  mp3.setVolume(DEFAULT_VOLUME);
+  setVolume(DEFAULT_VOLUME);
 
   // Initialize NFC reader
   SPI.begin();        // Init SPI bus
