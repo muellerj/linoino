@@ -1,11 +1,9 @@
 void volumeUp() {
-  uint8_t currentVolume = getVolume();
-  setVolume(currentVolume + 1);
+  setVolume(getVolume() + 1);
 }
 
 void volumeDown() {
-  uint8_t currentVolume = getVolume();
-  setVolume(currentVolume - 1);
+  setVolume(getVolume() - 1);
 }
 
 uint8_t getVolume() {
