@@ -28,7 +28,9 @@ int promptUserSelection(int question, int optMin, int optMax,
     mp3.loop();
 
     switch(pollButtons()) {
-      case BTN_PAUSE_SHORTPRESS: if (selection != 0) return selection; break;
+      case BTN_PAUSE_SHORTPRESS: 
+        if (selection != 0) return selection; 
+        break;
       case BTN_UP_LONGPRESS: 
         selection = changeOption(selection, +10, optMin, optMax, previewFolder);
         break;
