@@ -8,7 +8,6 @@ uint16_t newRandomTrack(uint16_t numTracksInFolder) {
 }
 
 void saveProgress()  { EEPROM.write(myCard.folder, currentTrack); }
-void resetProgress() { EEPROM.write(myCard.folder, 1); }
 
 void resetPlayback() {
   uint8_t currentVolume = getVolume();

@@ -51,23 +51,18 @@ void setupCard() {
   mp3.pause();
   printf("Configure new card\n");
 
-  // Ordner abfragen
   myCard.folder = promptUserSelection(300, 1, 99, 0);
+  myCard.mode   = promptUserSelection(310, 311, 315, -1);
 
-  // Wiedergabemodus abfragen
-  myCard.mode = promptUserSelection(310, 311, 315, -1);
+  currentTrack = 1;
+  saveProgress();
 
-  // Hörbuchmodus -> Fortschritt im EEPROM auf 1 setzen
-  resetProgress();
-
-  // Einzelmodus -> Datei abfragen
   if (myCard.mode == MODE_SINGLE) {
     int folderCount = mp3.getFolderTrackCount(myCard.folder);
     myCard.special = promptUserSelection(320, 1, folderCount, myCard.folder);  
   }
 
-  // Save settings
-  mp3.pause();
+  pausePlayback();
   writeCard(myCard);
 }
 
