@@ -10,6 +10,14 @@ uint16_t newRandomTrack(uint16_t numTracksInFolder) {
 void saveProgress()  { EEPROM.write(myCard.folder, currentTrack); }
 void resetProgress() { EEPROM.write(myCard.folder, 1); }
 
+void resetPlayback() {
+  uint8_t currentVolume = getVolume();
+  setVolume(0);
+  mp3.playFolderTrack(myCard.folder, 1);
+  pausePlayback();
+  setVolume(currentVolume);
+}
+
 void pausePlayback() { mp3.pause(); }
 void startPlayback() { mp3.start(); }
 
@@ -40,8 +48,7 @@ void nextTrack(uint16_t track) {
     } else {
       currentTrack = 1;
       printf("Mode album -> end\n");
-      mp3.playFolderTrack(myCard.folder, currentTrack);
-      pausePlayback();
+      resetPlayback();
     }
     break;
 
@@ -60,9 +67,8 @@ void nextTrack(uint16_t track) {
     } else {
       currentTrack = 1;
       printf("Mode book -> end, resetting track to 1\n");
-      mp3.playFolderTrack(myCard.folder, currentTrack);
-      pausePlayback();
       saveProgress();
+      resetPlayback();
     }
     break;
   }

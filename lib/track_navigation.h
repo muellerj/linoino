@@ -13,3 +13,4 @@ void nextTrack(uint16_t track);
 void previousTrack();
 void startPlayback();
 void pausePlayback();
+void resetPlayback();
