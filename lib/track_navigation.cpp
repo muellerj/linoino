@@ -1,4 +1,6 @@
-bool isPlaying() { return !digitalRead(busyPin); }
+bool isPlaying() { 
+  return !digitalRead(busyPin);
+}
 
 uint16_t newRandomTrack(uint16_t trackCount) {
   uint16_t newTrack = random(1, trackCount + 1);
@@ -11,10 +13,10 @@ void saveProgress() {
   EEPROM.write(myCard.folder, currentTrack);
 }
 
-void resetPlayback() {
+void resetPlayback(uint16_t track) {
   uint8_t currentVolume = getVolume();
   setVolume(0);
-  playTrack(1);
+  playTrack(track);
   pausePlayback();
   setVolume(currentVolume);
 }
@@ -39,22 +41,21 @@ void pausePlayback() { mp3.pause(); }
 void startPlayback() { mp3.start(); }
 
 void nextTrack(uint16_t track) {
-  if (track == lastTrackFinished)
-    return;
+
+  if (track == lastTrackFinished) return;
+  if (knownCard == false) return;
 
   lastTrackFinished = track;
-   
-  // Return early if card is unknown
-  if (knownCard == false)
-    return;
 
   switch(myCard.mode) {
   case MODE_RANDOM:
     printf("Mode random -> stop\n");
+    resetPlayback(currentTrack);
     break;
 
   case MODE_SINGLE:
     printf("Mode single -> stop\n");
+    resetPlayback(currentTrack);
     break;
 
   case MODE_ALBUM:
@@ -65,7 +66,7 @@ void nextTrack(uint16_t track) {
     } else {
       currentTrack = 1;
       printf("Mode album -> end\n");
-      resetPlayback();
+      resetPlayback(currentTrack);
     }
     break;
 
@@ -85,7 +86,7 @@ void nextTrack(uint16_t track) {
       currentTrack = 1;
       printf("Mode book -> end, resetting track to 1\n");
       saveProgress();
-      resetPlayback();
+      resetPlayback(currentTrack);
     }
     break;
   }

@@ -16,4 +16,4 @@ uint16_t getTrackCount();
 void previousTrack();
 void startPlayback();
 void pausePlayback();
-void resetPlayback();
+void resetPlayback(uint16_t track);

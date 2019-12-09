@@ -44,7 +44,7 @@ void rememberCard() {
 }
 
 bool isSameCard() {
-  return !memcmp(lastCardUid, mfrc522.uid.uidByte, 4);
+  return (memcmp(lastCardUid, mfrc522.uid.uidByte, 4) == 0);
 }
 
 void setupCard() {
