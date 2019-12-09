@@ -11,9 +11,9 @@ void setVolume(uint8_t vol) {
 }
 
 void volumeUp() {
-  setVolume(getVolume() + 1);
+  getVolume() < MAX_VOLUME ? setVolume(getVolume() + 1) : setVolume(MAX_VOLUME);
 }
 
 void volumeDown() {
-  setVolume(getVolume() - 1);
+  getVolume() > 0 ? setVolume(getVolume() - 1) : setVolume(0);
 }
