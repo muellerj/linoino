@@ -42,8 +42,7 @@ void startPlayback() { mp3.start(); }
 
 void nextTrack(uint16_t track) {
 
-  if (track == lastTrackFinished) return;
-  if (knownCard == false) return;
+  if (track == lastTrackFinished || !knownCard) return;
 
   lastTrackFinished = track;
 
