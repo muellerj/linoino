@@ -11,6 +11,5 @@ void resetProgress();
 bool isPlaying();
 void nextTrack(uint16_t track);
 void previousTrack();
-void playAdvert();
 void startPlayback();
 void pausePlayback();

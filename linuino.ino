@@ -33,7 +33,7 @@ void loop() {
   mp3.loop();
 
   switch(pollButtons()) {
-    case BTN_PAUSE_LONGPRESS:  isPlaying() ? playAdvert() : resetCard(); break;
+    case BTN_PAUSE_LONGPRESS:  isPlaying() ? pausePlayback() : resetCard(); break;
     case BTN_PAUSE_SHORTPRESS: isPlaying() ? pausePlayback() : startPlayback(); break;
     case BTN_UP_LONGPRESS:     nextTrack(random(65536)); break;
     case BTN_UP_SHORTPRESS:    volumeUp(); break;
