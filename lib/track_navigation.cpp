@@ -1,9 +1,9 @@
 bool isPlaying() { return !digitalRead(busyPin); }
 
-uint16_t newRandomTrack(uint16_t numTracksInFolder) {
-  uint16_t newTrack = random(1, numTracksInFolder + 1);
+uint16_t newRandomTrack(uint16_t trackCount) {
+  uint16_t newTrack = random(1, trackCount + 1);
   if (newTrack == currentTrack)
-    newTrack = newTrack == numTracksInFolder ? 1 : newTrack + 1;
+    newTrack = newTrack == trackCount ? 1 : newTrack + 1;
   return newTrack;
 }
 
@@ -14,9 +14,25 @@ void saveProgress() {
 void resetPlayback() {
   uint8_t currentVolume = getVolume();
   setVolume(0);
-  mp3.playFolderTrack(myCard.folder, 1);
+  playTrack(1);
   pausePlayback();
   setVolume(currentVolume);
+}
+
+void playTrack(uint8_t track) {
+  mp3.playFolderTrack(myCard.folder, track);
+}
+
+void playTrack(uint8_t folder, uint8_t track) {
+  mp3.playFolderTrack(folder, track);
+}
+
+uint16_t getTrackCount() {
+  return mp3.getFolderTrackCount(myCard.folder);
+}
+
+void playMessage(uint16_t message) {
+  mp3.playMp3FolderTrack(message);
 }
 
 void pausePlayback() { mp3.pause(); }
@@ -42,10 +58,10 @@ void nextTrack(uint16_t track) {
     break;
 
   case MODE_ALBUM:
-    if (currentTrack < numTracksInFolder) {
+    if (currentTrack < trackCount) {
       currentTrack = currentTrack + 1;
       printf("Mode album -> next track: %d\n", currentTrack);
-      mp3.playFolderTrack(myCard.folder, currentTrack);
+      playTrack(currentTrack);
     } else {
       currentTrack = 1;
       printf("Mode album -> end\n");
@@ -54,16 +70,16 @@ void nextTrack(uint16_t track) {
     break;
 
   case MODE_PARTY:
-    currentTrack = newRandomTrack(numTracksInFolder);
+    currentTrack = newRandomTrack(trackCount);
     printf("Mode party -> next random track: %d\n", currentTrack);
-    mp3.playFolderTrack(myCard.folder, currentTrack);
+    playTrack(currentTrack);
     break;
 
   case MODE_BOOK:
-    if (currentTrack < numTracksInFolder) {
+    if (currentTrack < trackCount) {
       currentTrack = currentTrack + 1;
       printf("Mode book -> next track (saved): %d\n", currentTrack);
-      mp3.playFolderTrack(myCard.folder, currentTrack);
+      playTrack(currentTrack);
       saveProgress();
     } else {
       currentTrack = 1;
@@ -101,5 +117,5 @@ void previousTrack() {
     break;
   }
 
-  mp3.playFolderTrack(myCard.folder, currentTrack);
+  playTrack(currentTrack);
 }

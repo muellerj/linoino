@@ -12,14 +12,14 @@
 void resetCard() {
   printf("Reset card...\n");
   knownCard = false;
-  mp3.playMp3FolderTrack(800);
+  playMessage(800);
 
   do {
     switch(pollButtons()) {
       case BTN_UP_SHORTPRESS: 
       case BTN_DOWN_SHORTPRESS:
         printf("Aborted!\n");
-        mp3.playMp3FolderTrack(802);
+        playMessage(802);
         return;
       break;
     }
@@ -29,7 +29,7 @@ void resetCard() {
     return;
 
   setupCard();
-  mp3.playMp3FolderTrack(999);
+  playMessage(999);
   memcpy(lastCardUid, 0, 4);
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();
@@ -48,7 +48,7 @@ bool isSameCard() {
 }
 
 void setupCard() {
-  mp3.pause();
+  pausePlayback();
   printf("Configure new card\n");
 
   myCard.folder = promptUserSelection(300, 1, 99, 0);
@@ -58,8 +58,7 @@ void setupCard() {
   saveProgress();
 
   if (myCard.mode == MODE_SINGLE) {
-    int folderCount = mp3.getFolderTrackCount(myCard.folder);
-    myCard.special = promptUserSelection(320, 1, folderCount, myCard.folder);  
+    myCard.special = promptUserSelection(320, 1, getTrackCount(), myCard.folder);  
   }
 
   pausePlayback();
@@ -141,7 +140,7 @@ void writeCard(nfcTagObject nfcTag) {
       MFRC522::PICC_CMD_MF_AUTH_KEY_B, trailerBlock, &key, &(mfrc522.uid));
   if (status != MFRC522::STATUS_OK) {
     printf("PCD_Authenticate() failed: %d\n", mfrc522.GetStatusCodeName(status));
-    mp3.playMp3FolderTrack(401);
+    playMessage(401);
     return;
   }
 
@@ -153,9 +152,9 @@ void writeCard(nfcTagObject nfcTag) {
   status = (MFRC522::StatusCode)mfrc522.MIFARE_Write(blockAddr, buffer, 16);
   if (status != MFRC522::STATUS_OK) {
     printf("MIFARE_Write() failed: %d\n", mfrc522.GetStatusCodeName(status));
-    mp3.playMp3FolderTrack(401);
+    playMessage(401);
   } else {
-    mp3.playMp3FolderTrack(400);
+    playMessage(400);
   }
   printf("\n");
   delay(100);
@@ -176,18 +175,18 @@ void onNewCard() {
 
 void handleKnownCard() {
   lastTrackFinished = 0;
-  numTracksInFolder = mp3.getFolderTrackCount(myCard.folder);
-  printf("%d files in folder %d\n", numTracksInFolder, myCard.folder);
+  trackCount = getTrackCount();
+  printf("%d files in folder %d\n", trackCount, myCard.folder);
 
   switch(myCard.mode) {
     case MODE_ALBUM:  currentTrack = 1; break;
     case MODE_RANDOM:
-    case MODE_PARTY:  currentTrack = random(1, numTracksInFolder + 1); break;
+    case MODE_PARTY:  currentTrack = random(1, trackCount + 1); break;
     case MODE_SINGLE: currentTrack = myCard.special; break;
     case MODE_BOOK:   currentTrack = EEPROM.read(myCard.folder); break;
   }
 
-  mp3.playFolderTrack(myCard.folder, currentTrack);
+  playTrack(currentTrack);
 }
 
 byte pollCard() {

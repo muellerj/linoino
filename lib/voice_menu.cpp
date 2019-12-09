@@ -7,12 +7,12 @@ void previewSelection(int folder, int track) {
     track = 1;
   }
 
-  mp3.playFolderTrack(folder, track);
+  playTrack(folder, track);
 }
 
 int changeOption(int i, int delta, int optMin, int optMax, int previewFolder) {
   i = delta > 0 ? min(i + delta, optMax - optMin + 1) : max(i + delta, 1);
-  mp3.playMp3FolderTrack((optMin - 1) + i);
+  playMessage((optMin - 1) + i);
   delay(1000);
   previewSelection(previewFolder, i);
   return i;
@@ -21,7 +21,7 @@ int changeOption(int i, int delta, int optMin, int optMax, int previewFolder) {
 int promptUserSelection(int question, int optMin, int optMax, 
                         int previewFolder=-1) {
   int selection = 0;
-  mp3.playMp3FolderTrack(question);
+  playMessage(question);
 
   while(true) {
 
