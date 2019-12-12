@@ -1,6 +1,6 @@
 void setstandbyTimer() {
   printf("=== setstandbyTimer()\n");
-  sleepAtMillis = millis() + (standbyTimer * 60 * 1000);
+  sleepAtMillis = millis() + standbyTimer;
   printf("Sleeping at %d\n", sleepAtMillis);
 }
 
@@ -9,7 +9,7 @@ void disablestandbyTimer() {
   sleepAtMillis = 0;
 }
 
-void checkStandbyAtMillis() {
+void pollStandby() {
   if (sleepAtMillis != 0 && millis() > sleepAtMillis) {
     printf("=== power off!i\n");
     // enter sleep state

@@ -53,6 +53,8 @@ void loop() {
       case PCS_CARD_IS_BACK: startPlayback(); disablestandbyTimer(); break;
     }
   }
+
+  //pollStandby();
 }
 
 #include "lib/debug.cpp"
