@@ -1,17 +1,17 @@
 void setstandbyTimer() {
-  printf(FS("=== setstandbyTimer()\n"));
+  printf("=== setstandbyTimer()\n");
   sleepAtMillis = millis() + (standbyTimer * 60 * 1000);
-  printf(FS("Sleeping at %d\n"), sleepAtMillis);
+  printf("Sleeping at %d\n", sleepAtMillis);
 }
 
 void disablestandbyTimer() {
-  printf(FS("=== disablestandby()\n"));
+  printf("=== disablestandby()\n");
   sleepAtMillis = 0;
 }
 
 void checkStandbyAtMillis() {
   if (sleepAtMillis != 0 && millis() > sleepAtMillis) {
-    printf(FS("=== power off!i\n"));
+    printf("=== power off!i\n");
     // enter sleep state
     digitalWrite(shutdownPin, HIGH);
     delay(500);

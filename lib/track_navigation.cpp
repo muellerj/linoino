@@ -48,42 +48,42 @@ void nextTrack(uint16_t track) {
 
   switch(myCard.mode) {
   case MODE_RANDOM:
-    printf(FS("Mode random -> stop\n"));
+    printf("Mode random -> stop\n");
     resetPlayback(currentTrack);
     break;
 
   case MODE_SINGLE:
-    printf(FS("Mode single -> stop\n"));
+    printf("Mode single -> stop\n");
     resetPlayback(currentTrack);
     break;
 
   case MODE_ALBUM:
     if (currentTrack < trackCount) {
       currentTrack = currentTrack + 1;
-      printf(FS("Mode album -> next track: %d\n"), currentTrack);
+      printf("Mode album -> next track: %d\n", currentTrack);
       playTrack(currentTrack);
     } else {
       currentTrack = 1;
-      printf(FS("Mode album -> end\n"));
+      printf("Mode album -> end\n");
       resetPlayback(currentTrack);
     }
     break;
 
   case MODE_PARTY:
     currentTrack = newRandomTrack(trackCount);
-    printf(FS("Mode party -> next random track: %d\n"), currentTrack);
+    printf("Mode party -> next random track: %d\n", currentTrack);
     playTrack(currentTrack);
     break;
 
   case MODE_BOOK:
     if (currentTrack < trackCount) {
       currentTrack = currentTrack + 1;
-      printf(FS("Mode book -> next track (saved): %d\n"), currentTrack);
+      printf("Mode book -> next track (saved): %d\n", currentTrack);
       playTrack(currentTrack);
       saveProgress();
     } else {
       currentTrack = 1;
-      printf(FS("Mode book -> end, resetting track to 1\n"));
+      printf("Mode book -> end, resetting track to 1\n");
       saveProgress();
       resetPlayback(currentTrack);
     }
@@ -94,25 +94,25 @@ void nextTrack(uint16_t track) {
 void previousTrack() {
   switch(myCard.mode) {
   case MODE_RANDOM:
-    printf(FS("Mode random -> play track again\n"));
+    printf("Mode random -> play track again\n");
     break;
 
   case MODE_ALBUM:
     currentTrack = max(currentTrack - 1, 1);
-    printf(FS("Mode album -> previous track\n"));
+    printf("Mode album -> previous track\n");
     break;
 
   case MODE_PARTY:
-    printf(FS("Party mode -> Replay current track\n"));
+    printf("Party mode -> Replay current track\n");
     break;
 
   case MODE_SINGLE:
-    printf(FS("Mode single -> Replay current track\n"));
+    printf("Mode single -> Replay current track\n");
     break;
 
   case MODE_BOOK:
     currentTrack = max(currentTrack - 1, 1);
-    printf(FS("Mode book -> previous track (saved)\n"));
+    printf("Mode book -> previous track (saved)\n");
     saveProgress();
     break;
   }
