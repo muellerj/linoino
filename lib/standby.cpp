@@ -1,18 +1,18 @@
 void setstandbyTimer() {
-  printf("=== setstandbyTimer()\n");
+  Serial.println(F("Setting standby timer"));
   sleepAtMillis = millis() + standbyTimer;
   printf("Sleeping at %d\n", sleepAtMillis);
 }
 
 void disablestandbyTimer() {
-  printf("=== disablestandby()\n");
+  Serial.println(F("Disabling standby timer"));
   sleepAtMillis = 0;
 }
 
 void pollStandby() {
   if (sleepAtMillis != 0 && millis() > sleepAtMillis) {
-    printf("=== power off!i\n");
-    // enter sleep state
+    Serial.println(F("Power off NOW!"));
+
     digitalWrite(shutdownPin, HIGH);
     delay(500);
 

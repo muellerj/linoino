@@ -14,8 +14,8 @@ void mySetup() {
 	fdev_setup_stream(&serial_stdout, serial_putchar, NULL, _FDEV_SETUP_WRITE);
 	stdout = &serial_stdout;
 
-  printf("TonUINO Version 2.0\n");
-  printf("(c) Thorsten Voß\n");
+  Serial.println(F("LinUINO Version 1.0"));
+  Serial.println(F("based on work by Thorsten Voß"));
 
   // Knöpfe mit PullUp
   pinMode(buttonPause, INPUT_PULLUP);
@@ -41,7 +41,7 @@ void mySetup() {
   if (digitalRead(buttonPause) == LOW && 
       digitalRead(buttonUp)    == LOW &&
       digitalRead(buttonDown)  == LOW) {
-    printf("Reset -> EEPROM wird gelöscht\n");
+    Serial.println(F("Reset -> EEPROM wird gelöscht"));
     for (int i = 0; i < EEPROM.length(); i++) {
       EEPROM.write(i, 0);
     }

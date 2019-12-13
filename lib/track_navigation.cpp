@@ -48,42 +48,42 @@ void nextTrack(uint16_t track) {
 
   switch(myCard.mode) {
   case MODE_RANDOM:
-    printf("Mode random -> stop\n");
+    Serial.println(F("Mode random -> stop"));
     resetPlayback(currentTrack);
     break;
 
   case MODE_SINGLE:
-    printf("Mode single -> stop\n");
+    Serial.println(F("Mode single -> stop"));
     resetPlayback(currentTrack);
     break;
 
   case MODE_ALBUM:
     if (currentTrack < trackCount) {
       currentTrack = currentTrack + 1;
-      printf("Mode album -> next track: %d\n", currentTrack);
+      Serial.println("Mode album -> next track: " + String(currentTrack));
       playTrack(currentTrack);
     } else {
       currentTrack = 1;
-      printf("Mode album -> end\n");
+      Serial.println(F("Mode album -> end"));
       resetPlayback(currentTrack);
     }
     break;
 
   case MODE_PARTY:
     currentTrack = newRandomTrack(trackCount);
-    printf("Mode party -> next random track: %d\n", currentTrack);
+    Serial.println("Mode party -> next random track: " + String(currentTrack));
     playTrack(currentTrack);
     break;
 
   case MODE_BOOK:
     if (currentTrack < trackCount) {
       currentTrack = currentTrack + 1;
-      printf("Mode book -> next track (saved): %d\n", currentTrack);
+      Serial.println("Mode book -> next track (saved): " + String(currentTrack));
       playTrack(currentTrack);
       saveProgress();
     } else {
       currentTrack = 1;
-      printf("Mode book -> end, resetting track to 1\n");
+      Serial.println(F("Mode book -> end, resetting track to 1"));
       saveProgress();
       resetPlayback(currentTrack);
     }
@@ -94,25 +94,25 @@ void nextTrack(uint16_t track) {
 void previousTrack() {
   switch(myCard.mode) {
   case MODE_RANDOM:
-    printf("Mode random -> play track again\n");
+    Serial.println(F("Mode random -> play track again"));
     break;
 
   case MODE_ALBUM:
     currentTrack = max(currentTrack - 1, 1);
-    printf("Mode album -> previous track\n");
+    Serial.println(F("Mode album -> previous track"));
     break;
 
   case MODE_PARTY:
-    printf("Party mode -> Replay current track\n");
+    Serial.println(F("Party mode -> Replay current track"));
     break;
 
   case MODE_SINGLE:
-    printf("Mode single -> Replay current track\n");
+    Serial.println(F("Mode single -> Replay current track"));
     break;
 
   case MODE_BOOK:
     currentTrack = max(currentTrack - 1, 1);
-    printf("Mode book -> previous track (saved)\n");
+    Serial.println(F("Mode book -> previous track (saved)"));
     saveProgress();
     break;
   }
