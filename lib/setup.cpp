@@ -10,10 +10,6 @@ void mySetup() {
   Serial.begin(115200); // Debug via Serial interface
   randomSeed(analogRead(A0)); // Initalize random number generator
 
-	// Set up stdoud
-	fdev_setup_stream(&serial_stdout, serial_putchar, NULL, _FDEV_SETUP_WRITE);
-	stdout = &serial_stdout;
-
   Serial.println(F("LinUINO Version 1.0"));
   Serial.println(F("based on work by Thorsten Voß"));
 
