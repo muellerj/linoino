@@ -2,17 +2,22 @@
 
 require "rake"
 
+class String
+  def sanitise
+    self.
+      delete("\n").
+      gsub("ä", "ae").gsub("ä", "ae").
+      gsub("ö", "oe").
+      gsub("ü", "ue").gsub("ü", "ue").
+      gsub("ß", "ss").
+      tr_s("^a-z0-9\-.", "_")
+  end
+end
+
 def bestname(path)
   dir  = File.dirname(path)
   name = File.basename(path)
-
-  basename = name.
-    downcase.
-    gsub("ä", "ae").
-    gsub("ö", "oe").
-    gsub("ü", "ue").
-    gsub("ß", "ss").
-    gsub(/[^a-z0-9\-_.]/, "_")
+  basename = name.downcase.sanitise
 
   i = (basename[/^\d+/] || 1).to_i
 
@@ -28,17 +33,20 @@ def bestname(path)
   File.join(dir, name)
 end
 
-path = ARGV.shift
+def main
+  path = ARGV.shift
 
-files = Dir.glob(File.join(path, "*.m4a"))
+  files = Dir.glob(File.join(path, "*.m4a"))
 
-files.sort.each do |file|
-  newname = bestname(file.ext(".mp3"))
-  puts "Converting #{file} -> #{newname}"
-  system "ffmpeg", \
-    "-i", file, \
-    "-acodec", "libmp3lame", \
-    "-aq", "2", \
-    newname
+  files.sort.each do |file|
+    newname = bestname(file.ext(".mp3"))
+    puts "Converting #{file} -> #{newname}"
+    system "ffmpeg", \
+      "-i", file, \
+      "-acodec", "libmp3lame", \
+      "-aq", "2", \
+      newname
+  end
 end
 
+main
