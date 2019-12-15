@@ -18,11 +18,11 @@ i = (basename[/^\d+/] || 1).to_i
 
 basename.gsub!(/^\d+[\-_]*/, "")
 
-name = sprintf("%04d", i) + "_" + basename
+name = sprintf("%03d", i) + "_" + basename
 
 while File.exist?(File.join(dir, name))
   i += 1
-  name = sprintf("%04d", i) + "_" + basename
+  name = sprintf("%03d", i) + "_" + basename
 end
 
 puts File.join(dir, name)

@@ -13,11 +13,11 @@ NAME=$(basename "$1" ".*" | \
   sed "s/^\d\+_*//")
 
 i=1
-name="$(printf "%04d" $i)_${NAME}"
+name="$(printf "%03d" $i)_${NAME}"
 
 while [ -f "$DIR/$name" ]; do
   i=$((i + 1))
-  name="$(printf "%04d" $i)_${NAME}"
+  name="$(printf "%03d" $i)_${NAME}"
 done
 
 echo "${DIR}/${name}"
