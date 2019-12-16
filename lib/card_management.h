@@ -45,7 +45,7 @@ MFRC522::StatusCode status;
 
 void onNewCard();
 void resetCard();
-void setupCard();
+void setupCard(bool reset = false);
 void forgetCard();
 void rememberCard();
 bool isSameCard();

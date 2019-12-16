@@ -28,9 +28,7 @@ void resetCard() {
   if (!mfrc522.PICC_ReadCardSerial())
     return;
 
-  setupCard();
-  playMessage(999);
-  memcpy(lastCardUid, 0, 4);
+  setupCard(true);
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();
 }
@@ -47,7 +45,7 @@ bool isSameCard() {
   return (memcmp(lastCardUid, mfrc522.uid.uidByte, 4) == 0);
 }
 
-void setupCard() {
+void setupCard(bool reset = false) {
   pausePlayback();
   Serial.println(F("Configure new card"));
 
@@ -61,8 +59,15 @@ void setupCard() {
     myCard.special = promptUserSelection(320, 1, getTrackCount(), myCard.folder);  
   }
 
-  pausePlayback();
   writeCard(myCard);
+
+  if (reset) {
+    playMessage(999);
+  } else {
+    playMessage(998);
+  }
+
+  forgetCard();
 }
 
 bool readCard(nfcTagObject *nfcTag) {
