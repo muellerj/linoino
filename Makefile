@@ -26,8 +26,7 @@ convert:
 	bin/convert_songs $(TC)
 
 copy:
-	rm -rf $(SDCARD)/*
-	rsync -zarv --progress --include="*/" --include="*.mp3" --exclude="*" $(TC)/ $(SDCARD)/
+	rsync -zarv --delete --progress --include="*/" --include="*.mp3" --exclude="*" $(TC)/ $(SDCARD)/
 	find $(SDCARD) -name '.*' | xargs rm -rf
 
 clean:
