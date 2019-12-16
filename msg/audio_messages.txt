@@ -21,4 +21,5 @@ mp3/0401_error.mp3|Oh weh! Das hat leider nicht geklappt!.
 mp3/0800_reset_tag.mp3|Bitte lege die zu löschende Karte auf! Zum Abbrechen einfach eine der Lautstärke Tasten drücken!
 mp3/0801_reset_tag_ok.mp3|OK, du kannst den Tag nun wieder neu konfigurieren.
 mp3/0802_reset_aborted.mp3|OK, ich habe den Vorgang abgebrochen.
+mp3/0998_setup_ok.mp3|Setup wurde durchgeführt!
 mp3/0999_reset_ok.mp3|Reset wurde durchgeführt!
