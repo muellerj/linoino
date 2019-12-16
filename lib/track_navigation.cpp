@@ -38,7 +38,9 @@ void playMessage(uint16_t message) {
 }
 
 void pausePlayback() { mp3.pause(); }
-void startPlayback() { mp3.start(); }
+void startPlayback() { 
+  if (hasCard) { mp3.start(); }
+}
 
 void nextTrack(uint16_t track) {
 
