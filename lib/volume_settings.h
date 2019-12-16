@@ -1,5 +1,5 @@
-const uint8_t DEFAULT_VOLUME = 10;
-const uint8_t MAX_VOLUME     = 20;
+const uint8_t DEFAULT_VOLUME = 8;
+const uint8_t MAX_VOLUME     = 15;
 const uint8_t MIN_VOLUME     = 0;
 
 void volumeUp();
