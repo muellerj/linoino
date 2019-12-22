@@ -31,6 +31,7 @@ void setup() {
 
 void loop() {
   mp3.loop();
+  //pollStandby();
 
   switch(pollButtons()) {
     case BTN_PAUSE_LONGPRESS:  isPlaying() ? pausePlayback() : resetCard(); break;
@@ -41,20 +42,11 @@ void loop() {
     case BTN_DOWN_SHORTPRESS:  volumeDown(); break;
   }
 
-  uint8_t now = millis();
-  uint8_t timeGone = static_cast<uint8_t>(now - lastCardPoll);
-
-  if (timeGone > minPollInterval) {
-    lastCardPoll = now;
-
-    switch (pollCard()) {
-      case PCS_NEW_CARD:     onNewCard(); break;
-      case PCS_CARD_GONE:    pausePlayback(); setstandbyTimer(); break;
-      case PCS_CARD_IS_BACK: startPlayback(); disablestandbyTimer(); break;
-    }
+  switch (pollCard()) {
+    case PCS_NEW_CARD:     onNewCard(); break;
+    case PCS_CARD_GONE:    pausePlayback(); setstandbyTimer(); break;
+    case PCS_CARD_IS_BACK: startPlayback(); disablestandbyTimer(); break;
   }
-
-  //pollStandby();
 }
 
 #include "lib/debug.cpp"

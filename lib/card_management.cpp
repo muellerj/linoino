@@ -195,36 +195,47 @@ void handleKnownCard() {
 }
 
 byte pollCard() {
-  if (!hasCard) {
-    if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial() && readCard(&myCard)) {
-      bool sameCard = isSameCard();
-      Serial.println("Same card: " + String(sameCard));
-      rememberCard();
-      lastCardWasUL = mfrc522.PICC_GetType(mfrc522.uid.sak) == MFRC522::PICC_TYPE_MIFARE_UL;
+  uint8_t now = millis();
+  uint8_t timeGone = static_cast<uint8_t>(now - lastCardPoll);
 
-      retries = 0;
-      hasCard = true;
-      return sameCard ? PCS_CARD_IS_BACK : PCS_NEW_CARD;
+  if (timeGone > minPollInterval) {
+    lastCardPoll = now;
+
+    if (!hasCard) {
+      if (mfrc522.PICC_IsNewCardPresent() && \
+          mfrc522.PICC_ReadCardSerial() && \
+          readCard(&myCard)) {
+        bool sameCard = isSameCard();
+        Serial.println("Same card: " + String(sameCard));
+        rememberCard();
+        lastCardWasUL = mfrc522.PICC_GetType(mfrc522.uid.sak) == MFRC522::PICC_TYPE_MIFARE_UL;
+
+        retries = 0;
+        hasCard = true;
+        return sameCard ? PCS_CARD_IS_BACK : PCS_NEW_CARD;
+      }
+      return PCS_NO_CHANGE;
+    } else {
+      // perform a dummy read command just to see whether the card is in range
+      byte buffer[18];
+      byte size = sizeof(buffer);
+
+      if (mfrc522.MIFARE_Read(lastCardWasUL ? 8 : blockAddr, buffer, &size) != MFRC522::STATUS_OK) {
+        if (retries < maxRetries) {
+          retries++;
+        } else {
+            Serial.println(F("card gone"));
+            mfrc522.PICC_HaltA();
+            mfrc522.PCD_StopCrypto1();
+            hasCard = false;
+            return PCS_CARD_GONE;
+        }
+      } else {
+        retries = 0;
+      }
     }
     return PCS_NO_CHANGE;
   } else {
-    // perform a dummy read command just to see whether the card is in range
-    byte buffer[18];
-    byte size = sizeof(buffer);
-
-    if (mfrc522.MIFARE_Read(lastCardWasUL ? 8 : blockAddr, buffer, &size) != MFRC522::STATUS_OK) {
-      if (retries < maxRetries) {
-        retries++;
-      } else {
-          Serial.println(F("card gone"));
-          mfrc522.PICC_HaltA();
-          mfrc522.PCD_StopCrypto1();
-          hasCard = false;
-          return PCS_CARD_GONE;
-      }
-    } else {
-      retries = 0;
-    }
+    return PCS_NO_CHANGE;
   }
-  return PCS_NO_CHANGE;
 }
