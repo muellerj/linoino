@@ -1,7 +1,7 @@
 void setstandbyTimer() {
   Serial.println(F("Setting standby timer"));
   sleepAtMillis = millis() + standbyTimer;
-  printf("Sleeping at %d\n", sleepAtMillis);
+  Serial.println("Sleeping at " + String(sleepAtMillis));
 }
 
 void disablestandbyTimer() {
