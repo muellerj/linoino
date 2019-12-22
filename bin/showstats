@@ -1,0 +1,7 @@
+#!/bin/sh
+
+sources=$(cat lib/*.cpp linuino.ino | grep -v '^\s*$' | wc -l)
+headers=$(cat lib/*.h | grep -v '^\s*$' | wc -l)
+
+echo "$sources lines of code"
+echo "$headers lines of headers"

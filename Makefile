@@ -25,6 +25,9 @@ dummysongs:
 convert:
 	bin/convert_songs $(TC)
 
+stats:
+	bin/showstats
+
 copy:
 	rsync -zarv --delete --progress --include="*/" --include="*.mp3" --exclude="*" $(TC)/ $(SDCARD)/
 	find $(SDCARD) -name '.*' | xargs rm -rf
