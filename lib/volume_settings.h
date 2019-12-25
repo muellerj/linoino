@@ -1,6 +1,6 @@
 const uint8_t DEFAULT_VOLUME = 8;
 const uint8_t MAX_VOLUME     = 15;
-const uint8_t MIN_VOLUME     = 0;
+const uint8_t MIN_VOLUME     = 1;
 
 void volumeUp();
 void volumeDown();
