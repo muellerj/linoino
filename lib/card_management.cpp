@@ -21,7 +21,11 @@ void resetCard() {
         Serial.println(F("Aborted!"));
         playMessage(802);
         return;
-      break;
+        break;
+      case BTN_PAUSE_SHORTPRESS:
+        Serial.println(F("Restarting..."));
+        fullReset();
+        break;
     }
   } while (!mfrc522.PICC_IsNewCardPresent());
 

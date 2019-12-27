@@ -5,3 +5,5 @@ void dump_byte_array(byte *buffer, byte bufferSize) {
     Serial.print(buffer[i], HEX);
   }
 }
+
+void noOp() {}

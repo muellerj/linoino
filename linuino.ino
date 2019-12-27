@@ -34,8 +34,8 @@ void loop() {
   //pollStandby();
 
   switch(pollButtons()) {
-    case BTN_PAUSE_LONGPRESS:  isPlaying() ? pausePlayback() : resetCard(); break;
-    case BTN_PAUSE_SHORTPRESS: isPlaying() ? pausePlayback() : startPlayback(); break;
+    case BTN_PAUSE_LONGPRESS:  isPlaying() ? noOp() : resetCard(); break;
+    case BTN_PAUSE_SHORTPRESS: isPlaying() ? noOp() : noOp(); break;
     case BTN_UP_LONGPRESS:     nextTrack(random(65536)); break;
     case BTN_UP_SHORTPRESS:    volumeUp(); break;
     case BTN_DOWN_LONGPRESS:   previousTrack(); break;
