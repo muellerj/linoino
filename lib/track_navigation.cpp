@@ -15,10 +15,10 @@ void saveProgress() {
 
 void resetPlayback(uint16_t track) {
   uint8_t currentVolume = getVolume();
-  setVolume(0);
+  mp3.setVolume(0);
   playTrack(track);
   pausePlayback();
-  setVolume(currentVolume);
+  mp3.setVolume(currentVolume);
 }
 
 void playTrack(uint8_t track) {
