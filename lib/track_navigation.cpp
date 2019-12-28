@@ -17,15 +17,19 @@ void resetPlayback(uint16_t track) {
   uint8_t currentVolume = getVolume();
   mp3.setVolume(0);
   playTrack(track);
-  pausePlayback();
+  delay(500);
+  mp3.pause();
   mp3.setVolume(currentVolume);
 }
 
 void playTrack(uint8_t track) {
+  Serial.println("Playing track " + String(track));
   mp3.playFolderTrack(myCard.folder, track);
 }
 
 void playTrack(uint8_t folder, uint8_t track) {
+  Serial.println("Playing track " + String(track) + \
+                 " from folder " + String(folder));
   mp3.playFolderTrack(folder, track);
 }
 
