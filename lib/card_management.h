@@ -22,7 +22,6 @@ const uint8_t minPollInterval = 100;
 
 const byte PCS_NO_CHANGE     = 0; // no change detected since last pollCard()
 const byte PCS_NEW_CARD      = 1; // card with new UID detected 
-                                  // (had no card or other card before)
 const byte PCS_CARD_GONE     = 2; // card is not reachable anymore
 const byte PCS_CARD_IS_BACK  = 3; // card was gone, and is now back again
 
