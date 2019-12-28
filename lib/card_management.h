@@ -9,7 +9,6 @@ struct nfcTagObject {
 
 nfcTagObject myCard;
 
-bool knownCard = false;
 bool hasCard = false;
 byte lastCardUid[4];
 byte retries;

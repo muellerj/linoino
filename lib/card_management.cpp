@@ -11,7 +11,6 @@
 
 void resetCard() {
   Serial.println(F("Reset card..."));
-  knownCard = false;
   playMessage(800);
 
   do {
@@ -173,10 +172,8 @@ void onNewCard() {
   randomSeed(millis() + random(1000));
   if (readCard(&myCard) == true) {
     if (myCard.cookie == 322417479 && myCard.folder != 0 && myCard.mode != 0) {
-      knownCard = true;
       handleKnownCard();
     } else {
-      knownCard = false;
       setupCard();
     }
   }

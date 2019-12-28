@@ -48,7 +48,7 @@ void startPlayback() {
 
 void nextTrack(uint16_t track) {
 
-  if (track == lastTrackFinished || !knownCard) return;
+  if (track == lastTrackFinished) return;
 
   lastTrackFinished = track;
 
