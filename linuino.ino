@@ -31,7 +31,12 @@ void setup() {
 
 void loop() {
   mp3.loop();
-  //pollStandby();
+  
+  switch(pollStandby()) {
+    case STDBY_DISABLED:
+    case STDBY_NOT_YET:  noOp(); break;
+    case STDBY_ACTIVATE: setStandby(); break;
+  }
 
   switch(pollButtons()) {
     case BTN_PAUSE_LONGPRESS:  isPlaying() ? noOp() : resetCard(); break;

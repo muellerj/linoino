@@ -1,6 +1,11 @@
-unsigned long standbyTimer = 5 * 60 * 1000; // miliseconds
-unsigned long sleepAtMillis = 0; // miliseconds
+unsigned long standbyTimer = 10 * 1000; // miliseconds
+unsigned long standbyAtMillis = 0; // miliseconds
+
+const byte STDBY_DISABLED    = 0;
+const byte STDBY_NOT_YET     = 1;
+const byte STDBY_ACTIVATE    = 2;
 
 void setstandbyTimer();
 void disablestandbyTimer();
-void pollStandby();
+byte pollStandby();
+void setStandby();
