@@ -21,6 +21,9 @@ void mySetup() {
   // Busy Pin
   pinMode(busyPin, INPUT);
 
+  // Standby timer
+  setstandbyTimer();
+
   // Initialize DFPlayer Mini
   mp3.begin();
   setVolume(DEFAULT_VOLUME);
