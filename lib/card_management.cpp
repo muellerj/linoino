@@ -10,6 +10,7 @@
  */
 
 void resetCard() {
+  disablestandbyTimer();
   Serial.println(F("Reset card..."));
   playMessage(800);
 
@@ -169,6 +170,7 @@ void writeCard(nfcTagObject nfcTag) {
 }
 
 void onNewCard() {
+  disablestandbyTimer();
   randomSeed(millis() + random(1000));
   if (readCard(&myCard) == true) {
     if (myCard.cookie == 322417479 && myCard.folder != 0 && myCard.mode != 0) {

@@ -41,9 +41,16 @@ void playMessage(uint16_t message) {
   mp3.playMp3FolderTrack(message);
 }
 
-void pausePlayback() { mp3.pause(); }
+void pausePlayback() { 
+  mp3.pause(); 
+  setstandbyTimer();
+}
+
 void startPlayback() { 
-  if (hasCard) { mp3.start(); }
+  if (!hasCard) return;
+  Serial.println("Starting playback");
+  mp3.start();
+  disablestandbyTimer();
 }
 
 void nextTrack(uint16_t track) {
@@ -55,7 +62,7 @@ void nextTrack(uint16_t track) {
   switch(myCard.mode) {
   case MODE_RANDOM:
     Serial.println(F("Mode random -> stop"));
-    resetPlayback(currentTrack);
+    resetPlayback(newRandomTrack(trackCount));
     break;
 
   case MODE_SINGLE:

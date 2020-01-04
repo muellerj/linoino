@@ -49,8 +49,8 @@ void loop() {
 
   switch (pollCard()) {
     case PCS_NEW_CARD:     onNewCard(); break;
-    case PCS_CARD_GONE:    pausePlayback(); setstandbyTimer(); break;
-    case PCS_CARD_IS_BACK: startPlayback(); disablestandbyTimer(); break;
+    case PCS_CARD_GONE:    pausePlayback(); break;
+    case PCS_CARD_IS_BACK: startPlayback(); break;
   }
 }
 
