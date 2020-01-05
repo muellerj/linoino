@@ -92,7 +92,6 @@ bool readCard(nfcTagObject *nfcTag) {
   if (status != MFRC522::STATUS_OK) {
     returnValue = false;
     Serial.println("PCD_Authenticate() failed: " + String(mfrc522.GetStatusCodeName(status)));
-    return;
   }
 
   // Show the whole sector as it currently is
