@@ -1,12 +1,13 @@
 void setstandbyTimer() {
-  Serial.println(F("Setting standby timer"));
+  Serial.println("Standby in " + String(standbyTimer / 1000UL) + "s");
   standbyAtMillis = millis() + standbyTimer;
-  Serial.println("Going to standby in " + String(standbyTimer/1000) + "s");
 }
 
 void disablestandbyTimer() {
-  Serial.println(F("Disabling standby timer"));
-  standbyAtMillis = 0;
+  if (standbyAtMillis != 0) {
+    Serial.println(F("Disabling standby timer"));
+    standbyAtMillis = 0;
+  }
 }
 
 byte pollStandby() {
