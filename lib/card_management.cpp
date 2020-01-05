@@ -63,13 +63,7 @@ void setupCard(bool reset = false) {
   }
 
   writeCard(myCard);
-
-  if (reset) {
-    playMessage(999);
-  } else {
-    playMessage(998);
-  }
-
+  playMessage(reset ? 999 : 998);
   forgetCard();
 }
 
@@ -169,7 +163,7 @@ void writeCard(nfcTagObject nfcTag) {
 
 void onNewCard() {
   randomSeed(millis() + random(1000));
-  if (readCard(&myCard) == true) {
+  if (readCard(&myCard)) {
     if (myCard.cookie == 322417479 && myCard.folder != 0 && myCard.mode != 0) {
       handleKnownCard();
     } else {
