@@ -1,5 +1,5 @@
 unsigned long standbyTimer = 100UL * 1000UL; // miliseconds
-unsigned long standbyAtMillis = 0; // miliseconds
+unsigned long standbyMillis = 0; // miliseconds
 
 const byte STDBY_DISABLED    = 0;
 const byte STDBY_NOT_YET     = 1;
