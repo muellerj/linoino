@@ -1,4 +1,4 @@
-#define ENABLE_STANDBY false
+#define ENABLE_STANDBY true
 
 unsigned long standbyTimer = 100UL * 1000UL; // miliseconds
 unsigned long standbyMillis = 0; // miliseconds
