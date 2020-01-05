@@ -20,6 +20,8 @@ const byte maxRetries = 2;
 
 const uint8_t minPollInterval = 100;
 
+const uint32_t cardCookie = 322417479;
+
 const byte PCS_NO_CHANGE     = 0; // no change detected since last pollCard()
 const byte PCS_NEW_CARD      = 1; // card with new UID detected 
 const byte PCS_CARD_GONE     = 2; // card is not reachable anymore

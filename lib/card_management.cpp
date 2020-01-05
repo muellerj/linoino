@@ -68,7 +68,6 @@ void setupCard(bool reset = false) {
 }
 
 bool readCard(nfcTagObject *nfcTag) {
-  bool returnValue = true;
   // Show some details of the PICC (that is: the tag/card)
   Serial.println(F("Card UID:"));
   dump_byte_array(mfrc522.uid.uidByte, mfrc522.uid.size);
@@ -83,9 +82,11 @@ bool readCard(nfcTagObject *nfcTag) {
   Serial.println(F("Authenticating using key A..."));
   status = (MFRC522::StatusCode)mfrc522.PCD_Authenticate(
       MFRC522::PICC_CMD_MF_AUTH_KEY_A, trailerBlock, &key, &(mfrc522.uid));
+
   if (status != MFRC522::STATUS_OK) {
-    returnValue = false;
     Serial.println("PCD_Authenticate() failed: " + String(mfrc522.GetStatusCodeName(status)));
+    mfrc522.PCD_Init();
+    return false;
   }
 
   // Show the whole sector as it currently is
@@ -97,17 +98,13 @@ bool readCard(nfcTagObject *nfcTag) {
   Serial.println("Reading data from block " + String(blockAddr) + "...");
   status = (MFRC522::StatusCode)mfrc522.MIFARE_Read(blockAddr, buffer, &size);
   if (status != MFRC522::STATUS_OK) {
-    returnValue = false;
     Serial.println("MIFARE_Read() failed: " + String(mfrc522.GetStatusCodeName(status)));
+    mfrc522.PCD_Init();
+    return false;
   }
 
-  // printf("Data in block %d:", blockAddr);
-  // dump_byte_array(buffer, 16);
-  // Serial.println(F(""));
-  // Serial.println(F(""));
-
   uint32_t tempCookie;
-  tempCookie = (uint32_t)buffer[0] << 24;
+  tempCookie  = (uint32_t)buffer[0] << 24;
   tempCookie += (uint32_t)buffer[1] << 16;
   tempCookie += (uint32_t)buffer[2] << 8;
   tempCookie += (uint32_t)buffer[3];
@@ -118,7 +115,7 @@ bool readCard(nfcTagObject *nfcTag) {
   nfcTag->mode    = buffer[6];
   nfcTag->special = buffer[7];
 
-  return returnValue;
+  return true;
 }
 
 void writeCard(nfcTagObject nfcTag) {
@@ -163,12 +160,10 @@ void writeCard(nfcTagObject nfcTag) {
 
 void onNewCard() {
   randomSeed(millis() + random(1000));
-  if (readCard(&myCard)) {
-    if (myCard.cookie == 322417479 && myCard.folder != 0 && myCard.mode != 0) {
-      handleKnownCard();
-    } else {
-      setupCard();
-    }
+  if (myCard.cookie == cardCookie && myCard.folder != 0 && myCard.mode != 0) {
+    handleKnownCard();
+  } else {
+    setupCard();
   }
 }
 
@@ -201,14 +196,17 @@ byte pollCard() {
     if (mfrc522.PICC_IsNewCardPresent() && \
         mfrc522.PICC_ReadCardSerial() && \
         readCard(&myCard)) {
-      bool sameCard = isSameCard();
-      Serial.println("Same card: " + String(sameCard));
-      rememberCard();
-      lastCardWasUL = mfrc522.PICC_GetType(mfrc522.uid.sak) == MFRC522::PICC_TYPE_MIFARE_UL;
-
       retries = 0;
       hasCard = true;
-      return sameCard ? PCS_CARD_IS_BACK : PCS_NEW_CARD;
+      if (isSameCard()) {
+        rememberCard();
+        Serial.println(F("Same card detected"));
+        return PCS_CARD_IS_BACK;
+      } else {
+        rememberCard();
+        Serial.println(F("New card detected"));
+        return PCS_NEW_CARD;
+      }
     } else {
       return PCS_NO_CHANGE;
     }
@@ -217,11 +215,11 @@ byte pollCard() {
     byte buffer[18];
     byte size = sizeof(buffer);
 
-    if (mfrc522.MIFARE_Read(lastCardWasUL ? 8 : blockAddr, buffer, &size) != MFRC522::STATUS_OK) {
+    if (mfrc522.MIFARE_Read(blockAddr, buffer, &size) != MFRC522::STATUS_OK) {
       if (retries < maxRetries) {
         retries++;
       } else {
-        Serial.println(F("card gone"));
+        Serial.println(F("Card gone"));
         mfrc522.PICC_HaltA();
         mfrc522.PCD_StopCrypto1();
         hasCard = false;
