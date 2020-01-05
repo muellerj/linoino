@@ -31,6 +31,8 @@ void setup() {
 
 void loop() {
   mp3.loop();
+
+  if (isPlaying()) disablestandbyTimer();
   
   switch(pollStandby()) {
     case STDBY_DISABLED:

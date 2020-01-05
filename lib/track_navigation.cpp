@@ -48,9 +48,7 @@ void pausePlayback() {
 
 void startPlayback() { 
   if (!hasCard) return;
-  Serial.println("Starting playback");
   mp3.start();
-  disablestandbyTimer();
 }
 
 void nextTrack(uint16_t track) {

@@ -1,7 +1,7 @@
 void setstandbyTimer() {
   Serial.println(F("Setting standby timer"));
   standbyAtMillis = millis() + standbyTimer;
-  Serial.println("Going to standby in " + String(standbyTimer) + "ms");
+  Serial.println("Going to standby in " + String(standbyTimer/1000) + "s");
 }
 
 void disablestandbyTimer() {
