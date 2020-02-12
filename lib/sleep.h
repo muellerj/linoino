@@ -1,4 +1,4 @@
-unsigned long sleepTimer = 20UL * 1000UL; // miliseconds
+unsigned long sleepTimer = 15UL * 60UL * 1000UL; // miliseconds
 unsigned long sleepMillis = 0; // miliseconds
 
 const byte SLEEP_DISABLED    = 0;
