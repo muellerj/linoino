@@ -32,5 +32,6 @@ byte pollSleep() {
 
 void goToSleep() {
   Serial.println(F("Going to sleep NOW!"));
+  sleepMillis = 0;
   pausePlayback();
 }
