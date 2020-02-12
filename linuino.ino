@@ -18,6 +18,7 @@
 #include "lib/debug.h"
 #include "lib/setup.h"
 #include "lib/standby.h"
+#include "lib/sleep.h"
 #include "lib/button_interface.h"
 #include "lib/track_navigation.h"
 #include "lib/card_management.h"
@@ -40,8 +41,14 @@ void loop() {
     case STDBY_ACTIVATE: setStandby(); break;
   }
 
+  switch(pollSleep()) {
+    case SLEEP_DISABLED:
+    case SLEEP_NOT_YET:  noOp(); break;
+    case SLEEP_ACTIVATE: goToSleep(); break;
+  }
+
   switch(pollButtons()) {
-    case BTN_PAUSE_LONGPRESS:  isPlaying() ? noOp() : resetCard(); break;
+    case BTN_PAUSE_LONGPRESS:  isPlaying() ? setSleepTimer() : resetCard(); break;
     case BTN_PAUSE_SHORTPRESS: noOp(); break;
     case BTN_UP_LONGPRESS:     nextTrack(random(65536)); break;
     case BTN_UP_SHORTPRESS:    volumeUp(); break;
@@ -59,6 +66,7 @@ void loop() {
 #include "lib/debug.cpp"
 #include "lib/setup.cpp"
 #include "lib/standby.cpp"
+#include "lib/sleep.cpp"
 #include "lib/button_interface.cpp"
 #include "lib/voice_menu.cpp"
 #include "lib/card_management.cpp"
