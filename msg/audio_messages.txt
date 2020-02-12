@@ -17,6 +17,10 @@ mp3/0332.mp3|Ja, Nummer ansagen.
 mp3/0400_ok.mp3|OK. Ich habe die Karte konfiguriert.
 mp3/0401_error.mp3|Oh weh! Das hat leider nicht geklappt!.
 
+# Sleep
+mp3/0500_activate_sleep_timer.mp3|Schlaf-Timer aktiv.
+mp3/0501_activate_sleep_timer.mp3|Schlaf-Timer aus.
+
 # Card reset
 mp3/0800_reset_tag.mp3|Bitte lege die zu löschende Karte auf! Abbruch mit Lautstärke, Reset mit Pause.
 mp3/0801_reset_tag_ok.mp3|OK, du kannst den Tag nun wieder neu konfigurieren.

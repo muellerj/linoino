@@ -1,11 +1,17 @@
 void setSleepTimer() {
   Serial.println("Sleep in " + String(sleepTimer / 1000UL) + "s");
+  pausePlayback();
+  delay(1000);
+  startPlayback();
   sleepMillis = millis() + sleepTimer;
 }
 
 void disableSleepTimer() {
   if (sleepMillis != 0) {
     Serial.println(F("Disabling sleep timer"));
+    pausePlayback();
+    delay(200);
+    startPlayback();
     sleepMillis = 0;
   }
 }
