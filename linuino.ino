@@ -48,7 +48,7 @@ void loop() {
   }
 
   switch(pollButtons()) {
-    case BTN_PAUSE_LONGPRESS:  isPlaying() ? setSleepTimer() : resetCard(); break;
+    case BTN_PAUSE_LONGPRESS:  isPlaying() ? toggleSleepTimer() : resetCard(); break;
     case BTN_PAUSE_SHORTPRESS: noOp(); break;
     case BTN_UP_LONGPRESS:     nextTrack(random(65536)); break;
     case BTN_UP_SHORTPRESS:    volumeUp(); break;

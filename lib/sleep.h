@@ -7,5 +7,6 @@ const byte SLEEP_ACTIVATE    = 2;
 
 void setSleepTimer();
 void disableSleepTimer();
+void toggleSleepTimer();
 byte pollSleep();
 void goToSleep();
