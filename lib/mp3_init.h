@@ -1,37 +1,32 @@
 class Mp3Notify {
   public:
     static void OnError(uint16_t errorCode) {
-      printf("Com Error %d\n", errorCode);
+      Serial.println("Com Error " + String(errorCode));
     }
 
-    static void OnPlayFinished(uint16_t track) {
-      printf("End of track %d\n", track);
+    static void PrintlnSourceAction(DfMp3_PlaySources source, const char* action) {
+       if (source & DfMp3_PlaySources_Sd) Serial.print("SD Karte ");
+       if (source & DfMp3_PlaySources_Usb) Serial.print("USB ");
+       if (source & DfMp3_PlaySources_Flash) Serial.print("Flash ");
+       Serial.println(action);
+     }
+
+    static void OnPlayFinished(DfMp3_PlaySources source, uint16_t track) {
+      Serial.println("End of track " + String(track));
       delay(100);
       nextTrack(track);
     }
 
-    static void OnCardOnline(uint16_t code) {
-      printf("SD Karte online\n");
+    static void OnPlaySourceOnline(DfMp3_PlaySources source) {
+      PrintlnSourceAction(source, "online");
     }
 
-    static void OnCardInserted(uint16_t code) {
-      printf("SD Karte bereit\n");
-    }
+    static void OnPlaySourceInserted(DfMp3_PlaySources source) {
+       PrintlnSourceAction(source, "ready");
+     }
 
-    static void OnCardRemoved(uint16_t code) {
-      printf("SD Karte entfernt\n");
-    }
-
-    static void OnUsbOnline(uint16_t code) {
-      printf("USB online\n");
-    }
-
-    static void OnUsbInserted(uint16_t code) {
-      printf("USB bereit\n");
-    }
-
-    static void OnUsbRemoved(uint16_t code) {
-      printf("USB entfernt\n");
+    static void OnPlaySourceRemoved(DfMp3_PlaySources source) {
+      PrintlnSourceAction(source, "removed");
     }
 };
 
