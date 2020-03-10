@@ -5,13 +5,13 @@ case "$(uname -s)" in
   Darwin)
     echo "Installing on MacOS"
     brew install lame sox
-    curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+    test bin/arduino-cli || curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
     ;;
 
   Linux)
     echo "Installing on Linux"
-    curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
     sudo apk add lame sox
+    test bin/arduino-cli || curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
     ;;
 
   *)
