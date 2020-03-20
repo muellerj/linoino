@@ -16,8 +16,8 @@ void(* fullReset) (void) = 0;
 nfcTagObject myCard;
 
 bool hasCard = false;
-byte lastCardUid[4];
-byte retries;
+uint8_t lastCardUid[4];
+uint8_t retries;
 uint8_t lastCardPoll = 0;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
@@ -25,9 +25,9 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 MFRC522::StatusCode status;
 MFRC522::MIFARE_Key key;
 
-byte sector = 1;
-byte blockAddr = 4;
-byte trailerBlock = 7;
+uint8_t sector = 1;
+uint8_t blockAddr = 4;
+uint8_t trailerBlock = 7;
 
 void resetCard() {
   Serial.println(F("Reset card..."));
@@ -96,8 +96,8 @@ bool readCard(nfcTagObject *nfcTag) {
   MFRC522::PICC_Type piccType = mfrc522.PICC_GetType(mfrc522.uid.sak);
   Serial.println("PICC type: " + String(mfrc522.PICC_GetTypeName(piccType)));
 
-  byte buffer[18];
-  byte size = sizeof(buffer);
+  uint8_t buffer[18];
+  uint8_t size = sizeof(buffer);
 
   // Authenticate using key A
   Serial.println(F("Authenticating using key A..."));
@@ -140,18 +140,13 @@ bool readCard(nfcTagObject *nfcTag) {
 }
 
 void writeCard(nfcTagObject nfcTag) {
-  MFRC522::PICC_Type mifareType;
-  byte buffer[16] = {0x13, 0x37, 0xb3, 0x47, // 0x1337 0xb347 magic cookie to
+  uint8_t buffer[16] = {0x13, 0x37, 0xb3, 0x47, // 0x1337 0xb347 magic cookie to
                                              // identify our nfc tags
                      0x01,                   // version 1
                      nfcTag.folder,          // the folder picked by the user
                      nfcTag.mode,    // the playback mode picked by the user
                      nfcTag.special, // track or function for admin cards
                      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-
-  byte size = sizeof(buffer);
-
-  mifareType = mfrc522.PICC_GetType(mfrc522.uid.sak);
 
   // Authenticate using key B
   Serial.println(F("Authenticating again using key B..."));
@@ -206,7 +201,7 @@ void handleKnownCard() {
   playTrack(currentTrack);
 }
 
-byte pollCard() {
+uint8_t pollCard() {
   uint8_t now = millis();
   uint8_t timeGone = static_cast<uint8_t>(now - lastCardPoll);
   const uint8_t maxRetries = 2;
@@ -237,8 +232,8 @@ byte pollCard() {
     }
   } else {
     // perform a dummy read command just to see whether the card is in range
-    byte buffer[18];
-    byte size = sizeof(buffer);
+    uint8_t buffer[18];
+    uint8_t size = sizeof(buffer);
 
     if (mfrc522.MIFARE_Read(blockAddr, buffer, &size) != MFRC522::STATUS_OK) {
       if (retries < maxRetries) {
@@ -255,4 +250,7 @@ byte pollCard() {
       return PCS_NO_CHANGE;
     }
   }
+  
+  // Just to squelch compiler warnings
+  return PCS_NO_CHANGE;
 }

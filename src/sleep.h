@@ -5,5 +5,5 @@
 void setSleepTimer();
 void disableSleepTimer();
 void toggleSleepTimer();
-byte pollSleep();
+uint8_t pollSleep();
 void goToSleep();

@@ -6,5 +6,5 @@
 
 void setstandbyTimer();
 void disablestandbyTimer();
-byte pollStandby();
+uint8_t pollStandby();
 void setStandby();

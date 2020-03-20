@@ -29,7 +29,7 @@ void toggleSleepTimer() {
   }
 }
 
-byte pollSleep() {
+uint8_t pollSleep() {
   if (sleepMillis == 0) {
     return SLEEP_DISABLED;
   } else {

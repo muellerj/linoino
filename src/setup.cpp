@@ -34,7 +34,7 @@ void mySetup() {
   SPI.begin();        // Init SPI bus
   mfrc522.PCD_Init(); // Init MFRC522
   mfrc522.PCD_DumpVersionToSerial(); // Show details of PCD MFRC522 Card Reader
-  for (byte i = 0; i < 6; i++) {
+  for (uint8_t i = 0; i < 6; i++) {
     key.keyByte[i] = 0xFF;
   }
 

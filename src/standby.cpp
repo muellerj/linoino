@@ -17,7 +17,7 @@ void disablestandbyTimer() {
   }
 }
 
-byte pollStandby() {
+uint8_t pollStandby() {
   if (standbyMillis == 0 || !ENABLE_STANDBY) {
     return STDBY_DISABLED;
   } else {

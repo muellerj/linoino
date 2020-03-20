@@ -35,4 +35,4 @@ bool isSameCard();
 bool readCard(nfcTagObject *nfcTag);
 void writeCard(nfcTagObject nfcTag);
 void handleKnownCard();
-byte pollCard();
+uint8_t pollCard();
