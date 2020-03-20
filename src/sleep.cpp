@@ -1,3 +1,8 @@
+#include "headers.h"
+
+unsigned long sleepTimer = 15UL * 60UL * 1000UL; // miliseconds
+unsigned long sleepMillis = 0; // miliseconds
+
 void setSleepTimer() {
   Serial.println("Sleep in " + String(sleepTimer / 1000UL) + "s");
   pausePlayback();

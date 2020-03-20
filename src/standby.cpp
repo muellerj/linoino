@@ -1,3 +1,8 @@
+#include "headers.h"
+
+unsigned long standbyTimer = 100UL * 1000UL; // miliseconds
+unsigned long standbyMillis = 0; // miliseconds
+
 void setstandbyTimer() {
   if (ENABLE_STANDBY) {
     Serial.println("Standby in " + String(standbyTimer / 1000UL) + "s");

@@ -1,3 +1,5 @@
+#include "headers.h"
+
 /*
  * Card types:
  *
@@ -8,6 +10,24 @@
  *   - PARTY (play all files from one folder randomly, never stop)
  *
  */
+
+void(* fullReset) (void) = 0;
+
+nfcTagObject myCard;
+
+bool hasCard = false;
+byte lastCardUid[4];
+byte retries;
+uint8_t lastCardPoll = 0;
+
+MFRC522 mfrc522(SS_PIN, RST_PIN);
+
+MFRC522::StatusCode status;
+MFRC522::MIFARE_Key key;
+
+byte sector = 1;
+byte blockAddr = 4;
+byte trailerBlock = 7;
 
 void resetCard() {
   Serial.println(F("Reset card..."));
@@ -68,6 +88,7 @@ void setupCard(bool reset = false) {
 }
 
 bool readCard(nfcTagObject *nfcTag) {
+
   // Show some details of the PICC (that is: the tag/card)
   Serial.println(F("Card UID:"));
   dump_byte_array(mfrc522.uid.uidByte, mfrc522.uid.size);
@@ -159,6 +180,8 @@ void writeCard(nfcTagObject nfcTag) {
 }
 
 void onNewCard() {
+  const uint32_t cardCookie = 322417479;
+
   randomSeed(millis() + random(1000));
   if (myCard.cookie == cardCookie && myCard.folder != 0 && myCard.mode != 0) {
     handleKnownCard();
@@ -186,6 +209,8 @@ void handleKnownCard() {
 byte pollCard() {
   uint8_t now = millis();
   uint8_t timeGone = static_cast<uint8_t>(now - lastCardPoll);
+  const uint8_t maxRetries = 2;
+  const uint8_t minPollInterval = 100;
 
   if (timeGone < minPollInterval)
     return PCS_NO_CHANGE;

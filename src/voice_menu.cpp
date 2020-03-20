@@ -1,3 +1,5 @@
+#include "headers.h"
+
 void previewSelection(int folder, int track) {
   if (folder == -1) return;
   do { delay(10); } while (isPlaying());

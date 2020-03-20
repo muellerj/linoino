@@ -3,7 +3,7 @@ all: upload
 BOARD=arduino:avr:nano:cpu=atmega328old
 PORT=/dev/cu.wchusbserialfd3140
 OUT=out/linuino
-SRC=linuino.ino lib/*.cpp lib/*.h
+SRC=src/*
 TC=/Volumes/tiggercloud/Linuino
 SDCARD=/Volumes/LINUINO
 
@@ -61,7 +61,4 @@ upload: $(OUT).hex
 
 $(OUT).elf: $(SRC)
 	@mkdir -p out
-	@arduino-cli compile \
-		--fqbn $(BOARD) \
-		--output $(OUT) \
-		.  && $(call ok, "COMPILER")
+	@platformio run && $(call ok, "COMPILER")

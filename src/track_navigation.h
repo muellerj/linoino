@@ -1,9 +1,7 @@
 // DFPlayer Mini
-SoftwareSerial mySoftwareSerial(2, 3); // RX, TX
-uint16_t trackCount;
-uint16_t currentTrack;
-uint16_t lastTrackFinished;
-
+extern uint16_t trackCount;
+extern uint16_t currentTrack;
+extern uint16_t lastTrackFinished;
 
 bool isPlaying();
 void saveProgress();

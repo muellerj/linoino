@@ -1,3 +1,9 @@
+#include "headers.h"
+
+uint16_t trackCount;
+uint16_t currentTrack;
+uint16_t lastTrackFinished;
+
 bool isPlaying() { 
   return !digitalRead(busyPin);
 }

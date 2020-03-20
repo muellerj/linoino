@@ -1,30 +1,7 @@
 #!/bin/sh
 
-# Install packages
-case "$(uname -s)" in
-  Darwin)
-    echo "Installing on MacOS"
-    brew install lame sox
-    test bin/arduino-cli || curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-    ;;
-
-  Linux)
-    echo "Installing on Linux"
-    sudo apk add lame sox
-    test bin/arduino-cli || curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-    ;;
-
-  *)
-    echo "Unknown operating system - aborting"
-    exit 1
-    ;;
-esac
-
-# Arduino: Update indices
-arduino-cli core update-index
-
-# Install core for Arduino Nano
-arduino-cli core install arduino:avr
+# Packages
+brew install lame sox platformio
 
 # Install required libs
-arduino-cli lib install "MFRC522" "DFPlayer Mini Mp3 by Makuna" "JC_Button"
+platformio lib install "MFRC522" "DFPlayer Mini Mp3 by Makuna" "JC_Button"

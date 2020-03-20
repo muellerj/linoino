@@ -1,3 +1,5 @@
+#include "headers.h"
+
 /*
  * EEPROM Organisation
  *
@@ -29,6 +31,7 @@ void mySetup() {
   setVolume(DEFAULT_VOLUME);
 
   // Initialize NFC reader
+  MFRC522::MIFARE_Key key;
   SPI.begin();        // Init SPI bus
   mfrc522.PCD_Init(); // Init MFRC522
   mfrc522.PCD_DumpVersionToSerial(); // Show details of PCD MFRC522 Card Reader
