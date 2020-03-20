@@ -28,7 +28,7 @@ extern MFRC522::MIFARE_Key key;
 
 void onNewCard();
 void resetCard();
-void setupCard(bool reset = false);
+void setupCard(bool reset);
 void forgetCard();
 void rememberCard();
 bool isSameCard();

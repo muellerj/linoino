@@ -31,7 +31,6 @@ void mySetup() {
   setVolume(DEFAULT_VOLUME);
 
   // Initialize NFC reader
-  MFRC522::MIFARE_Key key;
   SPI.begin();        // Init SPI bus
   mfrc522.PCD_Init(); // Init MFRC522
   mfrc522.PCD_DumpVersionToSerial(); // Show details of PCD MFRC522 Card Reader
@@ -44,7 +43,7 @@ void mySetup() {
       digitalRead(buttonUp)    == LOW &&
       digitalRead(buttonDown)  == LOW) {
     Serial.println(F("Reset -> EEPROM wird gelöscht"));
-    for (int i = 0; i < EEPROM.length(); i++) {
+    for (uint8_t i = 0; i < EEPROM.length(); i++) {
       EEPROM.write(i, 0);
     }
   }

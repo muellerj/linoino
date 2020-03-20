@@ -68,7 +68,7 @@ bool isSameCard() {
   return (memcmp(lastCardUid, mfrc522.uid.uidByte, 4) == 0);
 }
 
-void setupCard(bool reset = false) {
+void setupCard(bool reset) {
   pausePlayback();
   Serial.println(F("Configure new card"));
 
@@ -186,7 +186,7 @@ void onNewCard() {
   if (myCard.cookie == cardCookie && myCard.folder != 0 && myCard.mode != 0) {
     handleKnownCard();
   } else {
-    setupCard();
+    setupCard(false);
   }
 }
 
