@@ -1,1 +1,1 @@
-int promptUserSelection(int question, int optMin, int optMax, int previewFolder=-1);
+int promptUserSelection(int question, int optMin, int optMax, int folder);

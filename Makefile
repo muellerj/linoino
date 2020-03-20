@@ -38,7 +38,7 @@ compile: $(OUT)
 monitor:
 	@platformio device monitor
 
-upload: $(OUT).hex
+upload: $(OUT)
 	@platformio run -t upload
 
 $(OUT): $(SRC)

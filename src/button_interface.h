@@ -6,10 +6,6 @@
 #define BTN_PAUSE_LONGPRESS  5
 #define BTN_PAUSE_SHORTPRESS 6
 
-extern bool ignorePauseButton;
-extern bool ignoreUpButton;
-extern bool ignoreDownButton;
-
 int pollButtons();
 void volumeDown();
 void volumeUp();

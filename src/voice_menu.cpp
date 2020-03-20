@@ -20,7 +20,7 @@ int changeOption(int i, int delta, int optMin, int optMax, int folder) {
   return i;
 }
 
-int promptUserSelection(int question, int optMin, int optMax, int folder=-1) {
+int promptUserSelection(int question, int optMin, int optMax, int folder) {
   int selection = 0;
   int delta     = 0;
   playMessage(question);
