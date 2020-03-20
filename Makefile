@@ -1,20 +1,10 @@
 all: upload
 
-BOARD=arduino:avr:nano:cpu=atmega328old
 PORT=/dev/cu.wchusbserialfd3140
-OUT=out/linuino
+OUT=.pio/build/nanoatmega328/firmware.hex
 SRC=src/*
 TC=/Volumes/tiggercloud/Linuino
 SDCARD=/Volumes/LINUINO
-
-RED=\033[0;31m
-GREEN=\033[0;32m
-RESET=\033[0m 
-
-define ok
-	([ $$? -eq 0 ] && printf "\n$(GREEN)$(1) OK$(RESET)\n") || \
-	printf "\n$(RED)$(1) FAIL$(RESET)\n"
-endef
 
 setup:
 	bin/setup
@@ -43,22 +33,14 @@ audio_messages:
 
 deploy: upload monitor
 
-compile: $(OUT).hex
-
-$(OUT).hex: $(OUT).elf
+compile: $(OUT)
 
 monitor:
 	# Note that C-A C-\ exits screen
 	screen $(PORT) 115200
 
 upload: $(OUT).hex
-	@arduino-cli upload \
-		--fqbn $(BOARD) \
-		--port $(PORT) \
-		--input $< \
-		--verify \
-		.  && $(call ok, "UPLOAD")
+	@platformio run -t upload
 
-$(OUT).elf: $(SRC)
-	@mkdir -p out
-	@platformio run && $(call ok, "COMPILER")
+$(OUT): $(SRC)
+	@platformio run
