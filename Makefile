@@ -26,7 +26,7 @@ clean:
 	rm -rf tmp/*.aiff
 	rm -rf tmp/*.wav
 	rm -rf sd-card
-	rm -rf out
+	rm -rf .pio/build
 
 audio_messages:
 	bin/create_audio_messages $(TC) msg/audio_messages.txt
@@ -36,8 +36,7 @@ deploy: upload monitor
 compile: $(OUT)
 
 monitor:
-	# Note that C-A C-\ exits screen
-	screen $(PORT) 115200
+	@platformio device monitor
 
 upload: $(OUT).hex
 	@platformio run -t upload
