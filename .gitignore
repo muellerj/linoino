@@ -3,6 +3,4 @@ sd-card
 tmp/*
 !tmp/.gitkeep
 
-out
-
 .pio

@@ -4,4 +4,7 @@
 brew install lame sox platformio
 
 # Install required libs
-platformio lib install "MFRC522" "DFPlayer Mini Mp3 by Makuna" "JC_Button"
+platformio lib install 63 1561 77
+# 63: MFRC522
+# 1561: "DFPlayer Mini Mp3 by Makuna"
+# 77: JC_Button
