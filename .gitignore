@@ -4,5 +4,6 @@ tmp/*
 !tmp/.gitkeep
 
 bin/arduino-cli
+bin/mkspiffs
 
 out
