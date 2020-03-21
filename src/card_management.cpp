@@ -20,7 +20,7 @@ uint8_t lastCardUid[4];
 uint8_t retries;
 uint8_t lastCardPoll = 0;
 
-MFRC522 mfrc522(SS_PIN, RST_PIN);
+MFRC522 mfrc522(mfrcSsPin, mfrcRstPin);
 
 MFRC522::StatusCode status;
 MFRC522::MIFARE_Key key;

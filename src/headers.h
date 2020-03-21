@@ -1,13 +1,12 @@
 #include "Arduino.h"
 
-#define RST_PIN 9
-#define SS_PIN 10
 #define buttonPause A0
 #define buttonUp A1
 #define buttonDown A2
 #define busyPin 4
 #define shutdownPin 7
-#define LONG_PRESS 1000
+#define mfrcRstPin 9
+#define mfrcSsPin 10
 
 #include "DFMiniMp3.h"
 #include "EEPROM.h"

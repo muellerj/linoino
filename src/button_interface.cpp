@@ -8,6 +8,8 @@ bool ignorePauseButton = false;
 bool ignoreUpButton    = false;
 bool ignoreDownButton  = false;
 
+#define LONG_PRESS 1000
+
 int pollButtons() {
   pauseButton.read();
   upButton.read();
