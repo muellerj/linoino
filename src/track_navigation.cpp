@@ -53,7 +53,7 @@ void pausePlayback() {
 }
 
 void startPlayback() { 
-  if (!hasCard) return;
+  if (!hasCard()) return;
   mp3.start();
 }
 

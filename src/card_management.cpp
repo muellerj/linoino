@@ -15,7 +15,7 @@ void(* fullReset) (void) = 0;
 
 nfcTagObject myCard;
 
-bool hasCard = false;
+bool cardPresent = false;
 uint8_t lastCardUid[4];
 uint8_t retries;
 uint8_t lastCardPoll = 0;
@@ -28,6 +28,10 @@ MFRC522::MIFARE_Key key;
 uint8_t sector = 1;
 uint8_t blockAddr = 4;
 uint8_t trailerBlock = 7;
+
+bool hasCard() {
+  return cardPresent;
+}
 
 void setupCardReader() {
   SPI.begin();        // Init SPI bus
@@ -221,12 +225,12 @@ uint8_t pollCard() {
 
   lastCardPoll = now;
 
-  if (!hasCard) {
+  if (!cardPresent) {
     if (mfrc522.PICC_IsNewCardPresent() && \
         mfrc522.PICC_ReadCardSerial() && \
         readCard(&myCard)) {
       retries = 0;
-      hasCard = true;
+      cardPresent = true;
       if (isSameCard()) {
         rememberCard();
         Serial.println(F("Same card detected"));
@@ -251,7 +255,7 @@ uint8_t pollCard() {
         Serial.println(F("Card gone"));
         mfrc522.PICC_HaltA();
         mfrc522.PCD_StopCrypto1();
-        hasCard = false;
+        cardPresent = false;
         return PCS_CARD_GONE;
       }
     } else {

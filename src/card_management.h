@@ -9,8 +9,6 @@ struct nfcTagObject {
 
 extern nfcTagObject myCard;
 
-extern bool hasCard;
-
 #define PCS_NO_CHANGE    0 // no change detected since last pollCard()
 #define PCS_NEW_CARD     1 // card with new UID detected 
 #define PCS_CARD_GONE    2 // card is not reachable anymore
@@ -24,7 +22,6 @@ extern bool hasCard;
 
 // MFRC522
 extern MFRC522 mfrc522;
-extern MFRC522::MIFARE_Key key;
 
 void setupCardReader();
 void onNewCard();
@@ -33,6 +30,7 @@ void setupCard(bool reset);
 void forgetCard();
 void rememberCard();
 bool isSameCard();
+bool hasCard();
 bool readCard(nfcTagObject *nfcTag);
 void writeCard(nfcTagObject nfcTag);
 void handleKnownCard();
