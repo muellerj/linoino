@@ -26,6 +26,7 @@ extern bool hasCard;
 extern MFRC522 mfrc522;
 extern MFRC522::MIFARE_Key key;
 
+void setupCardReader();
 void onNewCard();
 void resetCard();
 void setupCard(bool reset);

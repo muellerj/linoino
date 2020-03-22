@@ -7,5 +7,6 @@
 #define BTN_PAUSE_SHORTPRESS 6
 
 int pollButtons();
+void setupButtons();
 void volumeDown();
 void volumeUp();

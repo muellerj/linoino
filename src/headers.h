@@ -17,7 +17,6 @@
 #include "avr/sleep.h"
 
 #include "debug.h"
-#include "setup.h"
 #include "standby.h"
 #include "sleep.h"
 #include "button_interface.h"

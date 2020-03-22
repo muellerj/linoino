@@ -1,7 +1,17 @@
 #include "headers.h"
 
 void setup() {
-  mySetup();
+  Serial.begin(115200);
+  randomSeed(analogRead(A0));
+  pinMode(busyPin, INPUT);
+
+  Serial.println(F("LinUINO Version 1.0"));
+  Serial.println(F("based on work by Thorsten Voß"));
+
+  setupButtons();
+  setupCardReader();
+  setupMp3Player();
+  setstandbyTimer();
 }
 
 void loop() {

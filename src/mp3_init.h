@@ -9,3 +9,4 @@ class Mp3Notify {
 };
 
 extern DFMiniMp3<SoftwareSerial, Mp3Notify> mp3;
+void setupMp3Player();

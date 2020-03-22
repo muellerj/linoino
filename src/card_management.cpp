@@ -29,6 +29,15 @@ uint8_t sector = 1;
 uint8_t blockAddr = 4;
 uint8_t trailerBlock = 7;
 
+void setupCardReader() {
+  SPI.begin();        // Init SPI bus
+  mfrc522.PCD_Init(); // Init MFRC522
+  mfrc522.PCD_DumpVersionToSerial(); // Show details of PCD MFRC522 Card Reader
+  for (uint8_t i = 0; i < 6; i++) {
+    key.keyByte[i] = 0xFF;
+  }
+}
+
 void resetCard() {
   Serial.println(F("Reset card..."));
   playMessage(800);

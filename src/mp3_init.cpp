@@ -31,3 +31,8 @@ void Mp3Notify::OnPlaySourceRemoved(DfMp3_PlaySources source) {
 
 SoftwareSerial mySoftwareSerial(2, 3); // RX, TX
 DFMiniMp3<SoftwareSerial, Mp3Notify> mp3(mySoftwareSerial);
+
+void setupMp3Player() {
+  mp3.begin();
+  setVolume(DEFAULT_VOLUME);
+}

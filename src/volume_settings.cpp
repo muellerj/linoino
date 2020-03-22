@@ -1,5 +1,13 @@
 #include "headers.h"
 
+/*
+ * EEPROM Organisation
+ *
+ * 0-255: Progress in respective folders
+ *   256: Volume
+ *
+ */
+
 uint8_t getVolume() {
   return EEPROM.read(256);
 }

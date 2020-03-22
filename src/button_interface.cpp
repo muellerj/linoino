@@ -10,6 +10,22 @@ bool ignoreDownButton  = false;
 
 #define LONG_PRESS 1000
 
+void setupButtons() {
+  pauseButton.begin();
+  upButton.begin();
+  downButton.begin();
+
+  // Reset all cards (all three buttons pressed)
+  if (digitalRead(buttonPause) == LOW && 
+      digitalRead(buttonUp)    == LOW &&
+      digitalRead(buttonDown)  == LOW) {
+    Serial.println(F("Reset -> EEPROM wird gelöscht"));
+    for (uint8_t i = 0; i < EEPROM.length(); i++) {
+      EEPROM.write(i, 0);
+    }
+  }
+}
+
 int pollButtons() {
   pauseButton.read();
   upButton.read();
