@@ -4,6 +4,7 @@ unsigned long sleepTimer = 15UL * 60UL * 1000UL; // miliseconds
 unsigned long sleepMillis = 0; // miliseconds
 
 void setSleepTimer() {
+  return;
   Serial.println("Sleep in " + String(sleepTimer / 1000UL) + "s");
   pausePlayback();
   delay(1000);
@@ -12,6 +13,7 @@ void setSleepTimer() {
 }
 
 void disableSleepTimer() {
+  return;
   if (sleepMillis != 0) {
     Serial.println(F("Disabling sleep timer"));
     pausePlayback();
