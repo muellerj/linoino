@@ -1,5 +1,3 @@
-sd-card
-
 tmp/*
 !tmp/.gitkeep
 
