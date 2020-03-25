@@ -1,3 +1,5 @@
+<meta charset="utf-8"> 
+
 # LinUINO
 
 Basierend auf der Arbeit von Thorsten Voss (TonUINO)
@@ -24,18 +26,18 @@ In diesem Zusammenhang bietet sich z.B. das Tool
 
 Die einzelen Tasks der `Makefile` sind:
 
-```
+~~~~~~ none
 setup:          PlatformIO + Bibliotheken installieren
 dummysongs:     Erstellt einige Dummysongs für Testzwecke
 convert:        Convertiert alle `*.m4a` Dateien unter `$CARDSRC`
-stats:          Zeigt Statistiken über die Codebasis an 
+stats:          Zeigt Statistiken über die Codebasis an
 copy:           Kopiert die `*.mp3` Dateien auf die SD-Karte (`$CARDDST`)
 clean:          Räumt Buildprodukte auf
 audio_messages: Erstellt die Audioansagen
 deploy:         Kompiliert den aktuellen Sketch, lädt ihn hoch und öffnet Monitor
 monitor:        Öffnet den Debug-Monitor
 upload:         Kompiliert den aktuellen Sketch und lädt ihn hoch
-```
+~~~~~~
 
 ## Ordnerstruktur
 
@@ -44,11 +46,11 @@ Projekt. Alle Sourcen liegen unter `./src`. In `./src/main.cpp` liegt
 der Hauptsketch, der möglichst sauber gehalten ist um die Struktur des
 Programflows direkt zu zeigen.
 
-```
+~~~~~~ none
 .
 ├── .pio                    # Buildprodukte
 ├── bin                     # Skripte (werden per `make` aufgerufen)
-│   ├── ...             
+│   ├── ...
 │   └── showstats
 ├── doc                     # Icons + PDF
 ├── msg
@@ -63,7 +65,7 @@ Programflows direkt zu zeigen.
 ├── Makefile                # Makefile
 ├── README.md.html          # Diese Datei
 └── platformio.ini          # PlatformIO KonfigurationK
-```
+~~~~~~
 
 ## Resourcen
 
@@ -88,9 +90,9 @@ Programflows direkt zu zeigen.
 *       | o VIN  VOUT o |                     |  |  |                     |
 *  5V --+-* VIN  VOUT *-+---------------------(-'   | *              D5 o |
 * GND --+-* GND   GND o |                     |     | |              D6 o |
-*       | o GND   GND *-+--------------------'      | ( 1K           D7 *-+. 
+*       | o GND   GND *-+--------------------'      | ( 1K           D7 *-+.
 *       | o ON      B o |                           | |              D8 o | |
-*      .+-* OFF     A *-+-.                         | *             GND *-+-)-----------------. 
+*      .+-* OFF     A *-+-.                         | *             GND *-+-)-----------------.
 *     | | o CTRL        |  |   .-------------.      |               GND *-+-|--------.         |
 *     | '---------------'  |   |       SDA *-+------+-*              A7 o | |         |        |
 *     |   POLOLU SWITCH    |   |       SCK *-+------+-*              A6 o | |         |        |
@@ -107,9 +109,9 @@ Programflows direkt zu zeigen.
 *      '-------------------(-----------------------------------------------'            |
 *                          |                                                            |
 *                           '----------------------------------------------------------'
-*                                                                              
-*                                                                              
-*                                                                              
+*
+*
+*
 ***************************************************************************************************
 
 <!-- Markdeep: --><script src="doc/js/markdeep.min.js"></script>
