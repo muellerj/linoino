@@ -10,16 +10,16 @@ Alle zentralen Funktionen sind über eine `Makefile` abgebildet. Die
 Ordner für die Quelle und das Ziel der SD-Karte müssen dabei als
 Environment-Variablen übergeben werden.
 
-```
+~~~~~~ sh
 CARDSRC=/path/to/src CARDDST=/path/to/dst make copy
-```
+~~~~~~
 
 oder per `export`:
 
-```
+~~~~~~ sh
 export CARDSRC=/path/to/src
 make convert
-```
+~~~~~~
 
 In diesem Zusammenhang bietet sich z.B. das Tool
 [`direnv`](https://github.com/direnv/direnv) an.
