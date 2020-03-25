@@ -4,15 +4,32 @@ Basierend auf der Arbeit von Thorsten Voss (TonUINO)
 
 ## Installation
 
-Alle zentralen Funktionen sind über eine `Makefile` abgebildet:
+Alle zentralen Funktionen sind über eine `Makefile` abgebildet. Die
+Ordner für die Quelle und das Ziel der SD-Karte müssen dabei als
+Environment-Variablen übergeben werden.
 
+```
+CARDSRC=/path/to/src CARDDST=/path/to/dst make copy
+```
+
+oder per `export`:
+
+```
+export CARDSRC=/path/to/src
+make convert
+```
+
+In diesem Zusammenhang bietet sich z.B. das Tool
+[`direnv`](https://github.com/direnv/direnv) an.
+
+Die einzelen Tasks der `Makefile` sind:
 
 ```
 setup:          PlatformIO + Bibliotheken installieren
 dummysongs:     Erstellt einige Dummysongs für Testzwecke
 convert:        Convertiert alle `*.m4a` Dateien unter `$CARDSRC`
 stats:          Zeigt Statistiken über die Codebasis an 
-copy:           Kopiert die `*.mp3` Dateien auf die SD-Karte (`$CARDDS`)
+copy:           Kopiert die `*.mp3` Dateien auf die SD-Karte (`$CARDDST`)
 clean:          Räumt Buildprodukte auf
 audio_messages: Erstellt die Audioansagen
 deploy:         Kompiliert den aktuellen Sketch, lädt ihn hoch und öffnet Monitor
