@@ -1,0 +1,15 @@
+#!/bin/sh
+
+status=0
+
+if test "$CARDSRC" = ""; then
+  echo "Environment variable CARDSRC missing!"
+  status=1
+fi
+
+if test "$CARDDST" = ""; then
+  echo "Environment variable CARDDST missing!"
+  status=1
+fi
+
+exit $status
