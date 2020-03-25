@@ -37,6 +37,34 @@ monitor:        Öffnet den Debug-Monitor
 upload:         Kompiliert den aktuellen Sketch und lädt ihn hoch
 ```
 
+## Ordnerstruktur
+
+Die Ordnerstruktur orientiert sind an einem Standardaufbau für ein C++
+Projekt. Alle Sourcen liegen unter `./src`. In `./src/main.cpp` liegt
+der Hauptsketch, der möglichst sauber gehalten ist um die Struktur des
+Programflows direkt zu zeigen.
+
+```
+.
+├── .pio                    # Buildprodukte
+├── bin                     # Skripte (werden per `make` aufgerufen)
+│   ├── ...             
+│   └── showstats
+├── doc                     # Icons + PDF
+├── msg
+│   └── audio_messages.txt  # Audiomessages
+├── src                     # C++ Sourcen
+│   ├── ...
+│   └── volume_settings.h
+├── tmp                     # Temporäre Dateien
+├── .envrc                  # Definiert Environment-Variablen
+├── .gitignore
+├── LICENSE                 # Lizenzen
+├── Makefile                # Makefile
+├── README.md.html          # Diese Datei
+└── platformio.ini          # PlatformIO KonfigurationK
+```
+
 ## Resourcen
 
 * [Bauanleitung TonUINO](https://www.voss.earth/tonuino/)
