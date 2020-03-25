@@ -1,3 +1,30 @@
+# LinUINO
+
+Basierend auf der Arbeit von Thorsten Voss (TonUINO)
+
+## Installation
+
+Alle zentralen Funktionen sind über eine `Makefile` abgebildet:
+
+
+```
+setup:          PlatformIO + Bibliotheken installieren
+dummysongs:     Erstellt einige Dummysongs für Testzwecke
+convert:        Convertiert alle `*.m4a` Dateien unter `$CARDSRC`
+stats:          Zeigt Statistiken über die Codebasis an 
+copy:           Kopiert die `*.mp3` Dateien auf die SD-Karte (`$CARDDS`)
+clean:          Räumt Buildprodukte auf
+audio_messages: Erstellt die Audioansagen
+deploy:         Kompiliert den aktuellen Sketch, lädt ihn hoch und öffnet Monitor
+monitor:        Öffnet den Debug-Monitor
+upload:         Kompiliert den aktuellen Sketch und lädt ihn hoch
+```
+
+## Resourcen
+
+* [Bauanleitung TonUINO](https://www.voss.earth/tonuino/)
+* [Forum TonUINO](https://discourse.voss.earth/)
+
 # Schaltplan
 
 ***************************************************************************************************
