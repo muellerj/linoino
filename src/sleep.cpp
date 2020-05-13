@@ -48,3 +48,7 @@ void goToSleep() {
   sleepMillis = 0;
   pausePlayback();
 }
+
+void setSleepLed(bool state) {
+  digitalWrite(shutdownPin, state ? HIGH : LOW);
+}

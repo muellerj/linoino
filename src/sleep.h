@@ -7,3 +7,4 @@ void disableSleepTimer();
 void toggleSleepTimer();
 uint8_t pollSleep();
 void goToSleep();
+void setSleepLed(bool state);

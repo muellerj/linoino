@@ -4,6 +4,7 @@ void setup() {
   Serial.begin(115200);
   randomSeed(analogRead(A0));
   pinMode(busyPin, INPUT);
+  pinMode(sleepStatusLedPin, OUTPUT);
 
   Serial.println(F("LinUINO Version 1.0"));
   Serial.println(F("based on work by Thorsten Voß"));
@@ -26,9 +27,9 @@ void loop() {
   }
 
   switch(pollSleep()) {
-    case SLEEP_DISABLED:
-    case SLEEP_NOT_YET:  noOp(); break;
-    case SLEEP_ACTIVATE: goToSleep(); break;
+    case SLEEP_DISABLED: setSleepLed(OFF); break;
+    case SLEEP_NOT_YET:  setSleepLed(ON); break;
+    case SLEEP_ACTIVATE: setSleepLed(OFF); goToSleep(); break;
   }
 
   switch(pollButtons()) {
