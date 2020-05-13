@@ -4,7 +4,12 @@
 #define buttonUp A1
 #define buttonDown A2
 #define busyPin 4
+
+#define freePin1 5
+#define freePin2 6
 #define shutdownPin 7
+#define freePin3 8
+
 #define mfrcRstPin 9
 #define mfrcSsPin 10
 
