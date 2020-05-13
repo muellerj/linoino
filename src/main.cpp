@@ -3,6 +3,7 @@
 void setup() {
   Serial.begin(115200);
   randomSeed(analogRead(A0));
+
   pinMode(busyPin, INPUT);
   pinMode(shutdownPin, OUTPUT);
   pinMode(sleepStatusLedPin, OUTPUT);
