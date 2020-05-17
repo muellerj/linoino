@@ -14,7 +14,7 @@ void setup() {
   setupButtons();
   setupCardReader();
   setupMp3Player();
-  setstandbyTimer();
+  setStandbyTimer();
 }
 
 void loop() {

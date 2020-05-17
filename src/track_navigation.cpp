@@ -49,7 +49,7 @@ void playMessage(uint16_t message) {
 
 void pausePlayback() { 
   mp3.pause(); 
-  setstandbyTimer();
+  setStandbyTimer();
 }
 
 void startPlayback() { 
