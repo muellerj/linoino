@@ -1,4 +1,4 @@
-#define ENABLE_STANDBY true
+#define ENABLE_STANDBY false
 
 #define STDBY_DISABLED 0
 #define STDBY_NOT_YET  1
