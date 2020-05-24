@@ -13,7 +13,7 @@ dummysongs:
 
 convert:
 	checkenv
-	bin/convert_songs $(CARDSRC)
+	bin/convert_songs $(CARDSRC)/*
 
 stats:
 	bin/showstats

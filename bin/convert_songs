@@ -5,47 +5,51 @@ require "rake"
 class String
   def sanitise
     self.
+      downcase.
       delete("\n").
       gsub("ä", "ae").gsub("ä", "ae").
       gsub("ö", "oe").
       gsub("ü", "ue").gsub("ü", "ue").
       gsub("ß", "ss").
-      tr_s("^a-z0-9\-.", "_")
+      tr_s("^a-z0-9\-", "_")
+  end
+
+  def remove_leading_digits
+    gsub(/^[\d\-_]*/, "")
   end
 end
 
 def bestname(path)
-  dir  = File.dirname(path)
-  name = File.basename(path)
-  basename = name.downcase.sanitise
+  dir      = File.dirname(path)
+  basename = File.basename(path, ".*").
+    sanitise.
+    remove_leading_digits.
+    concat(File.extname(path))
 
-  i = (basename[/^\d+/] || 1).to_i
+  i = 1
 
-  basename.gsub!(/^\d+[\-_]*/, "")
-
-  name = sprintf("%03d", i) + "_" + basename
-
-  while File.exist?(File.join(dir, name))
+  begin
+    digits = sprintf("%03d", i)
+    name = digits + "_" + basename
     i += 1
-    name = sprintf("%03d", i) + "_" + basename
-  end
+  end while !Dir.glob(File.join(dir, "#{digits}*")).empty?
 
   File.join(dir, name)
 end
 
 def main
-  path = ARGV.shift
+  ARGV.each do |path|
+    files = Dir.glob(File.join(path, "*.m4a"))
 
-  files = Dir.glob(File.join(path, "*.m4a"))
-
-  files.sort.each do |file|
-    newname = bestname(file.ext(".mp3"))
-    puts "Converting #{file} -> #{newname}"
-    system "ffmpeg", \
-      "-i", file, \
-      "-acodec", "libmp3lame", \
-      "-aq", "2", \
-      newname
+    files.sort.each do |file|
+      newname = bestname(file.ext(".mp3"))
+      puts "Converting #{file} -> #{newname}"
+      system "ffmpeg", \
+        "-i", file, \
+        "-acodec", "libmp3lame", \
+        "-aq", "2", \
+        newname
+    end
   end
 end
 
