@@ -4,6 +4,8 @@ uint16_t trackCount;
 uint16_t currentTrack;
 uint16_t lastTrackFinished;
 
+bool duringSetup = false;
+
 bool isPlaying() { 
   return !digitalRead(busyPin);
 }
@@ -29,7 +31,8 @@ void resetPlayback(uint16_t track) {
 }
 
 void playTrack(uint8_t track) {
-  Serial.println("Playing track " + String(track));
+  Serial.println("Playing track " + String(track) + \
+                 " from folder " + String(myCard.folder));
   mp3.playFolderTrack(myCard.folder, track);
 }
 
@@ -59,6 +62,7 @@ void startPlayback() {
 
 void nextTrack(uint16_t track) {
 
+  if (duringSetup) return;
   if (track == lastTrackFinished) return;
 
   lastTrackFinished = track;

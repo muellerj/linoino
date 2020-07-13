@@ -6,7 +6,7 @@ void previewSelection(int folder, int track) {
 
   if (folder == 0) {
     folder = track;
-    track = 1;
+    track  = 1;
   }
 
   playTrack(folder, track);
@@ -23,7 +23,10 @@ int changeOption(int i, int delta, int optMin, int optMax, int folder) {
 int promptUserSelection(int question, int optMin, int optMax, int folder) {
   int selection = 0;
   int delta     = 0;
+  bool done     = false;
   playMessage(question);
+
+  duringSetup = true;
 
   while(true) {
 
@@ -31,7 +34,7 @@ int promptUserSelection(int question, int optMin, int optMax, int folder) {
     delta = 0;
 
     switch(pollButtons()) {
-      case BTN_PAUSE_SHORTPRESS: if (selection != 0) return selection; break;
+      case BTN_PAUSE_SHORTPRESS: if (selection != 0) done = true; break;
       case BTN_UP_LONGPRESS:     delta = +10; break;
       case BTN_UP_SHORTPRESS:    delta =  +1; break;
       case BTN_DOWN_LONGPRESS:   delta = -10; break;
@@ -40,5 +43,10 @@ int promptUserSelection(int question, int optMin, int optMax, int folder) {
 
     if (delta != 0)
       selection = changeOption(selection, delta, optMin, optMax, folder);
+
+    if (done) {
+      duringSetup = false;
+      return selection;
+    }
   }
 }

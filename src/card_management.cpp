@@ -83,6 +83,7 @@ bool isSameCard() {
 
 void setupCard(bool reset) {
   pausePlayback();
+  forgetCard();
   Serial.println(F("Configure new card"));
 
   myCard.folder = promptUserSelection(300, 1, 99, 0);
