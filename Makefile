@@ -7,19 +7,19 @@ SRC=src/*
 setup:
 	bin/setup
 
-dummysongs:
-	checkenv
+checkenv:
+	bin/checkenv
+
+dummysongs: checkenv
 	bin/create_dummy_songs $(CARDSRC)
 
-convert:
-	checkenv
+convert: checkenv
 	bin/convert_songs $(CARDSRC)/*
 
 stats:
 	bin/showstats
 
-copy:
-	checkenv
+copy: checkenv
 	rsync -zarv --delete --progress --include="*/" --include="*.mp3" --exclude="*" $(CARDSRC)/ $(CARDDST)/
 	find $(CARDDST) -name '.*' | xargs rm -rf
 
@@ -28,8 +28,7 @@ clean:
 	rm -rf tmp/*.wav
 	rm -rf .pio/build
 
-audio_messages:
-	checkenv
+audio_messages: checkenv
 	bin/create_audio_messages $(CARDSRC) msg/audio_messages.txt
 
 deploy: upload monitor
@@ -44,3 +43,5 @@ upload: $(OUT)
 
 $(OUT): $(SRC)
 	@platformio run
+
+@PHONY: checkenv

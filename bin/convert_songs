@@ -37,18 +37,41 @@ def bestname(path)
   File.join(dir, name)
 end
 
+def convert_m4a(file)
+  newname = bestname(file.ext(".mp3"))
+  puts "Converting #{file} -> #{newname}"
+  system "ffmpeg", \
+    "-i", file, \
+    "-acodec", "libmp3lame", \
+    "-aq", "2", \
+    newname
+end
+
+def fix_filename(file)
+  foldername = File.dirname(file).split("/").last
+  filename = File.basename(file)
+  case foldername
+  when /\A\d{2}\z/
+    unless filename.match(/\A\d{3}_/)
+      system "mv", "-v", file, bestname(file)
+    end
+  when "mp3"
+    unless filename.match(/\A\d{4}/)
+      puts "Incompatible name for #{file}"
+    end
+  else
+    puts "Incompatible folder #{foldername}"
+  end
+end
+
 def main
   ARGV.each do |path|
-    files = Dir.glob(File.join(path, "*.m4a"))
-
-    files.sort.each do |file|
-      newname = bestname(file.ext(".mp3"))
-      puts "Converting #{file} -> #{newname}"
-      system "ffmpeg", \
-        "-i", file, \
-        "-acodec", "libmp3lame", \
-        "-aq", "2", \
-        newname
+    puts "Checking #{path}"
+    Dir.glob(File.join(path, "*.m4a")).sort.each do |file|
+      convert_m4a(file)
+    end
+    Dir.glob(File.join(path, "*.mp3")).sort.each do |file|
+      fix_filename(file)
     end
   end
 end
