@@ -12,8 +12,10 @@ void Mp3Notify::PrintlnSourceAction(DfMp3_PlaySources source, const char* action
 }
 
 void Mp3Notify::OnPlayFinished(DfMp3_PlaySources source, uint16_t track) {
-  Serial.println("End of track " + String(track));
-  nextTrack(track);
+  if (!duringSetup) {
+    Serial.println("End of track " + String(track));
+    nextTrack(track);
+  }
 }
 
 void Mp3Notify::OnPlaySourceOnline(DfMp3_PlaySources source) {

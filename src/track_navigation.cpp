@@ -62,9 +62,7 @@ void startPlayback() {
 
 void nextTrack(uint16_t track) {
 
-  if (duringSetup) return;
   if (track == lastTrackFinished) return;
-
   lastTrackFinished = track;
 
   switch(myCard.mode) {
