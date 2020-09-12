@@ -8,7 +8,7 @@ extern bool duringSetup;
 bool isPlaying();
 void saveProgress();
 
-void nextTrack(uint16_t track);
+void nextTrack(uint16_t track, bool userChoice);
 void previousTrack();
 
 void playTrack(uint8_t track);

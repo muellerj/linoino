@@ -60,7 +60,7 @@ void startPlayback() {
   mp3.start();
 }
 
-void nextTrack(uint16_t track) {
+void nextTrack(uint16_t track, bool userChoice) {
 
   if (track == lastTrackFinished) return;
   lastTrackFinished = track;
