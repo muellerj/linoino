@@ -68,12 +68,12 @@ void nextTrack(uint16_t track, bool userChoice) {
   switch(myCard.mode) {
   case MODE_RANDOM:
     Serial.println(F("Mode random -> stop"));
-    resetPlayback(newRandomTrack(trackCount));
+    playTrack(newRandomTrack(trackCount));
     break;
 
   case MODE_SINGLE:
     Serial.println(F("Mode single -> stop"));
-    resetPlayback(currentTrack);
+    playTrack(currentTrack);
     break;
 
   case MODE_ALBUM:
@@ -84,7 +84,7 @@ void nextTrack(uint16_t track, bool userChoice) {
     } else {
       currentTrack = 1;
       Serial.println(F("Mode album -> end"));
-      resetPlayback(currentTrack);
+      playTrack(currentTrack);
     }
     break;
 
@@ -104,7 +104,7 @@ void nextTrack(uint16_t track, bool userChoice) {
       currentTrack = 1;
       Serial.println(F("Mode book -> end, resetting track to 1"));
       saveProgress();
-      resetPlayback(currentTrack);
+      playTrack(currentTrack);
     }
     break;
   }
