@@ -17,6 +17,7 @@ void playTrack(uint8_t folder, uint8_t track);
 void playMessage(uint16_t track);
 
 uint16_t getTrackCount();
+uint8_t getFolderCount();
 
 void startPlayback();
 void pausePlayback();

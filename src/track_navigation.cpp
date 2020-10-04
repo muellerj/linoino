@@ -46,6 +46,10 @@ uint16_t getTrackCount() {
   return mp3.getFolderTrackCount(myCard.folder);
 }
 
+uint8_t getFolderCount() {
+  return mp3.getTotalFolderCount() - 2;
+}
+
 void playMessage(uint16_t message) {
   mp3.playMp3FolderTrack(message);
 }
