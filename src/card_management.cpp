@@ -86,7 +86,7 @@ void setupCard(bool reset) {
   forgetCard();
   Serial.println(F("Configure new card"));
 
-  myCard.folder = promptUserSelection(300, 1, 99, 0);
+  myCard.folder = promptUserSelection(300, 1, getFolderCount(), 0);
   myCard.mode   = promptUserSelection(310, 311, 315, -1);
 
   currentTrack = 1;
