@@ -3,7 +3,7 @@ extern uint16_t trackCount;
 extern uint16_t currentTrack;
 extern uint16_t lastTrackFinished;
 
-extern bool duringSetup;
+extern bool setupActive;
 
 bool isPlaying();
 void saveProgress();

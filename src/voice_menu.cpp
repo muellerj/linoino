@@ -23,7 +23,7 @@ int changeOption(int i, int delta, int optMin, int optMax, int folder) {
 int promptUserSelection(int question, int optMin, int optMax, int folder) {
   int selection = 0;
   int delta     = 0;
-  duringSetup = true;
+  setupActive = true;
 
   playMessage(question);
 
@@ -32,7 +32,7 @@ int promptUserSelection(int question, int optMin, int optMax, int folder) {
     delta = 0;
 
     switch(pollButtons()) {
-      case BTN_PAUSE_SHORTPRESS: if (selection != 0) duringSetup = false; break;
+      case BTN_PAUSE_SHORTPRESS: if (selection != 0) setupActive = false; break;
       case BTN_UP_LONGPRESS:     delta = +10; break;
       case BTN_UP_SHORTPRESS:    delta =  +1; break;
       case BTN_DOWN_LONGPRESS:   delta = -10; break;
@@ -42,7 +42,7 @@ int promptUserSelection(int question, int optMin, int optMax, int folder) {
     if (delta != 0)
       selection = changeOption(selection, delta, optMin, optMax, folder);
 
-    if (!duringSetup)
+    if (!setupActive)
       return selection;
   }
 }

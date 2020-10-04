@@ -4,7 +4,7 @@ uint16_t trackCount;
 uint16_t currentTrack;
 uint16_t lastTrackFinished;
 
-bool duringSetup = false;
+bool setupActive = false;
 
 bool isPlaying() { 
   return !digitalRead(busyPin);
@@ -67,13 +67,24 @@ void nextTrack(uint16_t track, bool userChoice) {
 
   switch(myCard.mode) {
   case MODE_RANDOM:
-    Serial.println(F("Mode random -> stop"));
-    playTrack(newRandomTrack(trackCount));
+    if (userChoice) {
+      Serial.println(F("Mode random -> new random track"));
+      currentTrack = newRandomTrack(trackCount);
+      playTrack(currentTrack);
+    } else {
+      Serial.println(F("Mode random -> stop"));
+      pausePlayback();
+    }
     break;
 
   case MODE_SINGLE:
-    Serial.println(F("Mode single -> stop"));
-    playTrack(currentTrack);
+    if (userChoice) {
+      Serial.println(F("Mode single -> Replay current track"));
+      playTrack(currentTrack);
+    } else {
+      Serial.println(F("Mode single -> stop"));
+      pausePlayback();
+    }
     break;
 
   case MODE_ALBUM:
@@ -84,7 +95,7 @@ void nextTrack(uint16_t track, bool userChoice) {
     } else {
       currentTrack = 1;
       Serial.println(F("Mode album -> end"));
-      playTrack(currentTrack);
+      pausePlayback();
     }
     break;
 
@@ -104,7 +115,7 @@ void nextTrack(uint16_t track, bool userChoice) {
       currentTrack = 1;
       Serial.println(F("Mode book -> end, resetting track to 1"));
       saveProgress();
-      playTrack(currentTrack);
+      pausePlayback();
     }
     break;
   }
