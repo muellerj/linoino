@@ -4,6 +4,7 @@ unsigned long sleepTimer = 15UL * 60UL * 1000UL; // miliseconds
 unsigned long sleepMillis = 0; // miliseconds
 
 void setSleepTimer() {
+  if (!ENABLE_SLEEP) return;
   Serial.println("Sleep in " + String(sleepTimer / 1000UL) + "s");
   sleepMillis = millis() + sleepTimer;
 }
